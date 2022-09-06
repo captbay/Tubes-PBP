@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    android:id="@+id/RegisLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".RegisActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="E-Learning"
+        android:text="Register Akun Anda"
         android:textColor="@color/black"
         style="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintEnd_toEndOf="@id/imageView"
@@ -84,18 +84,18 @@
         app:layout_constraintStart_toStartOf="@id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" >
 
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btnRegis"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Register"-->
+<!--            style="@style/Widget.MaterialComponents.Button.TextButton" />-->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegis"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnGas"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Register"
-            style="@style/Widget.MaterialComponents.Button.TextButton" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Daftarkan Akun"
             android:layout_weight="1" />
 
     </LinearLayout>
