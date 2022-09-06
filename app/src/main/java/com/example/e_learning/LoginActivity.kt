@@ -1,15 +1,15 @@
 package com.example.e_learning
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
@@ -17,10 +17,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var mainLayout : ConstraintLayout
-
+    lateinit var mbUsername : String
+    lateinit var mbPassword : String
 
     fun initComponents()
     {
+        overridePendingTransition(0,1)
         //Hubungkan variabel dengan view di layout
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
@@ -28,10 +30,11 @@ class LoginActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
 
         //Ubah Title pada AppBar Aplikasi
-        setTitle("User Login")
+        setTitle("A3-Learning Login")
 
 
         initComponents()
@@ -55,21 +58,24 @@ class LoginActivity : AppCompatActivity() {
             //Pengecekan apakah inputan username kosong
             if(username.isEmpty())
             {
+                inputUsername.requestFocus()
                 inputUsername.setError("username must be filled with text")
                 checkLogin = false
+                Log.i("Test", "Pengecekan Username Kosong Sukses")
+            }else
+            {
+                Log.i("Test", "Username tidak kosong : "+username)
             }
 
             //Pengecekan apakah Inputan Password kosong
-            if(username.isEmpty())
+            if(password.isEmpty())
             {
-                inputPassword.setError("Password must be filled with text")
+                inputPassword.setError("password must be filled with text")
+                Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
                 checkLogin = false
-            }
+                Log.i("Test","Pengecekan Password Kosong Sukses ")
+            }else{Log.i("Test", "Password Tidak Kosong : "+password) }
 
-            if(username == "admin" && password == "0541") checkLogin = true // jika username sesuai check login bernilai true
-            if(!checkLogin) return@OnClickListener //jika tidak masih false if(!checklogin !=false) -> true !=false --> jump
-            val moveHome = Intent(this@LoginActivity, HomeActivity::class.java) //pindah ke home activity
-            startActivity(moveHome)
         })
 
         btnRegister.setOnClickListener {
@@ -77,4 +83,14 @@ class LoginActivity : AppCompatActivity() {
             startActivity(moveRegister)
         }
     }
+
+    fun getBundle()
+    {
+        val mBundle = intent.extras!! // !! memastikan mBundle tidak nullable
+        mbUsername = mBundle.getString("username")!!
+        mbPassword = mBundle.getString("password")!!
+
+
+    }
+
 }

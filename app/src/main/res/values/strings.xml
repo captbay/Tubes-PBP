@@ -2,4 +2,10 @@
     <string name="app_name">E-Learning</string>
     <string name="AppTitle">A3-Learning</string>
     <string name="Register">Register Akun</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="cancel">Cancel</string>
+    <string name="icon_utama">Icon Utama</string>
+    <string name="login">Login</string>
+    <string name="register">REGISTER</string>
 </resources>

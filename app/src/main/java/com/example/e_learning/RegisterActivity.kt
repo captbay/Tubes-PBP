@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterActivity : AppCompatActivity() {
+    //Component View
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var inputEmail : TextInputLayout
@@ -44,6 +46,7 @@ class RegisterActivity : AppCompatActivity() {
             inputEmail.getEditText()?.setText("")
             inputTanggalLahir.getEditText()?.setText("")
             inputNomorTelepon.getEditText()?.setText("")
+            Toast.makeText(this,"Akan menghapus semua data inputan", Toast.LENGTH_SHORT).show()
         }
 
         btnRegister.setOnClickListener {
@@ -69,6 +72,8 @@ class RegisterActivity : AppCompatActivity() {
             mBundle.putString("tanggalLahir", tanggalLahir)
             mBundle.putString("nomorTelp",nomorTelp)
             intent.putExtras(mBundle)
+            Toast.makeText(this,"Berhasil Mendaftarkan Akun",Toast.LENGTH_SHORT).show()
+            //kembali ke menu login
         }
     }
 }
