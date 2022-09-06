@@ -1,10 +1,14 @@
 package com.example.e_learning
 
+import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
@@ -12,13 +16,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisActivity : AppCompatActivity() {
-
+//    DatePickerDialog.OnDateSetListener
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
     private lateinit var inputEmail: TextInputLayout
     private lateinit var inputTglLahir: TextInputLayout
     private lateinit var inputNmrTelp: TextInputLayout
-    private lateinit var mainLayout: ConstraintLayout
+
     private lateinit var username: TextInputEditText
     private lateinit var password: TextInputEditText
     private lateinit var email: TextInputEditText
@@ -41,13 +45,14 @@ class RegisActivity : AppCompatActivity() {
         inputEmail = findViewById(R.id.inputLayoutEmail)
         inputTglLahir = findViewById(R.id.inputLayoutTglLahir)
         inputNmrTelp = findViewById(R.id.inputLayoutNmrTelp)
-        mainLayout = findViewById(R.id.mainLayout)
+
 //        val moveLogin = Intent(this@RegisActivity, LoginActivity::class.java)
 
         setTitle("User Daftar")
 
 
         val btnClear: Button = findViewById(R.id.btnClear)
+        val btnGas: Button = findViewById(R.id.btnGas)
 
         btnClear.setOnClickListener {
             inputUsername.getEditText()?.setText("")
@@ -57,8 +62,27 @@ class RegisActivity : AppCompatActivity() {
             inputNmrTelp.getEditText()?.setText("")
 
             //memunculkan snackbar
-            Snackbar.make(mainLayout, "Text Cleard Success", Snackbar.LENGTH_LONG).show()
+            Toast.makeText(this,"akan menghapus semua data", Toast.LENGTH_SHORT).show()
         }
+
+        btnGas.setOnClickListener {
+            val intent = Intent(this,LoginActivity::class.java)
+            val mBundle = Bundle()
+
+            mBundle.putString("username", username.text.toString())
+            mBundle.putString("password", password.text.toString())
+            mBundle.putString("email", email.text.toString())
+            mBundle.putString("tglLahir", tglLahir.text.toString())
+            mBundle.putString("nomorTelp", nomorTelp.text.toString())
+
+            intent.putExtras(mBundle)
+
+            Toast.makeText(this,"Anda telah berhasil daftar", Toast.LENGTH_SHORT).show()
+
+            startActivity(intent)
+        }
+
+
 //        //Aksi Btn Regis ketika di klik
 //        btnRegis.setOnClickListener {
 //            var checkLogin = false
@@ -92,7 +116,15 @@ class RegisActivity : AppCompatActivity() {
 //
 //            }
 //            if (!checkLogin) return@setOnClickListener
+
+//            tglLahir.setOnClickListener{
+//                DatePickerDialog(this).show()
+//            }
         }
+
+//    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+//        Log.e("Calendar", "$year -- $month -- $dayOfMonth")
+//    }
 
 
 }

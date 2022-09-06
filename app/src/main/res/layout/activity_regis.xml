@@ -91,14 +91,21 @@
             android:layout_height="wrap_content"
             android:hint="Tanggal Lahir"
             app:errorEnabled="true"
+
+            android:focusableInTouchMode="false"
             app:helperText="Masukan tanggal lahir anda"
             app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
-
+<!--            android:clickable="false"-->
+<!--            android:cursorVisible="false"-->
+<!--            android:focusable="false"-->
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                android:id="@+id/etTglLahir"/>
+                android:id="@+id/etTglLahir"
+                android:focusableInTouchMode="false"/>
+<!--            android:clickable="false"-->
+<!--            android:cursorVisible="false"-->
+<!--            android:focusable="false"-->
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

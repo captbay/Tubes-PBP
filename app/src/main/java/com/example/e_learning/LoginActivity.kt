@@ -2,11 +2,13 @@ package com.example.e_learning
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
@@ -15,11 +17,28 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var inputPassword: TextInputLayout
     private lateinit var mainLayout: ConstraintLayout
 
+
+
+    lateinit var Vusername: String
+    lateinit var Vpassword: String
+    lateinit var Vmail: String
+    lateinit var VtglLahir: String
+    lateinit var VnomorTelp: String
+
+    private lateinit var username: TextInputEditText
+    private lateinit var password: TextInputEditText
+    private lateinit var email: TextInputEditText
+    private lateinit var tglLahir: TextInputEditText
+    private lateinit var nomorTelp: TextInputEditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         val moveRegis = Intent(this@LoginActivity, RegisActivity::class.java)
+
+        getBundle()
+
 
         // ubah title pada app bar aplikasi
         setTitle("User Login")
@@ -49,8 +68,10 @@ class LoginActivity : AppCompatActivity() {
             val username: String = inputUsername.getEditText()?.getText().toString()
             val password: String = inputPassword.getEditText()?.getText().toString()
 
+//            inputPassword.getEditText()?.setText(Vusername)
             //cek input kosong
             if(username.isEmpty()){
+
                 inputUsername.setError("Username harus diisi ya!!!")
                 checkLogin=false
             }else{
@@ -64,24 +85,27 @@ class LoginActivity : AppCompatActivity() {
                 inputPassword.setError(null)
             }
 
-            //password dengan npm ages
-            if (username == "admin" && password =="0994"){
+            //kondisi benar dan salah
+            if (username == Vusername && password == Vpassword){
                 checkLogin=true
-            } else if (password.isNotEmpty() && username.isNotEmpty() && username != "admin" && password !="0994"){
+                val moveHome = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(moveHome)
+            } else {
                 checkLogin=false
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this@LoginActivity)
-                builder.setMessage("Anda Belum Memiliki Akun! Silahkan register terlebih dahulu")
-                    .setPositiveButton("YES", object : DialogInterface.OnClickListener{
-                        override fun onClick(dialogInterface: DialogInterface, i : Int) {
-                            startActivity(moveRegis)
-                        }
-                    })
-                    .show()
+                Toast.makeText(this,"Anda gagal login, silahkan daftar dulu", Toast.LENGTH_SHORT).show()
+                startActivity(moveRegis)
             }
-            if (!checkLogin) return@setOnClickListener
-            val moveHome = Intent(this@LoginActivity, HomeActivity::class.java)
-            startActivity(moveHome)
 
         }
+    }
+
+    fun getBundle(){
+        //bundle
+        val mBundle = intent.extras
+        if (mBundle != null){
+            Vusername = mBundle.getString("username")!!
+            Vpassword = mBundle.getString("password")!!
+        }
+
     }
 }
