@@ -3,6 +3,7 @@ package com.example.e_learning
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputLayout
@@ -18,12 +19,12 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var btnCancel : Button
 //    private lateinit var btn
 
-    fun initComponent()
+    private fun initComponent()
     {
         setTitle("Register Akun")
-        inputUsername = findViewById(R.id.inputLayoutUsername)
-        inputPassword =  findViewById(R.id.inputLayoutPassword)
-        inputEmail = findViewById(R.id.inputLayoutEmail)
+        inputUsername = findViewById(R.id.inputLayoutUsernameRegister)
+        inputPassword =  findViewById(R.id.inputLayoutPasswordRegister)
+        inputEmail = findViewById(R.id.inputLayoutEmailRegister)
         inputTanggalLahir =  findViewById(R.id.inputLayoutTanggalLahir)
         inputNomorTelepon = findViewById(R.id.inputLayoutTelp)
         btnRegister = findViewById(R.id.btnRegisterAkun)
@@ -65,15 +66,21 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             val intent = Intent(this, LoginActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("username", username)
-            mBundle.putString("password", password)
-            mBundle.putString("email" , email)
-            mBundle.putString("tanggalLahir", tanggalLahir)
-            mBundle.putString("nomorTelp",nomorTelp)
-            intent.putExtras(mBundle)
+            val mBundle : Bundle?= Bundle()
+            mBundle?.putString("username", username)
+            mBundle?.putString("password", password)
+            mBundle?.putString("email" , email)
+            mBundle?.putString("tanggalLahir", tanggalLahir)
+            mBundle?.putString("nomorTelp",nomorTelp)
+
+            if (mBundle != null) {
+                intent.putExtras(mBundle)
+            }
             Toast.makeText(this,"Berhasil Mendaftarkan Akun",Toast.LENGTH_SHORT).show()
+            startActivity(intent)
             //kembali ke menu login
+
+      //      Log.i("Test Data", mBundle.getString("username"))
         }
     }
 }
