@@ -2,71 +2,80 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:id="@+id/loginLayout"
+    tools:context=".LoginActivity"
+    >
 
+<!--    Bagian Image -->
     <ImageView
+        android:contentDescription="@string/icon_utama"
         android:id="@+id/imageView"
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/book"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/books"/>
-
-
+        app:layout_constraintTop_toTopOf="parent" />
+<!-- Title dibawa Image-->
     <TextView
         android:id="@+id/textView"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="E-Learning"
-        android:textColor="@color/black"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toEndOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="@id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+        android:text="@string/AppTitle"
+        android:textColor="@color/Sekunder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.037" />
 
+<!--Layout Pertama Berisi inputan data untuk login-->
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayoutLogin"
+        android:layout_width="369dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutUsername"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Username"
+            android:hint="@string/username"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_person_24"
-            android:layout_marginBottom="8dp"
-            app:helperText="Masukan Username Anda">
+            app:startIconDrawable="@drawable/username_logo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+
+                android:inputType="text"
+                android:textColorHint="@color/Sekunder" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutPassword"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Password"
+            android:hint="@string/password"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_baseline_lock_24"
-            app:helperText="Masukan password anda">
+            app:helperText="Masukan Password Anda"
+            app:startIconDrawable="@drawable/password_logo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -76,27 +85,49 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@id/linearLayout"
-        app:layout_constraintStart_toStartOf="@id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" >
+        android:layout_marginTop="20dp"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintEnd_toEndOf="@id/linearLayoutLogin"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutLogin"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLogin">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegis"
+            android:id="@+id/btnClear"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Register"
-            style="@style/Widget.MaterialComponents.Button.TextButton" />
+            android:text="clear text"
+            android:textColor="@color/Sekunder"/>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
-            android:layout_weight="1" />
+
+            android:layout_weight="1"
+            android:text="@string/login"
+            android:backgroundTint="@color/Sekunder"/>
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRegister"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.201"
+        android:text="@string/register"
+        android:backgroundTint="@color/Sekunder"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
