@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
         if(mBundle !=null)
         {
             mbUsername =  mBundle.getString("username") //!! kalau pakai tanda seru -> run 1x doang.
-            mbPassword =  mBundle.getString("password")
+            mbPassword =  mBundle.getString("password") // ..
         }
         Log.i("Test","Success Get Bundle")
     }
