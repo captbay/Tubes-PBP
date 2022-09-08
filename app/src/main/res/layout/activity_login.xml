@@ -3,25 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
+    android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/loginLayout"
-    tools:context=".LoginActivity"
-    >
+    tools:context=".LoginActivity">
 
-<!--    Bagian Image -->
+    <!--    Bagian Image -->
     <ImageView
-        android:contentDescription="@string/icon_utama"
         android:id="@+id/imageView"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/icon_utama"
         android:src="@drawable/book"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<!-- Title dibawa Image-->
+    <!-- Title dibawa Image-->
     <TextView
         android:id="@+id/textView"
         style="@style/TextAppearance.MaterialComponents.Headline4"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.037" />
 
-<!--Layout Pertama Berisi inputan data untuk login-->
+    <!--Layout Pertama Berisi inputan data untuk login-->
     <LinearLayout
         android:id="@+id/linearLayoutLogin"
         android:layout_width="369dp"
@@ -55,6 +54,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/username"
             app:errorEnabled="true"
+            app:helperText="Masukan Username Anda"
             app:startIconDrawable="@drawable/username_logo">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -90,10 +90,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintEnd_toEndOf="@id/linearLayoutLogin"
         app:layout_constraintStart_toStartOf="@+id/linearLayoutLogin"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLogin">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLogin"
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnClear"
@@ -102,32 +102,56 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="clear text"
-            android:textColor="@color/Sekunder"/>
+            android:textColor="@color/Sekunder" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_weight="1"
-            android:text="@string/login"
-            android:backgroundTint="@color/Sekunder"/>
+            android:backgroundTint="@color/Sekunder"
+            android:text="@string/login" />
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRegister"
-        android:layout_width="350dp"
-        android:layout_height="53dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.201"
-        android:text="@string/register"
-        android:backgroundTint="@color/Sekunder"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Belum Punya Akun?"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        </TextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegisterAkun"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Buat Akun"
+            android:textColor="@color/Sekunder"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="wrap_content">
+
+        </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
