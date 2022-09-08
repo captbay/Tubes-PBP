@@ -57,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.i("Test", "Pengecekan Username Kosong Sukses")
             }else {
                 Log.i("Test", "Username tidak kosong : "+username)
+                inputUsername.setError(null)
             }
 
             //Pengecekan apakah Inputan Password kosong
@@ -65,7 +66,10 @@ class LoginActivity : AppCompatActivity() {
                 Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
                 checkLogin = false
                 Log.i("Test","Pengecekan Password Kosong Sukses ")
-            }else{Log.i("Test", "Password Tidak Kosong : "+password) }
+            }else{
+                Log.i("Test", "Password Tidak Kosong : "+password)
+                inputPassword.setError(null)
+            }
 
 
             if(username.isNotEmpty() && password.isNotEmpty()) {
@@ -75,7 +79,12 @@ class LoginActivity : AppCompatActivity() {
                 if(username ==mbUsername && password==mbPassword) {
                     startActivity(moveHome)
                     Log.i("Test", "Pengecekan " + mbUsername)
-                }else{
+                }else if(username!=mbUsername || password!=mbPassword){
+                    Snackbar.make(mainLayout,"Username / Password Salah",Snackbar.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+                else{
+                    Snackbar.make(mainLayout,"Silakan Registrasi Terlebih Dahulu",Snackbar.LENGTH_SHORT).show()
                     return@OnClickListener
                 }
 
