@@ -1,4 +1,4 @@
-package com.example.e_learning.Data.Profile
+package com.example.e_learning.data.profile
 
 import androidx.room.*
 

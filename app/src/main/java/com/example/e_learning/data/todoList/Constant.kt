@@ -1,4 +1,4 @@
-package com.example.e_learning.Data.ToDoList
+package com.example.e_learning.data.todoList
 
 class Constant {
     companion object{

@@ -1,18 +1,16 @@
-package com.example.e_learning.Data.ToDoList
+package com.example.e_learning.data.todoList
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.e_learning.Data.ToDoList.ToDoList
 
 
 @Dao
 interface ToDoListDAO {
     @Insert
-    suspend fun addNote(toDoList: ToDoList)
+    suspend fun addTodo(toDoList: ToDoList)
     @Update
-    suspend fun updateNote(toDoList: ToDoList)
+    suspend fun updateTodo(toDoList: ToDoList)
     @Delete
-    suspend fun deleteNote(toDoList: ToDoList)
+    suspend fun deleteToDo(toDoList: ToDoList)
     @Query("SELECT * FROM todo_list")
     suspend fun getNotes() : List<ToDoList>
     @Query("SELECT * FROM todo_list WHERE id =:todo_id")

@@ -1,25 +1,23 @@
-package com.example.e_learning.Data.ToDoList
+package com.example.e_learning.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.e_learning.Data.Profile.ProfileDAO
-import com.example.e_learning.Data.Profile.ProfileDB
+import com.example.e_learning.data.profile.Profile
+import com.example.e_learning.data.profile.ProfileDAO
+import com.example.e_learning.data.todoList.ToDoList
+import com.example.e_learning.data.todoList.ToDoListDAO
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@Database(
-    entities = [ToDoList::class],
-    version = 2
-)
-
-abstract class TodoDB : RoomDatabase() {
+@Database(entities = [ToDoList::class,Profile::class], version = 3)
+abstract class ELEARNINGDB : RoomDatabase() {
 
     abstract fun ToDoListDAO() : ToDoListDAO
-
+    abstract fun profileDAO() :ProfileDAO
     companion object
     {
-        @Volatile private var instance : TodoDB? = null
+        @Volatile private var instance : ELEARNINGDB? = null
         private val LOCK = Any()
 
         //       Ada error disini
@@ -33,7 +31,7 @@ abstract class TodoDB : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext, TodoDB::class.java,"tubes.db"
+            context.applicationContext, ELEARNINGDB::class.java,"tubes.db"
         ).fallbackToDestructiveMigration().build()
     }
 }

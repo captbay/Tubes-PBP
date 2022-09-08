@@ -5,16 +5,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityUpdateProfileBinding
-import com.example.e_learning.Data.Profile.Profile
-import com.example.e_learning.Data.Profile.ProfileDB
+import com.example.e_learning.data.profile.Profile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class UpdateProfile : AppCompatActivity() {
-    val db by lazy { ProfileDB(this) }
+    val db by lazy { ELEARNINGDB(this) }
     private lateinit var binding: ActivityUpdateProfileBinding
     private val id = "idKey"
     private val myPreference = "myPref"

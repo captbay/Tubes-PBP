@@ -2,18 +2,12 @@ package com.example.e_learning
 
 
 import android.annotation.SuppressLint
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_learning.Data.ToDoList.ToDoList
+import com.example.e_learning.data.todoList.ToDoList
 import kotlinx.android.synthetic.main.adapter_todo.view.*
-import com.example.e_learning.databinding.AdapterTodoBinding
-import com.google.android.gms.common.util.WorkSourceUtil.size
-import java.nio.file.Files.size
 
 class TodoAdapter (private val todolist: ArrayList<ToDoList>, private val listener: OnAdapterListener) :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {

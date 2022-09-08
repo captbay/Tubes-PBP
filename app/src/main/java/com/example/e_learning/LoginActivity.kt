@@ -9,7 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.e_learning.Data.Profile.ProfileDB
+import com.example.e_learning.data.ELEARNINGDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
-    val db by lazy{ ProfileDB(this) }
+    val db by lazy{ ELEARNINGDB(this) }
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var mainLayout : ConstraintLayout

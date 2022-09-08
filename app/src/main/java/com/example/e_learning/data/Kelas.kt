@@ -1,4 +1,4 @@
-package com.example.e_learning.Data
+package com.example.e_learning.data
 
 import com.example.e_learning.R
 

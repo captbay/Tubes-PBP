@@ -1,4 +1,4 @@
-package com.example.e_learning.Data.ToDoList
+package com.example.e_learning.data.todoList
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,7 +10,7 @@ data class ToDoList (
     val tanggal : String,
     val tanggalDeadline : String,
     val judul: String,
-    val pesan : String, //tipe kehadiran H, I, S
+    val pesan : String,
     val status : Boolean
 )
 //

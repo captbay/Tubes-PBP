@@ -13,15 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityRegisterBinding
-import com.example.e_learning.Data.Profile.Profile
-import com.example.e_learning.Data.Profile.ProfileDB
+import com.example.e_learning.data.profile.Profile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
-        val db by lazy { ProfileDB(this) }
+        val db by lazy { ELEARNINGDB(this) }
         private lateinit var binding : ActivityRegisterBinding
         private val channel_id ="channel_notification_01"
         private val notificationId1 =101

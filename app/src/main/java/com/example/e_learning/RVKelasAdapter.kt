@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_learning.Data.Kelas
+import com.example.e_learning.data.Kelas
 
 class RVKelasAdapter(private val data: Array<Kelas>) : RecyclerView.Adapter<RVKelasAdapter.viewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
