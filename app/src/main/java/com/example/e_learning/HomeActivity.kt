@@ -3,7 +3,7 @@ package com.example.e_learning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.e_learning.HomeFragment.*
+import com.example.e_learning.HomeFragment
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
