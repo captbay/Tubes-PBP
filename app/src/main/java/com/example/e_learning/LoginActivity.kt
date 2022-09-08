@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
         if(mBundle!=null)
         {
             inputUsername.getEditText()?.setText(mbUsername)
-            inputPassword.getEditText()?.setText(mbPassword)
+//            inputPassword.getEditText()?.setText(mbPassword)
         }
 
     }
