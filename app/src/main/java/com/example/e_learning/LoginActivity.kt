@@ -120,5 +120,6 @@ class LoginActivity : AppCompatActivity() {
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
         mainLayout = findViewById(R.id.loginLayout)
+
     }
 }
