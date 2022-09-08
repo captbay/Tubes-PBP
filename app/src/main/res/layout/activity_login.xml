@@ -104,7 +104,6 @@
             android:text="clear text"
             android:textColor="@color/Sekunder" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
