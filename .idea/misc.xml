@@ -11,12 +11,16 @@
         <entry key="..\:/9-Work Office/7-Dev/1-Code/7-Kotlin/Tubes-PBP/app/src/main/res/layout/fragment_kelas.xml" value="0.1" />
         <entry key="..\:/9-Work Office/7-Dev/1-Code/7-Kotlin/Tubes-PBP/app/src/main/res/layout/fragment_tugas.xml" value="0.1" />
         <entry key="..\:/9-Work Office/7-Dev/1-Code/7-Kotlin/Tubes-PBP/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25" />
-        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_home.xml" value="0.22" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_home.xml" value="0.3333333333333333" />
         <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_login.xml" value="0.14260385005065856" />
         <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_main.xml" value="0.213768115942029" />
         <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_regis.xml" value="0.22327898550724637" />
         <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/activity_register.xml" value="0.22" />
-        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/fragment_beranda.xml" value="0.22327898550724637" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/fragment_beranda.xml" value="0.4466666666666667" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/fragment_kelas.xml" value="0.2586050724637681" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/fragment_profile.xml" value="0.2586050724637681" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/fragment_tugas.xml" value="0.2586050724637681" />
+        <entry key="..\:/Android/Tubes-PBP/app/src/main/res/layout/rv_item_kelas.xml" value="0.4466666666666667" />
         <entry key="..\:/Android/Tubes-PBP/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.29322916666666665" />
       </map>
     </option>
