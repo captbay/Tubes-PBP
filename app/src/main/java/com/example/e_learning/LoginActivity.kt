@@ -25,12 +25,13 @@ class LoginActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        getBundle()
         initComponents()
         //Init Button --> bertipe val karena kegunaannya tidak berubah
         val btnClear : Button = findViewById(R.id.btnClear)
         val btnLogin : Button = findViewById(R.id.btnLogin)
         val btnRegister : Button = findViewById(R.id.btnRegister)
-        getBundle()
+
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener{
             inputUsername.getEditText()?.setText("")
@@ -106,10 +107,16 @@ class LoginActivity : AppCompatActivity() {
         //overridePendingTransition(0,1) --> niatannya mau buat reset condition
         //Hubungkan variabel dengan view di layout
         //Ubah Title pada AppBar Aplikasi
-        setTitle("A3-Learning Login")
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
         mainLayout = findViewById(R.id.loginLayout)
+        getSupportActionBar()?.hide();
+        val mBundle = intent.extras
+        if(mBundle!=null)
+        {
+            inputUsername.getEditText()?.setText(mbUsername)
+//            inputPassword.getEditText()?.setText(mbPassword)
+        }
 
     }
 }
