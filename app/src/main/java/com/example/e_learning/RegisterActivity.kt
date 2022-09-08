@@ -28,7 +28,6 @@ class RegisterActivity : AppCompatActivity() {
         inputTanggalLahir =  findViewById(R.id.inputLayoutTanggalLahir)
         inputNomorTelepon = findViewById(R.id.inputLayoutTelp)
         btnRegister = findViewById(R.id.btnRegisterAkun)
-        btnCancel = findViewById(R.id.btnCancelRegister)
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,18 +36,6 @@ class RegisterActivity : AppCompatActivity() {
         initComponent()
 
 
-        btnRegister.setOnClickListener {
-          // val intent = Intent( this,  )
-        }
-
-        btnCancel.setOnClickListener {
-            inputUsername.getEditText()?.setText("")
-            inputPassword.getEditText()?.setText("")
-            inputEmail.getEditText()?.setText("")
-            inputTanggalLahir.getEditText()?.setText("")
-            inputNomorTelepon.getEditText()?.setText("")
-            Toast.makeText(this,"Akan menghapus semua data inputan", Toast.LENGTH_SHORT).show()
-        }
 
         btnRegister.setOnClickListener {
             var checkRegisterInput = false
@@ -61,11 +48,26 @@ class RegisterActivity : AppCompatActivity() {
             //Cek masing-masing inputan & pastikan tidak kosong
             if(username.isEmpty())
             {
-                inputUsername.setError("Username" +
-                        " Harus diisi")
-                checkRegisterInput = false
+                inputUsername.setError("Username Harus diisi")
             }
-
+            if (password.isEmpty()){
+                inputPassword.setError("Password Harus diisi")
+            }
+            if (email.isEmpty()){
+                inputEmail.setError("Password Harus diisi")
+            }
+            if (tanggalLahir.isEmpty()){
+                inputTanggalLahir.setError("Password Harus diisi")
+            }
+            if (nomorTelp.isEmpty()){
+                inputNomorTelepon.setError("Password Harus diisi")
+            }
+            if (username.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty() && tanggalLahir.isNotEmpty() && nomorTelp.isNotEmpty()){
+                checkRegisterInput=true
+            }
+            if (!checkRegisterInput){
+                return@setOnClickListener
+            }
             val intent = Intent(this, LoginActivity::class.java)
             val mBundle : Bundle?= Bundle()
             mBundle?.putString("username", username)
@@ -79,9 +81,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             Toast.makeText(this,"Berhasil Mendaftarkan Akun",Toast.LENGTH_SHORT).show()
             startActivity(intent)
-            //kembali ke menu login
 
-      //      Log.i("Test Data", mBundle.getString("username"))
         }
     }
 }
