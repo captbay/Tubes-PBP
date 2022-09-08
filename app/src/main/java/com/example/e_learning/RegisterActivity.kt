@@ -61,7 +61,8 @@ class RegisterActivity : AppCompatActivity() {
             //Cek masing-masing inputan & pastikan tidak kosong
             if(username.isEmpty())
             {
-                inputUsername.setError("Username Harus diisi")
+                inputUsername.setError("Username" +
+                        " Harus diisi")
                 checkRegisterInput = false
             }
 
