@@ -89,16 +89,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //Method atau Fungsi fungsi yang dibuat untuk digunakna .
-//    fun getBundle() {
-//        //bundle
-//        val mBundle = intent.extras!! --> dipaksa tidak null, sedangkan pada kegunaannya bisa null
-//        if (mBundle != null) { --> ini tidak diperlukan lagi
-//            mbUsername = mBundle.getString("username")!!
-//            mbPassword = mBundle.getString("password")!!
-//
-//        }
-//    }
 
     fun getBundle()
     {

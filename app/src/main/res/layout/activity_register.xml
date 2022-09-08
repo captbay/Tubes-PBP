@@ -11,27 +11,24 @@
         style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Register"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="Register Akun Anda"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayoutRegisterInput"
-        android:layout_width="369dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.619"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_RegisterTitle"
-        app:layout_constraintVertical_bias="0.113">
+        app:layout_constraintTop_toBottomOf="@id/tv_RegisterTitle">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutUsernameRegister"
@@ -40,7 +37,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Username"
             app:errorEnabled="true"
-           >
+            app:helperText="Masukan Username Anda"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,11 +53,13 @@
             android:hint="Password"
             app:errorEnabled="true"
             app:helperText="Masukan Password Anda"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,11 +69,14 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Email"
             app:errorEnabled="true"
+            app:helperText="ex : learning@gmail.com"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="textEmailAddress"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,6 +86,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Tanggal Lahir"
             app:errorEnabled="true"
+            app:helperText="ex : DD/MM/YYYY"
+            app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -97,6 +102,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="No Telepon"
             app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_call_24"
+            app:helperText="ex : 6282341324824"
             >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -108,21 +115,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="355dp"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayoutRegisterInput"
+        app:layout_constraintStart_toStartOf="@+id/linearLayoutRegisterInput"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutRegisterInput">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancelRegister"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel"
-            android:textColor="@color/Sekunder" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegisterAkun"
