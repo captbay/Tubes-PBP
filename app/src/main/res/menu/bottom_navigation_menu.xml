@@ -2,23 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
         <item
-            android:id="@+id/page_1"
+            android:id="@+id/beranda"
             android:enabled="true"
             android:icon="@drawable/username_logo"
             android:title="test"
             />
         <item
-            android:id="@+id/page_2"
+            android:id="@+id/kelas"
             android:enabled="true"
             android:icon="@drawable/password_logo"
             android:title="test"
             />
 
-         <item
-             android:id="@+id/page_3"
+        <item
+             android:id="@+id/tugas"
              android:enabled="true"
              android:icon="@drawable/password_logo"
              android:title="test2"
-         />
+        />
+
+        <item
+            android:id="@+id/profile"
+            android:enabled="true"
+            android:icon="@drawable/password_logo"
+            android:title="test2"
+        />
     </menu>
 

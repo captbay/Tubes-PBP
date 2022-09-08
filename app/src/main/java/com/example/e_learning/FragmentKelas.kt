@@ -1,4 +1,4 @@
-package com.example.e_learning.HomeFragment
+package com.example.e_learning
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
