@@ -25,12 +25,13 @@ class LoginActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        getBundle()
         initComponents()
         //Init Button --> bertipe val karena kegunaannya tidak berubah
         val btnClear : Button = findViewById(R.id.btnClear)
         val btnLogin : Button = findViewById(R.id.btnLogin)
         val btnRegister : Button = findViewById(R.id.btnRegister)
-        getBundle()
+
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener{
             inputUsername.getEditText()?.setText("")
@@ -56,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.i("Test", "Pengecekan Username Kosong Sukses")
             }else {
                 Log.i("Test", "Username tidak kosong : "+username)
+                inputUsername.setError(null)
             }
 
             //Pengecekan apakah Inputan Password kosong
@@ -64,7 +66,10 @@ class LoginActivity : AppCompatActivity() {
                 Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
                 checkLogin = false
                 Log.i("Test","Pengecekan Password Kosong Sukses ")
-            }else{Log.i("Test", "Password Tidak Kosong : "+password) }
+            }else{
+                Log.i("Test", "Password Tidak Kosong : "+password)
+                inputPassword.setError(null)
+            }
 
 
             if(username.isNotEmpty() && password.isNotEmpty()) {
@@ -74,7 +79,12 @@ class LoginActivity : AppCompatActivity() {
                 if(username ==mbUsername && password==mbPassword) {
                     startActivity(moveHome)
                     Log.i("Test", "Pengecekan " + mbUsername)
-                }else{
+                }else if(username!=mbUsername || password!=mbPassword){
+                    Snackbar.make(mainLayout,"Username / Password Salah",Snackbar.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+                else{
+                    Snackbar.make(mainLayout,"Silakan Registrasi Terlebih Dahulu",Snackbar.LENGTH_SHORT).show()
                     return@OnClickListener
                 }
 
@@ -89,16 +99,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //Method atau Fungsi fungsi yang dibuat untuk digunakna .
-//    fun getBundle() {
-//        //bundle
-//        val mBundle = intent.extras!! --> dipaksa tidak null, sedangkan pada kegunaannya bisa null
-//        if (mBundle != null) { --> ini tidak diperlukan lagi
-//            mbUsername = mBundle.getString("username")!!
-//            mbPassword = mBundle.getString("password")!!
-//
-//        }
-//    }
 
     fun getBundle()
     {
@@ -116,10 +116,16 @@ class LoginActivity : AppCompatActivity() {
         //overridePendingTransition(0,1) --> niatannya mau buat reset condition
         //Hubungkan variabel dengan view di layout
         //Ubah Title pada AppBar Aplikasi
-        setTitle("A3-Learning Login")
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
         mainLayout = findViewById(R.id.loginLayout)
+        getSupportActionBar()?.hide();
+        val mBundle = intent.extras
+        if(mBundle!=null)
+        {
+            inputUsername.getEditText()?.setText(mbUsername)
+//            inputPassword.getEditText()?.setText(mbPassword)
+        }
 
     }
 }
