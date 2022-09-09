@@ -94,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
 
         //btnRegister untuk pindah ke ActivityRegister
         btnRegister.setOnClickListener {
+            inputPassword.setError("")
             val moveRegister = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(moveRegister)
         }
