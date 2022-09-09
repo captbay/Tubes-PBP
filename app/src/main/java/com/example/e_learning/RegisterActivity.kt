@@ -54,13 +54,13 @@ class RegisterActivity : AppCompatActivity() {
                 inputPassword.setError("Password Harus diisi")
             }
             if (email.isEmpty()){
-                inputEmail.setError("Password Harus diisi")
+                inputEmail.setError("Email Harus diisi")
             }
             if (tanggalLahir.isEmpty()){
-                inputTanggalLahir.setError("Password Harus diisi")
+                inputTanggalLahir.setError("Tanggal Lahir Harus diisi")
             }
             if (nomorTelp.isEmpty()){
-                inputNomorTelepon.setError("Password Harus diisi")
+                inputNomorTelepon.setError("Nomor Telpon Harus diisi")
             }
             if (username.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty() && tanggalLahir.isNotEmpty() && nomorTelp.isNotEmpty()){
                 checkRegisterInput=true
