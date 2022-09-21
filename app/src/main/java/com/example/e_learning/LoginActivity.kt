@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlin.concurrent.thread
 import kotlin.math.log
 
 
@@ -24,6 +26,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        //splashscreen
+        Thread.sleep(2000)
+        val splashScreen = installSplashScreen()
+        //
         setContentView(R.layout.activity_login)
         getBundle()
         initComponents()
