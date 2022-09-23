@@ -58,6 +58,7 @@
             app:startIconDrawable="@drawable/username_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -78,6 +79,7 @@
             app:startIconDrawable="@drawable/password_logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

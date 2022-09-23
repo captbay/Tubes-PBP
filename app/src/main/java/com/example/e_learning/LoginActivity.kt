@@ -1,6 +1,7 @@
 package com.example.e_learning
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,21 +9,25 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.e_learning.entity.ProfileDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
+    val db by lazy{ ProfileDB(this)}
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var mainLayout : ConstraintLayout
     var mbUsername : String? = null
     var mbPassword: String? = null
-
-
+    var sharedPreferences  : SharedPreferences? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -80,10 +85,24 @@ class LoginActivity : AppCompatActivity() {
 
 
             if(username.isNotEmpty() && password.isNotEmpty()) {
-                getBundle()
+//                getBundle()
                 val moveHome =Intent(this@LoginActivity,HomeActivity::class.java)
 
-                if(username ==mbUsername && password==mbPassword) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val users = db.profileDAO().getProfile()
+                    Log.d("LoginActivity", "dbResponse: $users")
+
+                    for (i in users) {
+                        if (username == i.username && password == i.password) {
+                            val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+                            editor.putString(username, i.username.toString())
+                            editor.apply()
+                            checkLogin = true
+                            break
+                        }
+                    }
+                }
+                if(username =="Admin" && password=="kelompok11" || checkLogin) {
                     startActivity(moveHome)
                     Log.i("Test", "Pengecekan " + mbUsername)
                 }else if(username!=mbUsername || password!=mbPassword){
