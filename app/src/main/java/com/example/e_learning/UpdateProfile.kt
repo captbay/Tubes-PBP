@@ -40,7 +40,7 @@ class UpdateProfile : AppCompatActivity() {
                         )
                     }
                     finish()
-                    val intent = Intent(this, ProfileFragment::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     val bundle = Bundle()
                     bundle.putString("key","iniTerisi")
                     intent.putExtra("keyBundle",bundle)
