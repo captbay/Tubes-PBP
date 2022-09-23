@@ -21,3 +21,5 @@ interface PresensiDAO {
     @Query("SELECT * FROM Presensi Where id =:presensi_id")
     suspend fun getPresensi(presensi_id : Int) : List<Presensi>
 }
+
+//

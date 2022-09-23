@@ -11,3 +11,4 @@ data class Presensi (
     val kehadiran : String, //tipe kehadiran H, I, S
     val catatan : String
 )
+//

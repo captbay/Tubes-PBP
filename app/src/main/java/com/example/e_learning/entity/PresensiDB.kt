@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
 
 abstract class PresensiDB : RoomDatabase() {
     abstract  fun presensiDAO() : PresensiDAO
-
+//
     companion object{
         @Volatile private var instance : PresensiDB? = null
         private val LOCK = Any()
