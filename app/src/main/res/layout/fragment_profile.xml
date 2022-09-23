@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="agalar"
+                        android:id="@+id/username"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="12345678"
+                        android:id="@+id/password"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="agalar@gmail.com"
+                        android:id="@+id/email"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
@@ -184,7 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="29 Desember 2001"
+                        android:id="@+id/tglLahir"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 
@@ -213,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="085712345678"
+                        android:id="@+id/noTelp"
                         android:textColor="#000000"
                         android:textSize="18sp" />
 

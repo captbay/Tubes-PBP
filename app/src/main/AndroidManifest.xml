@@ -24,12 +24,9 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-<<<<<<< Updated upstream
             android:theme="@style/Theme.App.Starting"
             android:exported="true">
-=======
-            android:exported="true" >
->>>>>>> Stashed changes
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
