@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 db.profileDAO().addProfile(
-                    Profile( binding.regisUsername.text.toString(),binding.regisPass.text.toString(),
+                    Profile( 0,binding.regisUsername.text.toString(),binding.regisPass.text.toString(),
                         binding.regisEmail.text.toString(),binding.regisTgl.text.toString(),binding.regisTelp.text.toString())
                 )
                 finish()

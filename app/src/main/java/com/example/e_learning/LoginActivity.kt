@@ -1,5 +1,6 @@
 package com.example.e_learning
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 import kotlin.math.log
 
@@ -28,6 +30,9 @@ class LoginActivity : AppCompatActivity() {
     var mbUsername : String? = null
     var mbPassword: String? = null
     var sharedPreferences  : SharedPreferences? = null
+    private val myPreference = "myPref"
+    private val id = "idKey"
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -43,6 +48,9 @@ class LoginActivity : AppCompatActivity() {
         val btnClear : Button = findViewById(R.id.btnClear)
         val btnLogin : Button = findViewById(R.id.btnLogin)
         val btnRegister : Button = findViewById(R.id.btnRegister)
+        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+
+        val moveHome = Intent(this,HomeActivity::class.java)
 
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener{
@@ -61,59 +69,49 @@ class LoginActivity : AppCompatActivity() {
             val username : String = inputUsername.getEditText()?.getText().toString()
             val password : String = inputPassword.getEditText()?.getText().toString()
 
-            //Pengecekan apakah inputan username kosong
-            if(username.isEmpty()) {
-                inputUsername.requestFocus()
-                inputUsername.setError("username must be filled with text")
-                checkLogin = false
-                Log.i("Test", "Pengecekan Username Kosong Sukses")
-            }else {
-                Log.i("Test", "Username tidak kosong : "+username)
-                inputUsername.setError(null)
-            }
+            CoroutineScope(Dispatchers.IO).launch {
+                val Profile = db.profileDAO().getProfile()
 
-            //Pengecekan apakah Inputan Password kosong
-            if(password.isEmpty()) {
-                inputPassword.setError("password must be filled with text")
-                Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
-                checkLogin = false
-                Log.i("Test","Pengecekan Password Kosong Sukses ")
-            }else{
-                Log.i("Test", "Password Tidak Kosong : "+password)
-                inputPassword.setError(null)
-            }
+                for (i in Profile) {
+                    if (username == i.username && password == i.password) {
+                        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
+                        editor.putString(id, i.id.toString())
+                        editor.apply()
+                        checkLogin = true
+                        break
+                    }
+                }
 
 
-            if(username.isNotEmpty() && password.isNotEmpty()) {
-//                getBundle()
-                val moveHome =Intent(this@LoginActivity,HomeActivity::class.java)
+                withContext(Dispatchers.Main)
+                {
+                    if (checkLogin == true) {
+                        startActivity(moveHome)
+                    }else
+                    {
+                        //Pengecekan apakah inputan username kosong
+                        if(username.isEmpty()) {
+                            inputUsername.requestFocus()
+                            inputUsername.setError("username must be filled with text")
+                            checkLogin = false
+                            Log.i("Test", "Pengecekan Username Kosong Sukses")
+                        }else {
+                            Log.i("Test", "Username tidak kosong : "+username)
+                            inputUsername.setError(null)
+                        }
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    val users = db.profileDAO().getProfile()
-                    Log.d("LoginActivity", "dbResponse: $users")
-
-                    for (i in users) {
-                        if (username == i.username && password == i.password) {
-                            val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                            editor.putString(username, i.username.toString())
-                            editor.apply()
-                            checkLogin = true
-                            break
+                        //Pengecekan apakah Inputan Password kosong
+                        if(password.isEmpty()) {
+                            inputPassword.setError("password must be filled with text")
+                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                            checkLogin = false
+                            Log.i("Test","Pengecekan Password Kosong Sukses ")
+                        }else{
+                            Log.i("Test", "Password Tidak Kosong : "+password)
+                            inputPassword.setError(null)
                         }
                     }
                 }
-                if(username =="Admin" && password=="kelompok11" || checkLogin) {
-                    startActivity(moveHome)
-                    Log.i("Test", "Pengecekan " + mbUsername)
-                }else if(username!=mbUsername || password!=mbPassword){
-                    Snackbar.make(mainLayout,"Username / Password Salah",Snackbar.LENGTH_SHORT).show()
-                    return@OnClickListener
-                }
-                else{
-                    Snackbar.make(mainLayout,"Silakan Registrasi Terlebih Dahulu",Snackbar.LENGTH_SHORT).show()
-                    return@OnClickListener
-                }
-
             }
 
         }
