@@ -24,23 +24,6 @@ class ProfileFragment : Fragment() {
         val LogoutButton: FloatingActionButton = view.findViewById(R.id.floatingActionLogout)
         val logout = Intent(this.getActivity(), LoginActivity::class.java)
 
-//        LogoutButton.setOnClickListener {
-//            val alertDialog : AlertDialog = AlertDialog.Builder(this.requireActivity()!!.getApplicationContext()).create()
-//            alertDialog.setTitle("Log out Dialog")
-//            alertDialog.setMessage("Do You Want Log Out??")
-//
-////            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES")
-////            {
-////                dialog, which -> startActivity(logout)
-////                dialog.dismiss()
-////            }
-////            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO")
-////            {
-////                dialog, which ->
-////                dialog.dismiss()
-////            }
-//            alertDialog.show()
-//        }
         LogoutButton.setOnClickListener(){
             val builder1 = AlertDialog.Builder(
                 this.requireContext()
@@ -59,6 +42,8 @@ class ProfileFragment : Fragment() {
             val alert11 = builder1.create()
             alert11.show()
         }
+
+
 
     }
 
