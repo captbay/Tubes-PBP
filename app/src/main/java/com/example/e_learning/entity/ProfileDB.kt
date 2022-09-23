@@ -11,7 +11,7 @@ import kotlinx.coroutines.internal.synchronized
     entities = [Profile::class],
     version = 1
 )
-
+//test
 abstract class ProfileDB : RoomDatabase() {
 
     abstract fun profileDAO() : ProfileDAO
