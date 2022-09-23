@@ -1,65 +1,43 @@
 package com.example.e_learning
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.e_learning.room.ProfileDB
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlin.concurrent.thread
 import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
-    val db by lazy{ ProfileDB(this)}
-//    lateinit var lBundle : Bundle
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var mainLayout : ConstraintLayout
     var mbUsername : String? = null
     var mbPassword: String? = null
 
-    //Preferences
-    private val myPreferences = "myPref"
-    private val key = "nameKey"
-    private val id = "idKey"
-    var sharedPreferences: SharedPreferences? = null
-
-//     control
-    private var checkLogin = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_login)
+
+        //splashscreen
+        Thread.sleep(2000)
+        val splashScreen = installSplashScreen()
+        //
+        setContentView(R.layout.activity_login)
         getBundle()
         initComponents()
         //Init Button --> bertipe val karena kegunaannya tidak berubah
         val btnClear : Button = findViewById(R.id.btnClear)
         val btnLogin : Button = findViewById(R.id.btnLogin)
         val btnRegister : Button = findViewById(R.id.btnRegister)
-        val moveHome =Intent(this@LoginActivity,HomeActivity::class.java)
-
-        sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
-        if(!sharedPreferences!!.contains(key))
-        {
-            val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
-            editor.putString(key,"terisi")
-            editor.apply()
-//            setContentView(R.) Splash Screen
-        }else{
-            setContentView(R.layout.activity_login)
-        }
 
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener{
@@ -70,87 +48,56 @@ class LoginActivity : AppCompatActivity() {
             Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
         }
 
-        btnLogin.setOnClickListener{
-            CoroutineScope(Dispatchers.IO).launch {
-                val ProfileDB = db.profileDAO().    getProfile()
-                val username : String = inputUsername.getEditText()?.getText().toString()
-                val password : String = inputPassword.getEditText()?.getText().toString()
+        // Aksi btnLogin ketika di klik
+        btnLogin.setOnClickListener  OnClickListener@{
 
-                for(i in ProfileDB)
-                {
-                    if(username == i.username && password == i.password)
-                    {
-                        val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                        editor.putString(id,i.username)
-                        editor.apply()
-                        checkLogin = true
-                        break
-                    }
+            //Inisialisasi kondisi
+            var checkLogin = false // 0
+            val username : String = inputUsername.getEditText()?.getText().toString()
+            val password : String = inputPassword.getEditText()?.getText().toString()
+
+            //Pengecekan apakah inputan username kosong
+            if(username.isEmpty()) {
+                inputUsername.requestFocus()
+                inputUsername.setError("username must be filled with text")
+                checkLogin = false
+                Log.i("Test", "Pengecekan Username Kosong Sukses")
+            }else {
+                Log.i("Test", "Username tidak kosong : "+username)
+                inputUsername.setError(null)
+            }
+
+            //Pengecekan apakah Inputan Password kosong
+            if(password.isEmpty()) {
+                inputPassword.setError("password must be filled with text")
+                Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                checkLogin = false
+                Log.i("Test","Pengecekan Password Kosong Sukses ")
+            }else{
+                Log.i("Test", "Password Tidak Kosong : "+password)
+                inputPassword.setError(null)
+            }
+
+
+            if(username.isNotEmpty() && password.isNotEmpty()) {
+                getBundle()
+                val moveHome =Intent(this@LoginActivity,HomeActivity::class.java)
+
+                if(username ==mbUsername && password==mbPassword) {
+                    startActivity(moveHome)
+                    Log.i("Test", "Pengecekan " + mbUsername)
+                }else if(username!=mbUsername || password!=mbPassword){
+                    Snackbar.make(mainLayout,"Username / Password Salah",Snackbar.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+                else{
+                    Snackbar.make(mainLayout,"Silakan Registrasi Terlebih Dahulu",Snackbar.LENGTH_SHORT).show()
+                    return@OnClickListener
                 }
 
-                withContext(Dispatchers.Main)
-                {
-                    if(checkLogin == true)
-                    {
-                        startActivity(moveHome)
-                    }else
-                    {
-                        //Lakukan Pengecekan
-                    }
-                }
             }
 
         }
-        // Aksi btnLogin ketika di klik
-////        btnLogin.setOnClickListener  OnClickListener@{
-////
-////            //Inisialisasi kondisi
-////            var checkLogin = false // 0
-////            val username : String = inputUsername.getEditText()?.getText().toString()
-////            val password : String = inputPassword.getEditText()?.getText().toString()
-////
-////            //Pengecekan apakah inputan username kosong
-////            if(username.isEmpty()) {
-////                inputUsername.requestFocus()
-////                inputUsername.setError("username must be filled with text")
-////                checkLogin = false
-////                Log.i("Test", "Pengecekan Username Kosong Sukses")
-////            }else {
-////                Log.i("Test", "Username tidak kosong : "+username)
-////                inputUsername.setError(null)
-////            }
-////
-////            //Pengecekan apakah Inputan Password kosong
-////            if(password.isEmpty()) {
-////                inputPassword.setError("password must be filled with text")
-////                Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
-////                checkLogin = false
-////                Log.i("Test","Pengecekan Password Kosong Sukses ")
-////            }else{
-////                Log.i("Test", "Password Tidak Kosong : "+password)
-////                inputPassword.setError(null)
-////            }
-////
-////
-////            if(username.isNotEmpty() && password.isNotEmpty()) {
-////                getBundle()
-////                val moveHome =Intent(this@LoginActivity,HomeActivity::class.java)
-////
-////                if(username ==mbUsername && password==mbPassword) {
-////                    startActivity(moveHome)
-////                    Log.i("Test", "Pengecekan " + mbUsername)
-////                }else if(username!=mbUsername || password!=mbPassword){
-////                    Snackbar.make(mainLayout,"Username / Password Salah",Snackbar.LENGTH_SHORT).show()
-////                    return@OnClickListener
-////                }
-////                else{
-////                    Snackbar.make(mainLayout,"Silakan Registrasi Terlebih Dahulu",Snackbar.LENGTH_SHORT).show()
-////                    return@OnClickListener
-////                }
-////
-////            }
-//
-//        }
 
         //btnRegister untuk pindah ke ActivityRegister
         btnRegister.setOnClickListener {
@@ -180,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
         mainLayout = findViewById(R.id.loginLayout)
-        getSupportActionBar()?.hide()
+        getSupportActionBar()?.hide();
         val mBundle = intent.extras
         if(mBundle!=null)
         {

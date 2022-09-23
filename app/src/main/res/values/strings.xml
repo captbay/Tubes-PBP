@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">E-Learning</string>
-    <string name="AppTitle">A3-Learning</string>
+    <string name="AppTitle">A3 Learning</string>
     <string name="Register">Register Akun</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
