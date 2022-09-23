@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_learning.entity.kelas
+import com.example.e_learning.entity.Kelas
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,15 +30,15 @@ class FragmentKelas : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = LinearLayoutManager(context)
-        val adapter : RVKelasAdapter = RVKelasAdapter(kelas.litsOfKelas)
-
-        val rvKelas : RecyclerView = view.findViewById(R.id.rv_kelas)
-
-        rvKelas.layoutManager = layoutManager
-
-        rvKelas.setHasFixedSize(true)
-
-        rvKelas.adapter = adapter
+//        val layoutManager = LinearLayoutManager(context)
+//        val adapter : RVKelasAdapter = RVKelasAdapter(Kelas.litsOfKelas)
+//
+//        val rvKelas : RecyclerView = view.findViewById(R.id.rv_kelas)
+//
+//        rvKelas.layoutManager = layoutManager
+//
+//        rvKelas.setHasFixedSize(true)
+//
+//        rvKelas.adapter = adapter
     }
 }

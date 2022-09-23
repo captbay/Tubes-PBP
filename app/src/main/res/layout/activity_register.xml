@@ -40,6 +40,7 @@
             app:helperText="Masukan Username Anda"
             app:startIconDrawable="@drawable/ic_baseline_person_24">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"/>
@@ -56,6 +57,7 @@
             app:startIconDrawable="@drawable/ic_baseline_lock_24"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -73,6 +75,7 @@
             app:startIconDrawable="@drawable/ic_baseline_email_24"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -90,6 +93,7 @@
             app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"/>
@@ -106,6 +110,7 @@
             app:helperText="ex : 6282341324824"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTelp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
