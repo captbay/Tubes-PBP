@@ -6,82 +6,75 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import com.example.e_learning.databinding.ActivityRegisterBinding
+import com.example.e_learning.entity.Profile
+import com.example.e_learning.entity.ProfileDB
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
-    //Component View
-    private lateinit var inputUsername : TextInputLayout
-    private lateinit var inputPassword : TextInputLayout
-    private lateinit var inputEmail : TextInputLayout
-    private lateinit var inputTanggalLahir : TextInputLayout
-    private lateinit var inputNomorTelepon : TextInputLayout
-    private lateinit var btnRegister : Button
-    private lateinit var btnCancel : Button
-//    private lateinit var btn
+        val db by lazy {ProfileDB(this)}
+        private lateinit var binding : ActivityRegisterBinding
 
-    private fun initComponent()
-    {
-        setTitle("Register Akun")
-        inputUsername = findViewById(R.id.inputLayoutUsernameRegister)
-        inputPassword =  findViewById(R.id.inputLayoutPasswordRegister)
-        inputEmail = findViewById(R.id.inputLayoutEmailRegister)
-        inputTanggalLahir =  findViewById(R.id.inputLayoutTanggalLahir)
-        inputNomorTelepon = findViewById(R.id.inputLayoutTelp)
-        btnRegister = findViewById(R.id.btnRegisterAkun)
-
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        initComponent()
+        setTitle("Register Akun")
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        val moveLogin = Intent(this,LoginActivity::class.java)
+//      initComponent()
 
-
-
-        btnRegister.setOnClickListener {
+        binding.btnRegisterAkun.setOnClickListener{
             var checkRegisterInput = false
-            val username : String = inputUsername.getEditText()?.getText().toString()
-            val password : String = inputPassword.getEditText()?.getText().toString()
-            val email : String = inputEmail.getEditText()?.getText().toString()
-            val tanggalLahir : String = inputTanggalLahir.getEditText()?.getText().toString()
-            val nomorTelp : String = inputNomorTelepon.getEditText()?.getText().toString()
-
-            //Cek masing-masing inputan & pastikan tidak kosong
-            if(username.isEmpty())
+            if (binding.regisUsername.text.toString().isEmpty())
             {
-                inputUsername.setError("Username Harus diisi")
+                binding.inputLayoutUsernameRegister.setError("Username Harus Diisi")
             }
-            if (password.isEmpty()){
-                inputPassword.setError("Password Harus diisi")
+            if(binding.regisPass.text.toString().isEmpty())
+            {
+                binding.inputLayoutPasswordRegister.setError("Password Harus Diisi")
             }
-            if (email.isEmpty()){
-                inputEmail.setError("Email Harus diisi")
+            if(binding.regisEmail.text.toString().isEmpty())
+            {
+                binding.inputLayoutEmailRegister.setError("Email harus Diisi")
             }
-            if (tanggalLahir.isEmpty()){
-                inputTanggalLahir.setError("Tanggal Lahir Harus diisi")
+            if(binding.regisTgl.text.toString().isEmpty())
+            {
+                binding.inputLayoutTanggalLahir.setError("Tanggal Lahir Harus Diisi")
             }
-            if (nomorTelp.isEmpty()){
-                inputNomorTelepon.setError("Nomor Telpon Harus diisi")
+            if(binding.regisTelp.text.toString().isEmpty())
+            {
+                binding.inputLayoutTelp.setError("Nomor Telepon Harus diisi")
             }
-            if (username.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty() && tanggalLahir.isNotEmpty() && nomorTelp.isNotEmpty()){
-                checkRegisterInput=true
+
+            if(binding.regisUsername.text!!.isNotEmpty() && binding.regisPass.text!!.isNotEmpty() && binding.regisTelp.text!!.isNotEmpty()
+                && binding.regisTgl.text!!.isNotEmpty()){
+                checkRegisterInput = true
             }
-            if (!checkRegisterInput){
+            if(!checkRegisterInput)
+            {
                 return@setOnClickListener
             }
-            val intent = Intent(this, LoginActivity::class.java)
-            val mBundle : Bundle?= Bundle()
-            mBundle?.putString("username", username)
-            mBundle?.putString("password", password)
-            mBundle?.putString("email" , email)
-            mBundle?.putString("tanggalLahir", tanggalLahir)
-            mBundle?.putString("nomorTelp",nomorTelp)
+            val bundle = Bundle()
+            bundle.putString("username", binding.regisUsername.text.toString())
+            bundle.putString("password", binding.regisPass.text.toString())
+            moveLogin.putExtra("registerBundle", bundle)
 
-            if (mBundle != null) {
-                intent.putExtras(mBundle)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.profileDAO().addProfile(
+                    Profile( binding.regisUsername.text.toString(),binding.regisPass.text.toString(),
+                        binding.regisEmail.text.toString(),binding.regisTgl.text.toString(),binding.regisTelp.text.toString())
+                )
+                finish()
             }
-            Toast.makeText(this,"Berhasil Mendaftarkan Akun",Toast.LENGTH_SHORT).show()
-            startActivity(intent)
+            startActivity(moveLogin)
+        }
+
+
 
         }
     }
-}
