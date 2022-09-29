@@ -98,24 +98,25 @@ class RegisterActivity : AppCompatActivity() {
             val name ="Register Notification"
             val descriptionText = "Success Register"
 
-            val channe1l = NotificationChannel(channel_id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            val channel1 = NotificationChannel(channel_id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
                 description = descriptionText
             }
 
             val notificationManager : NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channe1l)
+            notificationManager.createNotificationChannel(channel1)
         }
     }
 
     private fun sendNotification1(){
-        val intent : Intent = Intent(this, RegisterActivity::class.java).apply {
+        //Notif di klik kembali ke Login Activity
+        val intent : Intent = Intent(this, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
         val broadcastIntent : Intent = Intent(this,NotificiationReceiver::class.java)
-        broadcastIntent.putExtra("toastMessage",binding?.regisUsername?.text.toString())
+            broadcastIntent.putExtra("toastMessage",binding?.regisUsername?.text.toString())
         val actionIntent = PendingIntent.getBroadcast(this, 0 , broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val bitmap  = BitmapFactory.decodeResource(resources,R.drawable.welcome_notif2)
         val builder = NotificationCompat.Builder(this, channel_id)
