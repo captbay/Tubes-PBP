@@ -30,15 +30,15 @@ class FragmentKelas : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val layoutManager = LinearLayoutManager(context)
-//        val adapter : RVKelasAdapter = RVKelasAdapter(Kelas.litsOfKelas)
-//
-//        val rvKelas : RecyclerView = view.findViewById(R.id.rv_kelas)
-//
-//        rvKelas.layoutManager = layoutManager
-//
-//        rvKelas.setHasFixedSize(true)
-//
-//        rvKelas.adapter = adapter
+        val layoutManager = LinearLayoutManager(context)
+        val adapter : RVKelasAdapter = RVKelasAdapter(Kelas.litsOfKelas)
+
+        val rvKelas : RecyclerView = view.findViewById(R.id.rv_kelas)
+
+        rvKelas.layoutManager = layoutManager
+
+        rvKelas.setHasFixedSize(true)
+
+        rvKelas.adapter = adapter
     }
 }
