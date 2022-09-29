@@ -9,8 +9,8 @@ import kotlinx.coroutines.internal.synchronized
 
 @Database(
     entities = [Profile::class],
-    version = 1
 
+    version = 2
 )
 //test
 abstract class ProfileDB : RoomDatabase() {
@@ -32,6 +32,6 @@ abstract class ProfileDB : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,ProfileDB::class.java,"tubes.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 }

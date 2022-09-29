@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [Presensi::class],
-    version = 1
+    version = 2
 )
 
 abstract class PresensiDB : RoomDatabase() {
@@ -25,10 +25,11 @@ abstract class PresensiDB : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) =
+
             Room.databaseBuilder(
                 context.applicationContext,
                 PresensiDB::class.java,
             "tubes.db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
     }
 }

@@ -62,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
             Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
         }
 
-        // Aksi btnLogin ketika di klik
         btnLogin.setOnClickListener  OnClickListener@{
 
             //Inisialisasi kondisi

@@ -12,6 +12,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        //Untuk Default Fragment
+        if(savedInstanceState ==null)
+        {
+            changeFragment(BerandaFragment())
+        }
         val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
 
         bottomNav.setOnItemSelectedListener{ item ->
