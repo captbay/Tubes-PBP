@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import kotlin.concurrent.thread
 import kotlin.math.log
 
+//BELOM JADI
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
