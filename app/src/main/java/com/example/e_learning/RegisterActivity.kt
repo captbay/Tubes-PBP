@@ -128,7 +128,7 @@ class RegisterActivity : AppCompatActivity() {
             .setContentIntent(pendingIntent)
             .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setStyle(NotificationCompat.BigPictureStyle(bitmap))
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
         with(NotificationManagerCompat.from(this)){
             notify(notificationId1,builder.build())
         }
