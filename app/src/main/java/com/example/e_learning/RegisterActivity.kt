@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -116,7 +117,7 @@ class RegisterActivity : AppCompatActivity() {
         val broadcastIntent : Intent = Intent(this,NotificiationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage",binding?.regisUsername?.text.toString())
         val actionIntent = PendingIntent.getBroadcast(this, 0 , broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
+        val bitmap  = BitmapFactory.decodeResource(resources,R.drawable.book)
         val builder = NotificationCompat.Builder(this, channel_id)
             .setSmallIcon(R.drawable.ic_baseline_account_circle_24)
             .setContentTitle(binding?.regisUsername?.text.toString())
@@ -127,7 +128,7 @@ class RegisterActivity : AppCompatActivity() {
             .setContentIntent(pendingIntent)
             .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
+            .setStyle(NotificationCompat.BigPictureStyle(bitmap))
         with(NotificationManagerCompat.from(this)){
             notify(notificationId1,builder.build())
         }
