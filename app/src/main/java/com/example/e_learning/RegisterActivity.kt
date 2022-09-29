@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -113,11 +114,9 @@ class RegisterActivity : AppCompatActivity() {
         val intent : Intent = Intent(this, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
-        val broadcastIntent : Intent = Intent(this,NotificiationReceiver::class.java)
-            broadcastIntent.putExtra("toastMessage",binding?.regisUsername?.text.toString())
-        val actionIntent = PendingIntent.getBroadcast(this, 0 , broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val broadcastIntent : Intent = Intent(this,HomeActivity::class.java)
+        val actionIntent = PendingIntent.getActivity(this,0,broadcastIntent,0)
         val bitmap  = BitmapFactory.decodeResource(resources,R.drawable.welcome_notif2)
         val builder = NotificationCompat.Builder(this, channel_id)
             .setSmallIcon(R.drawable.ic_baseline_account_circle_24)
@@ -127,9 +126,12 @@ class RegisterActivity : AppCompatActivity() {
             .setAutoCancel(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
-            .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
+            .addAction(R.mipmap.ic_launcher, "Login Langsung ?? ", actionIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+
+
         with(NotificationManagerCompat.from(this)){
             notify(notificationId1,builder.build())
         }

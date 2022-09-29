@@ -14,6 +14,13 @@ class HomeActivity : AppCompatActivity() {
 
         val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
 
+        //Default Fragment (Beranda)
+        if(savedInstanceState ==null)
+        {
+            changeFragment(BerandaFragment())
+        }
+
+
         bottomNav.setOnItemSelectedListener{ item ->
             when(item.itemId){
                 R.id.beranda -> {
