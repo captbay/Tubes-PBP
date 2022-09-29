@@ -10,6 +10,7 @@ import kotlinx.coroutines.internal.synchronized
 @Database(
     entities = [Profile::class],
     version = 1
+
 )
 //test
 abstract class ProfileDB : RoomDatabase() {

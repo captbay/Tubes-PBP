@@ -1,11 +1,19 @@
 package com.example.e_learning
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.entity.Profile
 import com.example.e_learning.entity.ProfileDB
@@ -17,6 +25,8 @@ import kotlinx.coroutines.launch
 class RegisterActivity : AppCompatActivity() {
         val db by lazy {ProfileDB(this)}
         private lateinit var binding : ActivityRegisterBinding
+        private val channel_id ="channel_notification_01"
+        private val notificationId1 =101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        createNotificationChannel()
         val moveLogin = Intent(this,LoginActivity::class.java)
 //      initComponent()
 
@@ -71,10 +82,55 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 finish()
             }
+            sendNotification1()
             startActivity(moveLogin)
         }
 
 
 
         }
+
+    private fun createNotificationChannel()
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            val name ="Register Notification"
+            val descriptionText = "Success Register"
+
+            val channe1l = NotificationChannel(channel_id, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+                description = descriptionText
+            }
+
+            val notificationManager : NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channe1l)
+        }
     }
+
+    private fun sendNotification1(){
+        val intent : Intent = Intent(this, RegisterActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
+        val broadcastIntent : Intent = Intent(this,NotificiationReceiver::class.java)
+        broadcastIntent.putExtra("toastMessage",binding?.regisUsername?.text.toString())
+        val actionIntent = PendingIntent.getBroadcast(this, 0 , broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = NotificationCompat.Builder(this, channel_id)
+            .setSmallIcon(R.drawable.ic_baseline_account_circle_24)
+            .setContentTitle(binding?.regisUsername?.text.toString())
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setColor(Color.YELLOW)
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setContentIntent(pendingIntent)
+            .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId1,builder.build())
+        }
+    }
+}
+
