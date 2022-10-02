@@ -104,8 +104,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             val notificationManager : NotificationManager =
-                getSystemService(
-                    Context.NOTIFICATION_SERVICE) as NotificationManager
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel1)
         }
     }
@@ -115,7 +114,6 @@ class RegisterActivity : AppCompatActivity() {
         val intent : Intent = Intent(this, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
         val broadcastIntent : Intent = Intent(this,HomeActivity::class.java)
         val actionIntent = PendingIntent.getActivity(this,0,broadcastIntent,0)
@@ -132,6 +130,7 @@ class RegisterActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+
 
         with(NotificationManagerCompat.from(this)){
             notify(notificationId1,builder.build())

@@ -40,5 +40,6 @@ class FragmentKelas : Fragment() {
         rvKelas.setHasFixedSize(true)
 
         rvKelas.adapter = adapter
+        //udah bisa
     }
 }

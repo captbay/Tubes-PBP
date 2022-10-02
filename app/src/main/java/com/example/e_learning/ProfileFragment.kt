@@ -1,13 +1,19 @@
 package com.example.e_learning
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.e_learning.databinding.FragmentProfileBinding
 import com.example.e_learning.entity.ProfileDB
@@ -23,6 +29,8 @@ class ProfileFragment : Fragment() {
     var sharedPreferences: SharedPreferences? = null
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private val channelLogout = "channelLogoutNotification"
+    private val notificationId = 10
 
 
     override fun onCreateView(
@@ -31,8 +39,10 @@ class ProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val view = binding.root
+        createNotificationChannel()
         return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,7 +75,8 @@ class ProfileFragment : Fragment() {
 
             builder1.setPositiveButton(
                 "Yes"
-            ) { dialog, id -> startActivity(logout) }
+            ) { dialog, id -> startActivity(logout)
+            sendNotification()}
 
             builder1.setNegativeButton(
                 "No"
@@ -73,11 +84,43 @@ class ProfileFragment : Fragment() {
 
             val alert11 = builder1.create()
             alert11.show()
+
+
         }
 
 
 
     }
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "Notification Title"
+            val descriptionText = "Notification Description"
 
+            val logoutNotif = NotificationChannel(channelLogout, name,  NotificationManager.IMPORTANCE_DEFAULT).apply{
+                description = descriptionText
+            }
+
+            val notificationManager: NotificationManager =  requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(logoutNotif)
+        }
+    }
+
+    private fun  sendNotification(){
+        val builder = NotificationCompat.Builder(requireContext(), channelLogout)
+            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+            .setContentTitle("Berhasil Logout!!")
+            .setContentText("Sampai Jumpa Lagi")
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("Thor: Love and Thunder menceritakan Thor dalam sebuah perjalanan yang belum pernah ia jalani – pencariankedamaian batin. Namun, masa pensiunnya terganggu oleh seorang pembunuh galaksi yang dikenal sebagai Gorr sang Dewa Jagal , yang ingin memusnahkan para dewa.")
+                    .setSummaryText("Pembelajaran Hari Ini Sudah Selesai")
+
+            )
+
+        with(NotificationManagerCompat.from(requireContext())){
+            notify(notificationId, builder.build())
+        }
+    }
 }
 
