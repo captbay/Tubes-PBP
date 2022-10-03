@@ -7,10 +7,10 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/text_tanggal"
+        android:id="@+id/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Jangan Titip Absen"
+        tools:text="Student : To Do Today"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
