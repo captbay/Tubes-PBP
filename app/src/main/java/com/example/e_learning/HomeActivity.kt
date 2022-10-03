@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.tugas -> {
-                    changeFragment(FragmentKelas())
+                    changeFragment(TugasFragment())
                     true
                 }
                 R.id.profile -> {
