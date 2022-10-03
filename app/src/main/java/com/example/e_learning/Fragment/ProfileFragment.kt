@@ -15,17 +15,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.e_learning.databinding.FragmentProfileBinding
-import com.example.e_learning.Data.Profile.ProfileDB
 import com.example.e_learning.LoginActivity
 import com.example.e_learning.R
 import com.example.e_learning.UpdateProfile
+import com.example.e_learning.data.ELEARNINGDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
-    val db by lazy { activity?.let { ProfileDB(it) } }
+    val db by lazy { activity?.let { ELEARNINGDB(it) } }
     private val id = "idKey"
     private val myPreference = "myPref"
     var sharedPreferences: SharedPreferences? = null

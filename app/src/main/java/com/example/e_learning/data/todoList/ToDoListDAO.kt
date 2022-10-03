@@ -15,6 +15,7 @@ interface ToDoListDAO {
     suspend fun getNotes() : List<ToDoList>
     @Query("SELECT * FROM todo_list WHERE id =:todo_id")
     suspend fun getNote(todo_id: Int) : List<ToDoList>
+
 }
 
 //

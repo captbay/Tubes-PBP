@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_learning.Data.Kelas
+import com.example.e_learning.data.Kelas
 import com.example.e_learning.R
 import com.example.e_learning.RVKelasAdapter
 
