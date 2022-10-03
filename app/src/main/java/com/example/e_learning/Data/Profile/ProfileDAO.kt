@@ -10,8 +10,6 @@ interface ProfileDAO {
     suspend fun addProfile(profile: Profile)
 
 //Read
-
-
     //Update
     @Update
     suspend fun updateProfile(profile: Profile)
