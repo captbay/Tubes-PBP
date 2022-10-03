@@ -1,4 +1,4 @@
-package com.example.e_learning.entity
+package com.example.e_learning.Data.Profile
 
 import androidx.room.*
 
@@ -21,10 +21,10 @@ interface ProfileDAO {
     suspend fun  deleteProfile(profile: Profile)
 
     //Query ntah untuk apa
-    @Query("SELECT * From Profile")
+    @Query("SELECT * From profile_table")
     suspend fun getProfile()    : List<Profile>
 
-    @Query("SELECT * FROM Profile Where id =:user_id")
+    @Query("SELECT * FROM profile_table Where id =:user_id")
     suspend fun getProfile(user_id: Int) : List<Profile>
 
 }

@@ -11,21 +11,17 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.e_learning.databinding.ActivityRegisterBinding
-import com.example.e_learning.entity.Profile
-import com.example.e_learning.entity.ProfileDB
-import com.google.android.material.textfield.TextInputLayout
+import com.example.e_learning.Data.Profile.Profile
+import com.example.e_learning.Data.Profile.ProfileDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
-        val db by lazy {ProfileDB(this)}
+        val db by lazy { ProfileDB(this) }
         private lateinit var binding : ActivityRegisterBinding
         private val channel_id ="channel_notification_01"
         private val notificationId1 =101

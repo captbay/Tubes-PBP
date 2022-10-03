@@ -1,4 +1,4 @@
-package com.example.e_learning.entity
+package com.example.e_learning.Data.Profile
 
 import android.content.Context
 import androidx.room.Database
@@ -31,7 +31,7 @@ abstract class ProfileDB : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext,ProfileDB::class.java,"tubes.db"
+            context.applicationContext, ProfileDB::class.java,"tubes.db"
         ).fallbackToDestructiveMigration().build()
     }
 }

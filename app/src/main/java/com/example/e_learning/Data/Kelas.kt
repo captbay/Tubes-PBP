@@ -1,7 +1,5 @@
-package com.example.e_learning.entity
+package com.example.e_learning.Data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.example.e_learning.R
 
 //import com.example.e_learning.R

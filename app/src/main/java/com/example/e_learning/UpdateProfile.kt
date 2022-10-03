@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.e_learning.databinding.ActivityUpdateProfileBinding
-import com.example.e_learning.entity.Profile
-import com.example.e_learning.entity.ProfileDB
+import com.example.e_learning.Data.Profile.Profile
+import com.example.e_learning.Data.Profile.ProfileDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

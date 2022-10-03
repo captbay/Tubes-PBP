@@ -1,10 +1,10 @@
-package com.example.e_learning.entity
+package com.example.e_learning.Data.Profile
 
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "profile_table")
 data class Profile(
     @PrimaryKey(autoGenerate = true)
     val id : Int,

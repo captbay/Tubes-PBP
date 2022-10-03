@@ -5,26 +5,23 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.e_learning.entity.ProfileDB
+import com.example.e_learning.Data.Profile.ProfileDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.concurrent.thread
-import kotlin.math.log
 
 //BELOM JADI
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
-    val db by lazy{ ProfileDB(this)}
+    val db by lazy{ ProfileDB(this) }
     private lateinit var inputUsername : TextInputLayout
     private lateinit var inputPassword : TextInputLayout
     private lateinit var mainLayout : ConstraintLayout
