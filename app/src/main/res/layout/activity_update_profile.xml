@@ -20,7 +20,7 @@
         android:adjustViewBounds="true"
         android:padding="3dp"
         android:scaleType="centerInside"
-        tools:src="@tools:sample/avatars"
+        android:src="@drawable/budesi"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>

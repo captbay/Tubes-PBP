@@ -33,10 +33,11 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        setTitle("Register Akun")
+        supportActionBar?.hide();
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
         createNotificationChannel()
         val moveLogin = Intent(this,LoginActivity::class.java)
 //      initComponent()
