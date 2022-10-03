@@ -3,6 +3,10 @@ package com.example.e_learning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.e_learning.Fragment.BerandaFragment
+import com.example.e_learning.Fragment.FragmentKelas
+import com.example.e_learning.Fragment.ProfileFragment
+import com.example.e_learning.Fragment.TugasFragment
 import com.google.android.material.navigation.NavigationBarView
 
 

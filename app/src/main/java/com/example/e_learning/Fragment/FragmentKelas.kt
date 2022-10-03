@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_learning.Data.Kelas
+import com.example.e_learning.R
+import com.example.e_learning.RVKelasAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
