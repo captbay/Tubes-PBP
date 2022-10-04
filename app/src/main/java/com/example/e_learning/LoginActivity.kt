@@ -84,7 +84,10 @@ class LoginActivity : AppCompatActivity() {
                 {
                     if (checkLogin == true) {
                         startActivity(moveHome)
-                    }else
+                    }else if(checkLogin == false){
+                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
+                    }
+                    else
                     {
                         //Pengecekan apakah inputan username kosong
                         if(username.isEmpty()) {
