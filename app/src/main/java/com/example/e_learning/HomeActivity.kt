@@ -3,10 +3,7 @@ package com.example.e_learning
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.e_learning.Fragment.BerandaFragment
-import com.example.e_learning.Fragment.FragmentKelas
-import com.example.e_learning.Fragment.ProfileFragment
-import com.example.e_learning.Fragment.TugasFragment
+import com.example.e_learning.Fragment.*
 import com.google.android.material.navigation.NavigationBarView
 
 
@@ -23,11 +20,6 @@ class HomeActivity : AppCompatActivity() {
         }
         val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
 
-        //Default Fragment (Beranda)
-        if(savedInstanceState ==null)
-        {
-            changeFragment(BerandaFragment())
-        }
 
 
         bottomNav.setOnItemSelectedListener{ item ->
