@@ -10,15 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.e_learning.EditActivity
-import com.example.e_learning.TodoAdapter
+import com.example.e_learning.Activity.EditActivity
+import com.example.e_learning.Adapter.TodoAdapter
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.data.todoList.Constant
 import com.example.e_learning.data.todoList.ToDoList
 import com.example.e_learning.databinding.FragmentTodoBinding
 import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.android.synthetic.main.fragment_todo.button_create
-import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -15,9 +15,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.e_learning.databinding.FragmentProfileBinding
-import com.example.e_learning.LoginActivity
+import com.example.e_learning.Activity.LoginActivity
 import com.example.e_learning.R
-import com.example.e_learning.UpdateProfile
+import com.example.e_learning.Activity.UpdateProfile
 import com.example.e_learning.data.ELEARNINGDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope

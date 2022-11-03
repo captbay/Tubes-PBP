@@ -1,9 +1,10 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.e_learning.Fragment.*
+import com.example.e_learning.R
 import com.google.android.material.navigation.NavigationBarView
 
 

@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_learning.R
 import com.example.e_learning.data.Kelas
 
 class RVKelasAdapter(private val data: Array<Kelas>) : RecyclerView.Adapter<RVKelasAdapter.viewHolder>()  {

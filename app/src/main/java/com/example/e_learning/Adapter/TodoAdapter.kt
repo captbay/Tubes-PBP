@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Adapter
 
 
 import android.annotation.SuppressLint
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.e_learning.R
 import com.example.e_learning.data.todoList.ToDoList
 import kotlinx.android.synthetic.main.adapter_todo.view.*
 

@@ -1,14 +1,13 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.View
+import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.data.todoList.Constant
 import com.example.e_learning.data.todoList.ToDoList
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.adapter_todo.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
