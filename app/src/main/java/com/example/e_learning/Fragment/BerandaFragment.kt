@@ -34,7 +34,9 @@ class BerandaFragment : Fragment() {
                 getParentFragmentManager()
                     .beginTransaction()
                     .replace(R.id.layout_fragment, ToDoFragment())
+                    .addToBackStack(null)
                     .commit()
+
         }
     }
 
