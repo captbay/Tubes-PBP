@@ -1,13 +1,16 @@
 package com.example.e_learning.Fragment
 
 
+import android.content.Intent
 import android.mtp.MtpConstants
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.e_learning.Activity.CameraActivity
 import com.example.e_learning.R
+import com.example.e_learning.MapsActivity
 import com.example.e_learning.databinding.FragmentBerandaBinding
 import kotlinx.android.synthetic.main.fragment_beranda.*
 
@@ -35,6 +38,11 @@ class BerandaFragment : Fragment() {
                     .beginTransaction()
                     .replace(R.id.layout_fragment, ToDoFragment())
                     .commit()
+        }
+
+        binding.mapIcon.setOnClickListener {
+            val moveMaps = Intent(activity, MapsActivity::class.java)
+            startActivity(moveMaps)
         }
     }
 
