@@ -14,12 +14,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import com.example.e_learning.Activity.CameraActivity
 import com.example.e_learning.databinding.FragmentProfileBinding
 import com.example.e_learning.Activity.LoginActivity
 import com.example.e_learning.R
 import com.example.e_learning.Activity.UpdateProfile
 import com.example.e_learning.data.ELEARNINGDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,8 +52,14 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val LogoutButton: FloatingActionButton = view.findViewById(R.id.floatingActionLogout)
         val logout = Intent(this.getActivity(), LoginActivity::class.java)
-
+        val camera = button
         sharedPreferences = activity?.getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+
+        camera.setOnClickListener{
+            val moveCamera = Intent(activity,CameraActivity::class.java)
+            startActivity(moveCamera)
+        }
+
 
         CoroutineScope(Dispatchers.IO).launch {
             val profile = db?.profileDAO()?.getProfile(sharedPreferences!!.getString(id,"")!!.toInt())?.get(0)
