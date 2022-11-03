@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Notification
 
 import android.content.BroadcastReceiver
 import android.content.Context

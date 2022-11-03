@@ -1,10 +1,11 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityUpdateProfileBinding
 import com.example.e_learning.data.profile.Profile

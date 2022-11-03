@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.data.profile.Profile
@@ -35,7 +36,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(view)
 
         createNotificationChannel()
-        val moveLogin = Intent(this,LoginActivity::class.java)
+        val moveLogin = Intent(this, LoginActivity::class.java)
 //      initComponent()
 
         binding.btnRegisterAkun.setOnClickListener{
@@ -112,9 +113,9 @@ class RegisterActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
-        val broadcastIntent : Intent = Intent(this,HomeActivity::class.java)
+        val broadcastIntent : Intent = Intent(this, HomeActivity::class.java)
         val actionIntent = PendingIntent.getActivity(this,0,broadcastIntent,0)
-        val bitmap  = BitmapFactory.decodeResource(resources,R.drawable.welcome_notif2)
+        val bitmap  = BitmapFactory.decodeResource(resources, R.drawable.welcome_notif2)
         val builder = NotificationCompat.Builder(this, channel_id)
             .setSmallIcon(R.drawable.ic_baseline_account_circle_24)
             .setContentTitle("Welcome " +binding?.regisUsername?.text.toString() +"!! 😊😊")

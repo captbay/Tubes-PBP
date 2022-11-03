@@ -14,19 +14,19 @@
         android:theme="@style/Theme.ELearning"
         tools:targetApi="31" >
         <activity
-            android:name=".EditActivity"
+            android:name=".Activity.EditActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateProfile"
+            android:name=".Activity.UpdateProfile"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:theme="@style/Theme.App.Starting"
             android:exported="true">
 
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".Notification.MyFirebaseMessagingService"
             android:exported="false"
             >
             <intent-filter>

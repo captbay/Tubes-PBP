@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -48,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         val btnRegister : Button = findViewById(R.id.btnRegister)
         sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
 
-        val moveHome = Intent(this,HomeActivity::class.java)
+        val moveHome = Intent(this, HomeActivity::class.java)
 
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener{

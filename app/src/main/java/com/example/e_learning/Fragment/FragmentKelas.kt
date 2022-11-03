@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_learning.data.Kelas
 import com.example.e_learning.R
-import com.example.e_learning.RVKelasAdapter
+import com.example.e_learning.Adapter.RVKelasAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
