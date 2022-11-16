@@ -1,4 +1,4 @@
-package com.example.e_learning
+package com.example.e_learning.geolocation
 
 class ModelMain {
     lateinit var strName: String

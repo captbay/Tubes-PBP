@@ -1,5 +1,6 @@
-package com.example.e_learning
+package com.example.e_learning.geolocation
 
+import com.example.e_learning.R
 import kotlinx.android.synthetic.main.layout_tooltip.view.*
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker

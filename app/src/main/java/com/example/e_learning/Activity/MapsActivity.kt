@@ -1,19 +1,12 @@
-package com.example.e_learning
+package com.example.e_learning.Activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Toast
-import com.example.e_learning.Activity.HomeActivity
-import com.example.e_learning.Activity.UpdateProfile
-import com.example.e_learning.databinding.ActivityMapsBinding
-import com.example.e_learning.databinding.FragmentBerandaBinding
+import com.example.e_learning.R
+import com.example.e_learning.geolocation.CustomInfoWindow
+import com.example.e_learning.geolocation.ModelMain
 import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONException
 import org.json.JSONObject

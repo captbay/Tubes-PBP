@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MapsActivity"
+            android:name=".Activity.MapsActivity"
 
             android:exported="false">
         </activity>
