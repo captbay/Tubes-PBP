@@ -7,13 +7,13 @@ import androidx.room.RoomDatabase
 import com.example.e_learning.data.profile.Profile
 import com.example.e_learning.data.profile.ProfileDAO
 import com.example.e_learning.data.todoList.ToDoList
-import com.example.e_learning.data.todoList.ToDoListDAO
+//import com.example.e_learning.data.todoList.ToDoListDAO
 import kotlinx.coroutines.InternalCoroutinesApi
-
-@Database(entities = [ToDoList::class,Profile::class], version = 3)
+//@Database(entities = [ToDoList::class,Profile::class], version = 3)
+@Database(entities = [Profile::class], version = 4)
 abstract class ELEARNINGDB : RoomDatabase() {
 
-    abstract fun ToDoListDAO() : ToDoListDAO
+//    abstract fun ToDoListDAO() : ToDoListDAO
     abstract fun profileDAO() :ProfileDAO
     companion object
     {

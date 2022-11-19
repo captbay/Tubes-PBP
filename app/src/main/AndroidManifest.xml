@@ -2,11 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
@@ -17,10 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ELearning"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".Activity.CameraActivity"
-
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -28,12 +25,9 @@
         </activity>
         <activity
             android:name=".Activity.MapsActivity"
-
-            android:exported="false">
-        </activity>
-
+            android:exported="false"></activity>
         <activity
-            android:name=".Activity.EditActivity"
+            android:name=".Activity.AddEditActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.UpdateProfile"

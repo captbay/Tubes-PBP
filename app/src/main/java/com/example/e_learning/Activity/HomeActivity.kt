@@ -9,6 +9,9 @@ import com.google.android.material.navigation.NavigationBarView
 
 
 class HomeActivity : AppCompatActivity() {
+//    companion object {
+//        const val LAUNCH_ADD_ACTIVITY = 123
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
        // supportActionBar()?.hide()
         super.onCreate(savedInstanceState)
