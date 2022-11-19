@@ -11,21 +11,31 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.example.e_learning.Api.ProfileApi
 import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.data.profile.Profile
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class RegisterActivity : AppCompatActivity() {
-        val db by lazy { ELEARNINGDB(this) }
-        private lateinit var binding : ActivityRegisterBinding
-        private val channel_id ="channel_notification_01"
-        private val notificationId1 =101
+    val db by lazy { ELEARNINGDB(this) }
+    private lateinit var binding : ActivityRegisterBinding
+    private val channel_id ="channel_notification_01"
+    private val notificationId1 =101
+    private var queue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,20 +85,69 @@ class RegisterActivity : AppCompatActivity() {
             bundle.putString("password", binding.regisPass.text.toString())
             moveLogin.putExtra("registerBundle", bundle)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                db.profileDAO().addProfile(
-                    Profile( 0,binding.regisUsername.text.toString(),binding.regisPass.text.toString(),
-                        binding.regisEmail.text.toString(),binding.regisTgl.text.toString(),binding.regisTelp.text.toString())
-                )
-                finish()
-            }
+            register()
             sendNotification1()
             startActivity(moveLogin)
         }
+    }
 
+    private fun register(){
+        binding.btnRegisterAkun
+        val mahasiswa = Profile(
+            binding!!.regisUsername.text.toString(),
+            binding!!.regisPass.text.toString(),
+            binding!!.regisEmail.text.toString(),
+            binding!!.regisTgl.text.toString(),
+            binding!!.regisTelp.text.toString()
+        )
 
+        val StringRequest: StringRequest = object : StringRequest(Method.POST, ProfileApi.ADD_URL,
+            Response.Listener { response ->
+                val gson = Gson()
+                val mahasiswa = gson.fromJson(response, Profile::class.java)
 
+                if(mahasiswa != null)
+                    Toast.makeText(this@RegisterActivity,"Berhasil Register", Toast.LENGTH_SHORT).show()
+
+                val returnIntent = Intent()
+                setResult(RESULT_OK, returnIntent)
+                finish()
+
+                binding.btnRegisterAkun
+            }, Response.ErrorListener { error->
+                binding.btnRegisterAkun
+                try{
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        errors.getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }catch (e: Exception){
+                    Toast.makeText(this@RegisterActivity,e.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        ){
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String,String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+            @Throws(AuthFailureError::class)
+            override fun getBody(): ByteArray {
+                val gson = Gson()
+                val requestBody = gson.toJson(mahasiswa)
+                return requestBody.toByteArray(StandardCharsets.UTF_8)
+            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
+            }
         }
+        queue!!.add(StringRequest)
+    }
 
     private fun createNotificationChannel()
     {
