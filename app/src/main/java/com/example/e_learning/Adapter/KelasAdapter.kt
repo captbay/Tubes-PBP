@@ -9,21 +9,24 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.e_learning.Fragment.FragmentKelas
+import com.example.e_learning.Fragment.KelasFragment
 import com.example.e_learning.R
 import com.example.e_learning.models.Kelas
 import java.util.*
 
-class KelasAdapter(private var kelasList: List<Kelas>, context : Context) :
+class KelasAdapter(private var kelasList: List<Kelas>, context: Context , fragment: Fragment) :
     RecyclerView.Adapter<KelasAdapter.ViewHolder>(), Filterable {
 
     private var filterkelasList: MutableList<Kelas>
     private val context: Context
+    private val fragment : Fragment
 
     init {
         filterkelasList = ArrayList(kelasList)
         this.context = context
+        this.fragment = fragment
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
