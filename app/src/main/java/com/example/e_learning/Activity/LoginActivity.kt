@@ -128,39 +128,41 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
 
+                //sementara loss aja dulu
+                checkLogin=true
 
-//                withContext(Dispatchers.Main)
-//                {
-//                    if (checkLogin == true) {
-//                        startActivity(moveHome)
-//                    }else if(checkLogin == false){
-//                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
-//                    }
-//                    else
-//                    {
-//                        //Pengecekan apakah inputan username kosong
-//                        if(username.isEmpty()) {
-//                            inputUsername.requestFocus()
-//                            inputUsername.setError("username must be filled with text")
-//                            checkLogin = false
-//                            Log.i("Test", "Pengecekan Username Kosong Sukses")
-//                        }else {
-//                            Log.i("Test", "Username tidak kosong : "+username)
-//                            inputUsername.setError(null)
-//                        }
-//
-//                        //Pengecekan apakah Inputan Password kosong
-//                        if(password.isEmpty()) {
-//                            inputPassword.setError("password must be filled with text")
-//                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
-//                            checkLogin = false
-//                            Log.i("Test","Pengecekan Password Kosong Sukses ")
-//                        }else{
-//                            Log.i("Test", "Password Tidak Kosong : "+password)
-//                            inputPassword.setError(null)
-//                        }
-//                    }
-//                }
+                withContext(Dispatchers.Main)
+                {
+                    if (checkLogin == true) {
+                        startActivity(moveHome)
+                    }else if(checkLogin == false){
+                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
+                    }
+                    else
+                    {
+                        //Pengecekan apakah inputan username kosong
+                        if(username.isEmpty()) {
+                            inputUsername.requestFocus()
+                            inputUsername.setError("username must be filled with text")
+                            checkLogin = false
+                            Log.i("Test", "Pengecekan Username Kosong Sukses")
+                        }else {
+                            Log.i("Test", "Username tidak kosong : "+username)
+                            inputUsername.setError(null)
+                        }
+
+                        //Pengecekan apakah Inputan Password kosong
+                        if(password.isEmpty()) {
+                            inputPassword.setError("password must be filled with text")
+                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                            checkLogin = false
+                            Log.i("Test","Pengecekan Password Kosong Sukses ")
+                        }else{
+                            Log.i("Test", "Password Tidak Kosong : "+password)
+                            inputPassword.setError(null)
+                        }
+                    }
+                }
             }
 
         }
