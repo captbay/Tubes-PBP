@@ -1,5 +1,6 @@
 package com.example.e_learning.Activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -37,8 +38,8 @@ class UpdateProfile : AppCompatActivity() {
 
         val view = binding.root
         setContentView(view)
-//        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
-//        val id = sharedPreferences!!.getString(id,"")!!.toInt()
+        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+        val id = sharedPreferences!!.getString(id,"")!!.toInt()
 //        loadData(id)
         queue = Volley.newRequestQueue(this)
 
@@ -85,9 +86,10 @@ class UpdateProfile : AppCompatActivity() {
             val profile = Profile(
                 id,
                 binding!!.editUsername.text.toString(),
+                binding!!.editPassword.text.toString(),
                 binding!!.editEmail.text.toString(),
                 binding!!.editTglLahir.text.toString(),
-                binding!!.editNoTelp.text.toString()
+                binding!!.editNoTelp.text.toString(),
             )
             val StringRequest: StringRequest = object : StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id,
                 Response.Listener { response ->

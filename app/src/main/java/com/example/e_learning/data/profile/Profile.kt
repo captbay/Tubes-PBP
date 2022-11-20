@@ -1,8 +1,11 @@
 package com.example.e_learning.data.profile
 
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+
+//class Profile (var username: String, var password: String, var email: String, var tglLahir: String, var noTelp: String) {
+//    var id: Long? =null
+//}
 
 @Entity(tableName = "profile_table")
 data class Profile(
@@ -15,4 +18,3 @@ data class Profile(
     val noTelp : String
 )
 
-//

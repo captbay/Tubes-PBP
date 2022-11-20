@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.kelas -> {
-                    changeFragment(FragmentKelas())
+                    changeFragment(KelasFragment())
                     true
                 }
                 R.id.tugas -> {
