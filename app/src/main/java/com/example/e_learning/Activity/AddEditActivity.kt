@@ -50,6 +50,7 @@ class AddEditActivity : AppCompatActivity() {
         }else
         {
             binding.tvJudulAddedit.setText("Edit Todo")
+            Log.d("ini_id",id.toString())
             getTodoById(id)
             binding.btnSave.setOnClickListener { updateTodo(id) }
         }
@@ -118,12 +119,13 @@ class AddEditActivity : AppCompatActivity() {
     }
 
     private fun updateTodo(id : Long) {
+        setLoading(true)
         val current = LocalDate.now()
         val Todo = ToDoList(
-            binding.etTodo.toString(),
-            binding.etPesan.toString(),
-            current.toString(),
-            binding.etDeadline.toString(),
+            binding.etTodo.getText().toString(),
+            binding.etPesan.getText().toString(),
+            binding.etDibuat.getText().toString(),
+            binding.etDeadline.getText().toString(),
             0
         )
 
@@ -183,17 +185,19 @@ class AddEditActivity : AppCompatActivity() {
         setLoading(true)
         val stringRequest: StringRequest = object :
             StringRequest(Method.GET, TodoApi.GET_BY_ID_URL + id, Response.Listener { response ->
+                Log.d("iniresponeget", response)
                 val gson = Gson()
-                val todoo = gson.fromJson(response, ToDoList::class.java)
-
-                binding.etTodo!!.setText(todoo.judul)
-                binding.etPesan.setText(todoo.pesan)
-                binding.etDeadline!!.setText(todoo.tglDeadline)
-
-
+                val todoo = gson.fromJson(response, Array<ToDoList>::class.java)
+//
+                binding.etTodo!!.setText(todoo[0].judul)
+                binding.etPesan!!.setText(todoo[0].pesan)
+                binding.etDeadline!!.setText(todoo[0].tglDeadline)
+//
+//
                 Toast.makeText(this@AddEditActivity, "Data berhasil diambil!", Toast.LENGTH_SHORT).show()
                 setLoading(false)
             }, Response.ErrorListener { error ->
+
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
