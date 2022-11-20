@@ -1,9 +1,8 @@
 package com.example.e_learning.data.todoList
 
 
-class ToDoList(var judul: String, var pesan: String, var tanggaldibuat: String, var tanggaldeadline: String, var status: Boolean )
-{
-    var id: Long? =null
+class ToDoList(var judul:String, var pesan:String, var tglDibuat: String, var tglDeadline: String, var status: Int) {
+    var id: Long? = null
 }
 
 //@Entity(tableName = "todo_list")
