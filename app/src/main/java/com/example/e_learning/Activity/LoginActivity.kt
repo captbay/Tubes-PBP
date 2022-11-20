@@ -5,18 +5,34 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.e_learning.Api.ProfileApi
 import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
+import com.example.e_learning.data.profile.Profile
+import com.example.e_learning.data.profile.ResponseProfile
+import com.example.e_learning.databinding.ActivityLoginBinding
+import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 //BELOM JADI
 
@@ -31,6 +47,9 @@ class LoginActivity : AppCompatActivity() {
     var sharedPreferences  : SharedPreferences? = null
     private val myPreference = "myPref"
     private val id = "idKey"
+
+    private lateinit var binding : ActivityLoginBinding
+    private var queue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -48,6 +67,8 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin : Button = findViewById(R.id.btnLogin)
         val btnRegister : Button = findViewById(R.id.btnRegister)
         sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        queue = Volley.newRequestQueue(this@LoginActivity)
 
         val moveHome = Intent(this, HomeActivity::class.java)
 
@@ -75,44 +96,71 @@ class LoginActivity : AppCompatActivity() {
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         editor.putString(id, i.id.toString())
                         editor.apply()
-                        checkLogin = true
+//                        checkLogin = true
+                         login()
                         break
                     }
                 }
 
-
-                withContext(Dispatchers.Main)
-                {
-                    if (checkLogin == true) {
-                        startActivity(moveHome)
-                    }else if(checkLogin == false){
-                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
+                try{
+                    login()
+                }
+                catch(e : Error){
+                    if(username.isEmpty()) {
+                        inputUsername.requestFocus()
+                        inputUsername.setError("username must be filled with text")
+                        checkLogin = false
+                        Log.i("Test", "Pengecekan Username Kosong Sukses")
+                    }else {
+                        Log.i("Test", "Username tidak kosong : "+username)
+                        inputUsername.setError(null)
                     }
-                    else
-                    {
-                        //Pengecekan apakah inputan username kosong
-                        if(username.isEmpty()) {
-                            inputUsername.requestFocus()
-                            inputUsername.setError("username must be filled with text")
-                            checkLogin = false
-                            Log.i("Test", "Pengecekan Username Kosong Sukses")
-                        }else {
-                            Log.i("Test", "Username tidak kosong : "+username)
-                            inputUsername.setError(null)
-                        }
 
-                        //Pengecekan apakah Inputan Password kosong
-                        if(password.isEmpty()) {
-                            inputPassword.setError("password must be filled with text")
-                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
-                            checkLogin = false
-                            Log.i("Test","Pengecekan Password Kosong Sukses ")
-                        }else{
-                            Log.i("Test", "Password Tidak Kosong : "+password)
-                            inputPassword.setError(null)
-                        }
+                    //Pengecekan apakah Inputan Password kosong
+                    if(password.isEmpty()) {
+                        inputPassword.setError("password must be filled with text")
+                        Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                        checkLogin = false
+                        Log.i("Test","Pengecekan Password Kosong Sukses ")
+                    }else{
+                        Log.i("Test", "Password Tidak Kosong : "+password)
+                        inputPassword.setError(null)
                     }
                 }
+
+
+//                withContext(Dispatchers.Main)
+//                {
+//                    if (checkLogin == true) {
+//                        startActivity(moveHome)
+//                    }else if(checkLogin == false){
+//                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
+//                    }
+//                    else
+//                    {
+//                        //Pengecekan apakah inputan username kosong
+//                        if(username.isEmpty()) {
+//                            inputUsername.requestFocus()
+//                            inputUsername.setError("username must be filled with text")
+//                            checkLogin = false
+//                            Log.i("Test", "Pengecekan Username Kosong Sukses")
+//                        }else {
+//                            Log.i("Test", "Username tidak kosong : "+username)
+//                            inputUsername.setError(null)
+//                        }
+//
+//                        //Pengecekan apakah Inputan Password kosong
+//                        if(password.isEmpty()) {
+//                            inputPassword.setError("password must be filled with text")
+//                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+//                            checkLogin = false
+//                            Log.i("Test","Pengecekan Password Kosong Sukses ")
+//                        }else{
+//                            Log.i("Test", "Password Tidak Kosong : "+password)
+//                            inputPassword.setError(null)
+//                        }
+//                    }
+//                }
             }
 
         }
@@ -123,6 +171,68 @@ class LoginActivity : AppCompatActivity() {
             val moveRegister = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(moveRegister)
         }
+    }
+
+    private fun login(){
+        binding.btnLogin.id
+        val profile = Profile(
+            0,
+            binding.inputLayoutUsername?.getEditText()?.getText().toString(),
+            binding.inputLayoutPassword?.getEditText()?.getText().toString(),
+            "","",""
+        )
+
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.POST, ProfileApi.LOGIN_URL, Response.Listener { response ->
+                val gson = Gson()
+                Log.d("volleyerr",response.toString())
+                val mahasiswa = gson.fromJson(response, ResponseProfile::class.java)
+
+                if(mahasiswa != null)
+                    Toast.makeText(this@LoginActivity, "Berhasil Login", Toast.LENGTH_SHORT).show()
+
+                val sp = this@LoginActivity.getSharedPreferences("user", 0)
+                val editor = sp.edit()
+                editor.putInt("id", mahasiswa.data.id)
+                editor.commit()
+
+                val moveHome = Intent(this, HomeActivity::class.java)
+                this?.startActivity(moveHome)
+                this?.finish()
+
+                binding.btnLogin
+            }, Response.ErrorListener { error ->
+                binding.btnLogin
+                Log.d("volleyerr",error.toString())
+                try{
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(this@LoginActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    Log.d("volleyerr",errors.getString("message"))
+                }
+                catch (e:Exception){
+                    Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Log.d("volleyerr",e.message.toString())
+                }
+            }){
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String>{
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+            @Throws(AuthFailureError::class)
+            override fun getBody(): ByteArray{
+                val gson = Gson()
+                val requestBody = gson.toJson(profile)
+                return requestBody.toByteArray(StandardCharsets.UTF_8)
+            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
+            }
+        }
+        queue!!.add(stringRequest)
     }
 
 

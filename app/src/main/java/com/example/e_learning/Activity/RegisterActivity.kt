@@ -11,19 +11,24 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.e_learning.Api.ProfileApi
 import com.example.e_learning.R
 import com.example.e_learning.data.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.data.profile.Profile
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +46,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         supportActionBar?.hide();
+        queue = Volley.newRequestQueue(this@RegisterActivity)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -75,6 +81,7 @@ class RegisterActivity : AppCompatActivity() {
             if(binding.regisUsername.text!!.isNotEmpty() && binding.regisPass.text!!.isNotEmpty() && binding.regisTelp.text!!.isNotEmpty()
                 && binding.regisTgl.text!!.isNotEmpty()){
                 checkRegisterInput = true
+
             }
             if(!checkRegisterInput)
             {
@@ -92,61 +99,65 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(){
-        binding.btnRegisterAkun
-        val mahasiswa = Profile(
-            binding!!.regisUsername.text.toString(),
-            binding!!.regisPass.text.toString(),
-            binding!!.regisEmail.text.toString(),
-            binding!!.regisTgl.text.toString(),
-            binding!!.regisTelp.text.toString()
-        )
+        binding.btnRegisterAkun.setOnClickListener{
+            setLoading(true)
+            val mahasiswa = Profile(
+                0,
+                binding!!.regisUsername.text.toString(),
+                binding!!.regisPass.text.toString(),
+                binding!!.regisEmail.text.toString(),
+                binding!!.regisTgl.text.toString(),
+                binding!!.regisTelp.text.toString(),
+            )
 
-        val StringRequest: StringRequest = object : StringRequest(Method.POST, ProfileApi.ADD_URL,
-            Response.Listener { response ->
-                val gson = Gson()
-                val mahasiswa = gson.fromJson(response, Profile::class.java)
+            val StringRequest: StringRequest = object : StringRequest(Method.POST, ProfileApi.ADD_URL,
+                Response.Listener { response ->
+                    val gson = Gson()
+                    val Profile = gson.fromJson(response, Profile::class.java)
 
-                if(mahasiswa != null)
-                    Toast.makeText(this@RegisterActivity,"Berhasil Register", Toast.LENGTH_SHORT).show()
+                    if(Profile != null)
+                        Toast.makeText(this@RegisterActivity,"Berhasil Register", Toast.LENGTH_SHORT).show()
 
-                val returnIntent = Intent()
-                setResult(RESULT_OK, returnIntent)
-                finish()
+                    val returnIntent = Intent()
+                    setResult(RESULT_OK, returnIntent)
+                    finish()
 
-                binding.btnRegisterAkun
-            }, Response.ErrorListener { error->
-                binding.btnRegisterAkun
-                try{
-                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }catch (e: Exception){
-                    Toast.makeText(this@RegisterActivity,e.message, Toast.LENGTH_SHORT).show()
+                    setLoading(false)
+                }, Response.ErrorListener { error->
+                    setLoading(false)
+                    try{
+                        val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            errors.getString("message"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }catch (e: Exception){
+                        Toast.makeText(this@RegisterActivity,e.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            ){
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String,String>()
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    val gson = Gson()
+                    val requestBody = gson.toJson(mahasiswa)
+                    return requestBody.toByteArray(StandardCharsets.UTF_8)
+                }
+
+                override fun getBodyContentType(): String {
+                    return "application/json"
                 }
             }
-        ){
-            @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String> {
-                val headers = HashMap<String,String>()
-                headers["Accept"] = "application/json"
-                return headers
-            }
-            @Throws(AuthFailureError::class)
-            override fun getBody(): ByteArray {
-                val gson = Gson()
-                val requestBody = gson.toJson(mahasiswa)
-                return requestBody.toByteArray(StandardCharsets.UTF_8)
-            }
-
-            override fun getBodyContentType(): String {
-                return "application/json"
-            }
+            queue!!.add(StringRequest)
         }
-        queue!!.add(StringRequest)
+
     }
 
     private fun createNotificationChannel()
@@ -191,6 +202,19 @@ class RegisterActivity : AppCompatActivity() {
 
         with(NotificationManagerCompat.from(this)){
             notify(notificationId1,builder.build())
+        }
+    }
+
+    fun setLoading(isLoading:Boolean){
+        if(isLoading){
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+            binding.layoutLoading?.root?.visibility = View.VISIBLE
+        }else{
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            binding.layoutLoading?.root?.visibility = View.VISIBLE
         }
     }
 }

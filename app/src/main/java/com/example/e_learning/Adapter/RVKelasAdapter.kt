@@ -7,7 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_learning.R
-import com.example.e_learning.data.Kelas
+import com.example.e_learning.models.Kelas
+
+//import com.example.e_learning.data.Kelas
 
 class RVKelasAdapter(private val data: Array<Kelas>) : RecyclerView.Adapter<RVKelasAdapter.viewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
@@ -22,7 +24,7 @@ class RVKelasAdapter(private val data: Array<Kelas>) : RecyclerView.Adapter<RVKe
         holder.tvTahunAjaran.text = currentItem.tahunAjaran
         holder.tvSesi.text = currentItem.sesiKelas
         holder.tvGuru.text = currentItem.guruPengajar
-        holder.tvGambar.setImageResource(currentItem.photo)
+//        holder.tvGambar.setImageResource(currentItem.photo)
     }
 
     override fun getItemCount(): Int {
