@@ -15,7 +15,7 @@ import com.example.e_learning.R
 import com.example.e_learning.models.Kelas
 import java.util.*
 
-class KelasAdapter(private var kelasList: List<Kelas>, context: FragmentKelas) :
+class KelasAdapter(private var kelasList: List<Kelas>, context : Context) :
     RecyclerView.Adapter<KelasAdapter.ViewHolder>(), Filterable {
 
     private var filterkelasList: MutableList<Kelas>

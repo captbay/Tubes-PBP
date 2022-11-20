@@ -61,7 +61,7 @@ class FragmentKelas : Fragment() {
 //        rvKelas.layoutManager = layoutManager
 //        rvKelas.setHasFixedSize(true)
 //        rvKelas.adapter = adapter
-        adapter = KelasAdapter(ArrayList(), this)
+        adapter = mActivity?.let { KelasAdapter(ArrayList(), it) }
         rvKelas.layoutManager = layoutManager
         rvKelas.setHasFixedSize(true)
         rvKelas.adapter = adapter
