@@ -1,54 +1,50 @@
 package com.example.e_learning.Fragment
-import android.content.DialogInterface
+
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils.isEmpty
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewbinding.ViewBindings
+import com.example.e_learning.R
+import com.example.e_learning.databinding.FragmentBerandaBinding
+import com.example.e_learning.databinding.FragmentTodoBinding
+import com.example.e_learning.data.todoList.ResponseData
+import com.example.e_learning.data.todoList.ToDoList
+import com.example.e_learning.Adapter.TodoAdapter
+import com.example.e_learning.Api.TodoApi
 import com.android.volley.AuthFailureError
+import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.e_learning.Activity.AddEditActivity
-import com.example.e_learning.Activity.HomeActivity
-//import com.example.e_learning.Activity.
-import com.example.e_learning.Adapter.TodoAdapter
-import com.example.e_learning.Api.TodoApi
-import com.example.e_learning.data.todoList.Constant
-import com.example.e_learning.data.todoList.ToDoList
-import com.example.e_learning.databinding.FragmentTodoBinding
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_todo.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
-import com.example.e_learning.data.todoList.ResponseData
-
-
-//import kotlinx.android.synthetic.main.fragment_beranda.*
-
 
 class ToDoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-    private var todoAdapter: TodoAdapter?= null
-    private var queue:RequestQueue? = null
+    private var adapter: TodoAdapter? = null
+    private var queue: RequestQueue? = null
+    private var layoutLoading: LinearLayout? = null
 
     companion object {
-        const val LAUNCH_ADD_ACTIVITY = 123
+        val LAUNCH_ADD_ACTIVITY = 123
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,62 +54,70 @@ class ToDoFragment : Fragment() {
         return view
     }
 
-    //Test
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        queue = Volley.newRequestQueue(requireContext())
-
-        binding.srTodo.setOnRefreshListener({ allTodo() })
+        layoutLoading = requireView().findViewById(R.id.layout_loading)
+        queue = Volley.newRequestQueue(requireActivity())
+        binding.srTodo.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { allTodo() })
         binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(s: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextSubmit(s: String?): Boolean {
-                todoAdapter!!.filter.filter(s)
+                adapter!!.filter.filter(s)
                 return false
             }
         })
 
-        binding.fabAdd.setOnClickListener{
+        binding.fabAdd.setOnClickListener {
             val i = Intent(requireActivity(), AddEditActivity::class.java)
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
-        todoAdapter = TodoAdapter(ArrayList(),requireContext() )
+        adapter = TodoAdapter(ArrayList(), requireContext(), this@ToDoFragment)
         binding.rvTodo.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTodo.adapter = todoAdapter
+        binding.rvTodo.adapter = adapter
         allTodo()
     }
 
     private fun allTodo() {
         binding.srTodo!!.isRefreshing = true
-        val stringRequest: StringRequest = object : StringRequest(Method.GET, TodoApi.GET_ALL_URL, Response.Listener { response ->
+        //val url = "https://elearning-pbp.herokuapp.com/todolists"
+        val stringRequest: StringRequest = object :
+            StringRequest(Request.Method.GET, TodoApi.GET_ALL_URL, Response.Listener { response ->
+                Log.d("responsee", response)
                 val gson = Gson()
-                var  todolist: Array<ToDoList> = gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
-                todoAdapter!!.setTodoList(todolist)
-                todoAdapter!!.filter.filter(binding.svTodo!!.query)
+                var todo: Array<ToDoList> =
+                    gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
+                Log.d("todonyawoiii", todo[0].judul)
+                Log.d("gson", gson.toString())
+                Log.d("ArrayHasil", todo.toString())
+                Log.d("todo", todo[0].judul)
+                Log.d("responsenya", response.toString())
+                adapter!!.setTodoList(todo)
+                adapter!!.filter.filter(binding.svTodo!!.query)
                 binding.srTodo!!.isRefreshing = false
 
-                if(!todolist.isEmpty())
-                    Toast.makeText(context, "Data Berhasil Diambil!", Toast.LENGTH_SHORT)
+                if (!todo.isEmpty())
+                    Toast.makeText(requireContext(), "Data Berhasil Diambil!", Toast.LENGTH_SHORT)
                         .show()
                 else
-                    Toast.makeText(context, "Data Kosong!", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Data Kosong!", Toast.LENGTH_SHORT)
                         .show()
             }, Response.ErrorListener { error ->
+                Log.d("responseror", error.toString())
                 binding.srTodo!!.isRefreshing = false
-                try{
+                try {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
                     Toast.makeText(
-                        requireActivity(),
+                        requireContext(),
                         errors.getString("message"),
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception) {
-                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             // Menambahkan header pada request
@@ -124,10 +128,69 @@ class ToDoFragment : Fragment() {
                 return headers
             }
         }
+
 //        Log.d("Hasil Queue",queue.toString())
+        Log.d("Queue Test", queue.toString())
+        Log.d("Link Api", queue.toString())
         queue!!.add(stringRequest)
     }
+
+    public fun deleteTodo(id: Long) {
+        setLoading(true)
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.DELETE, TodoApi.DELETE_URL + id, Response.Listener { response ->
+                setLoading(false)
+
+                val gson = Gson()
+                var mahasiswa = gson.fromJson(response, TodoApi::class.java)
+                if (mahasiswa != null)
+                    Toast.makeText(requireContext(), "Data Berhasil Dihapus!", Toast.LENGTH_SHORT)
+                        .show()
+                allTodo()
+            }, Response.ErrorListener { error ->
+                setLoading(false)
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        requireContext(),
+                        errors.getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: java.lang.Exception) {
+                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            // Menambahkan header pada request
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers: HashMap<String, String> = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+        }
+        queue!!.add(stringRequest)
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
+            requireActivity().window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+            layoutLoading!!.visibility = View.VISIBLE
+        } else {
+            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            layoutLoading!!.visibility = View.GONE
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == Activity.RESULT_OK) allTodo()
+    }
 }
+
 
 
 

@@ -4,90 +4,120 @@ package com.example.e_learning.Adapter
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.view.menu.ActionMenuItemView
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.example.e_learning.R
 import com.example.e_learning.Activity.AddEditActivity
 import com.example.e_learning.Activity.HomeActivity
 import com.example.e_learning.Fragment.ToDoFragment
-import com.example.e_learning.Fragment.ToDoFragment.Companion.LAUNCH_ADD_ACTIVITY
-import com.example.e_learning.R
 import com.example.e_learning.data.todoList.ToDoList
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 import kotlin.collections.ArrayList
-class TodoAdapter(private var todoList:  List<ToDoList>, context: Context) : RecyclerView.Adapter<TodoAdapter.ViewHolder>(), Filterable {
-    private var filteredTodoList: MutableList<ToDoList>
-    private val context: Context
+
+class TodoAdapter(private var todoList : List<ToDoList> , context: Context , fragment: Fragment) :
+    RecyclerView.Adapter<TodoAdapter.ViewHolder>(),Filterable{
+    private var filteredTodoList : MutableList<ToDoList>
+    private val context : Context
+    private val fragment : Fragment
 
     init {
         filteredTodoList = ArrayList(todoList)
         this.context = context
+        this.fragment = fragment
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    {
+        var tvJudul : TextView
+        var tvPesan : TextView
+        var tglDibuat : TextView
+        var tglDeadline : TextView
+        var status : TextView
+        var cvTodo : CardView
+        var btnDelete : ImageButton
+
+        init{
+            tvJudul = itemView.findViewById(R.id.tv_todo)
+            tvPesan = itemView.findViewById(R.id.tv_pesan)
+            tglDibuat = itemView.findViewById(R.id.tv_tgldibuat)
+            tglDeadline = itemView.findViewById(R.id.tv_tgldeadline)
+            status = itemView.findViewById(R.id.tv_status)
+            cvTodo = itemView.findViewById(R.id.cv_todo)
+            btnDelete = itemView.findViewById(R.id.btn_delete)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_todo, parent, false)
+        val view = inflater.inflate(R.layout.item_todo,parent,false)
         return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val todolist = filteredTodoList[position]
+        holder.tvJudul.text = todolist.judul
+        holder.tvPesan.text = todolist.pesan
+        holder.tglDibuat.text = todolist.tglDibuat.toString()
+        holder.tglDeadline.text = todolist.tglDeadline.toString()
+        holder.status.text = todolist.status.toString()
+
+        holder.btnDelete.setOnClickListener{
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
+            materialAlertDialogBuilder.setTitle("Konfirmasi")
+                .setMessage("Apakah anda yakin ingin menghapus data todo ini?")
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Yakin"){_, _ ->
+                    if(fragment is ToDoFragment) todolist.id?.let {
+                            it1->fragment.deleteTodo(
+                        it1
+                    )
+                    }
+                }.show()
+        }
+
+        holder.cvTodo.setOnClickListener{
+            val i = Intent(context, AddEditActivity::class.java)
+            i.putExtra("id", todolist.id)
+            if(context is HomeActivity)
+                context.startActivityForResult(i, ToDoFragment.LAUNCH_ADD_ACTIVITY)
+        }
     }
 
     override fun getItemCount(): Int {
         return filteredTodoList.size
     }
 
-    fun setTodoList(todoList: Array<ToDoList>) {
+    fun setTodoList(todoList: Array<ToDoList>)
+    {
         this.todoList = todoList.toList()
         filteredTodoList = todoList.toMutableList()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val todo = filteredTodoList[position]
-        holder.tvNama.text = todo.judul
-        holder.tvNPM.text = todo.pesan
-//        holder.tvFakultas.text = mahasiswa.fakultas
-//        holder.tvProdi.text = mahasiswa.prodi
-
-        holder.btnDelete.setOnClickListener {
-            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
-            materialAlertDialogBuilder.setTitle("konfirmasi")
-                .setMessage("Apakah anda yakin ingin menghapus data mahasiswa ini?")
-                .setNegativeButton("Batal", null)
-                .setPositiveButton("Hapus") { _, _ ->
-                    val toDoFragment = ToDoFragment()
-                     todo.id?.let { it1 ->
-//                        toDoFragment.deleteMahasiswa(
-//                            it1
-//                        )
-                    }
-                }
-                .show()
-        }
-        holder.cvTodo.setOnClickListener {
-            val i = Intent(context, AddEditActivity::class.java)
-//            val todoFragment = ToDoFragment()
-            i.putExtra("id", todo.id)
-            if (context is HomeActivity)
-                context.startActivityForResult(i,ToDoFragment.LAUNCH_ADD_ACTIVITY)
-        }
-    }
-
     override fun getFilter(): Filter {
-        return object : Filter() {
+        return object : Filter()
+        {
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 val charSequenceString = charSequence.toString()
                 val filtered: MutableList<ToDoList> = java.util.ArrayList()
-                if (charSequenceString.isEmpty()) {
+                if(charSequenceString.isEmpty())
+                {
                     filtered.addAll(todoList)
-                } else {
-                    for (todo in todoList) {
-                        if (todo.judul.lowercase(Locale.getDefault())
+                }else
+                {
+                    for(todo in todoList)
+                    {
+                        if(todo.judul.lowercase(Locale.getDefault())
                                 .contains(charSequenceString.lowercase(Locale.getDefault()))
-                        ) filtered.add(todo)
+                        )filtered.add(todo)
                     }
                 }
                 val filterResults = FilterResults()
@@ -95,31 +125,15 @@ class TodoAdapter(private var todoList:  List<ToDoList>, context: Context) : Rec
                 return filterResults
             }
 
-            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+            override fun publishResults(p0: CharSequence, p1: FilterResults) {
                 filteredTodoList.clear()
-                filteredTodoList.addAll(filterResults.values as List<ToDoList>)
+                filteredTodoList.addAll(p1.values as List<ToDoList>)
                 notifyDataSetChanged()
             }
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var tvNama: TextView
-        var tvNPM: TextView
-        var cvTodo: CardView
-        var btnDelete: ImageButton
-//        var tvFakultas : TextView
-//        var tvProdi : TextView
 
-        init {
-            tvNama = itemView.findViewById(R.id.tv_todo)
-            tvNPM = itemView.findViewById(R.id.tv_pesan)
-//            tvProdi = itemView.findViewById(R.id.tv_prodi)
-//            tvFakultas = itemView.findViewById(R.id.tv_fakultas)
-            btnDelete = itemView.findViewById(R.id.btn_delete)
-            cvTodo = itemView.findViewById(R.id.cv_todo)
-        }
-    }
 }
 
 //
