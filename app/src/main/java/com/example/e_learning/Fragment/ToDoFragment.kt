@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.SearchView
 import android.widget.Toast
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBindings
@@ -187,7 +188,11 @@ class ToDoFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == Activity.RESULT_OK) allTodo()
+        if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == AppCompatActivity.RESULT_OK)
+        {
+            setLoading(true)
+            allTodo()
+        }
     }
 }
 
