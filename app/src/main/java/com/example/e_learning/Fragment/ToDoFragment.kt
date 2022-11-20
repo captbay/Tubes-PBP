@@ -17,6 +17,7 @@ import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.e_learning.Activity.AddEditActivity
 import com.example.e_learning.Activity.HomeActivity
 //import com.example.e_learning.Activity.
@@ -61,6 +62,7 @@ class ToDoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        queue = Volley.newRequestQueue(requireContext())
 
         binding.srTodo.setOnRefreshListener({ allTodo() })
         binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
