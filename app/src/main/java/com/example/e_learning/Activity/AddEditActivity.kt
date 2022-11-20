@@ -191,13 +191,13 @@ class AddEditActivity : AppCompatActivity() {
 //
                 binding.etTodo!!.setText(todoo[0].judul)
                 binding.etPesan!!.setText(todoo[0].pesan)
+                binding.etPesan!!.setText(todoo[0].tglDibuat)
                 binding.etDeadline!!.setText(todoo[0].tglDeadline)
 //
 //
                 Toast.makeText(this@AddEditActivity, "Data berhasil diambil!", Toast.LENGTH_SHORT).show()
                 setLoading(false)
             }, Response.ErrorListener { error ->
-
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
