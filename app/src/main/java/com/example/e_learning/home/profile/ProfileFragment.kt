@@ -25,6 +25,7 @@ import com.example.e_learning.R
 import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.FragmentProfileBinding
+import com.example.e_learning.home.profile.camera.CameraActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.*

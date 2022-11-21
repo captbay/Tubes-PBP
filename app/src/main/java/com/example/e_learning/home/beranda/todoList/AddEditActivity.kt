@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda
+package com.example.e_learning.home.beranda.todoList
 
 
 import android.content.Intent
@@ -12,7 +12,6 @@ import android.widget.Toast
 import com.example.e_learning.R
 import com.example.e_learning.databinding.ActivityAddEditBinding
 //import com.example.e_learning.databinding.ActivityAuthBinding
-import com.example.e_learning.home.beranda.todoList.ToDoList
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -66,7 +65,8 @@ class AddEditActivity : AppCompatActivity() {
         val todoo = ToDoList( judul, pesan, dibuat, deadline,0)
         Log.d("initodo",todoo.pesan + todoo.tglDeadline + current)
         val stringRequest: StringRequest =
-            object : StringRequest(Request.Method.POST, TodoApi.ADD_URL, Response.Listener { response ->
+            object : StringRequest(Request.Method.POST,
+                TodoApi.ADD_URL, Response.Listener { response ->
                 Log.d("iniresponse",response)
                 val gson = Gson()
                 var todoo = gson.fromJson(response, ToDoList::class.java)

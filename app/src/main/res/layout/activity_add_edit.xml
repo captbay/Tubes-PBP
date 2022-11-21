@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".home.beranda.AddEditActivity">
+    tools:context=".home.beranda.todoList.AddEditActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"

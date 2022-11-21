@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".home.profile.CameraActivity">
+    tools:context=".home.profile.camera.CameraActivity">
 
     <FrameLayout
         android:layout_width="wrap_content"

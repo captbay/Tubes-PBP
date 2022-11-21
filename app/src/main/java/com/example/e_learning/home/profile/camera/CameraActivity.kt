@@ -1,4 +1,4 @@
-package com.example.e_learning.home.profile
+package com.example.e_learning.home.profile.camera
 
 import android.annotation.SuppressLint
 import android.hardware.Camera

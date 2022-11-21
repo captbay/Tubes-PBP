@@ -1,4 +1,4 @@
-package com.example.e_learning.home.profile
+package com.example.e_learning.home.profile.camera
 
 import android.content.Context
 import android.hardware.Camera

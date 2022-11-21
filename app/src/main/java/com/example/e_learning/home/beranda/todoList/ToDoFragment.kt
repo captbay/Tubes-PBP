@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda
+package com.example.e_learning.home.beranda.todoList
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.e_learning.R
 import com.example.e_learning.databinding.FragmentTodoBinding
-import com.example.e_learning.home.beranda.todoList.ResponseData
-import com.example.e_learning.home.beranda.todoList.ToDoList
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
