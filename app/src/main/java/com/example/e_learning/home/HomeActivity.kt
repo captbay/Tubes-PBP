@@ -3,7 +3,7 @@ package com.example.e_learning.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.e_learning.Fragment.*
+import com.example.e_learning.home.tugas.TugasFragment
 import com.example.e_learning.R
 import com.example.e_learning.home.beranda.BerandaFragment
 import com.example.e_learning.home.kelas.KelasFragment

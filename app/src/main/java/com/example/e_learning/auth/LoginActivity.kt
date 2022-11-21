@@ -23,6 +23,7 @@ import com.example.e_learning.home.profile.dataprofile.Profile
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
@@ -32,16 +33,13 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
-//BELOM JADI
+
 
 class LoginActivity : AppCompatActivity() {
     //Atribut yang akan dipakai
     val db by lazy{ ELEARNINGDB(this) }
 
 
-    private lateinit var inputUsername : TextInputLayout
-    private lateinit var inputPassword : TextInputLayout
-    private lateinit var mainLayout : ConstraintLayout
     var mbUsername : String? = null
     var mbPassword: String? = null
     var sharedPreferences  : SharedPreferences? = null
@@ -61,15 +59,17 @@ class LoginActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
 
         //binding
-//        binding = ActivityLoginBinding.inflate(layoutInflater)
-//        val view = binding.root
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        //Akhir dari binding
         getBundle()
 //        initComponents()
-        //Init Button --> bertipe val karena kegunaannya tidak berubah
-        val btnClear : Button = findViewById(R.id.btnClear)
-        val btnLogin : Button = findViewById(R.id.btnLogin)
-        val btnRegister : Button = findViewById(R.id.btnRegister)
+
+        //init button -> val ( kegunaan tidak pernah berubah)
+        val btnClear = binding.btnClear
+        val btnLogin = binding.btnLogin
+        val btnRegister = binding.btnRegister
         sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         queue = Volley.newRequestQueue(this@LoginActivity)
@@ -77,21 +77,25 @@ class LoginActivity : AppCompatActivity() {
         val moveHome = Intent(this, HomeActivity::class.java)
 
         // Aksi btnClear ketika di klik
-        binding.btnClear.setOnClickListener{
-            binding.loginUsername.setText("")
-//            inputUsername.getEditText()?.setText("")
-//            inputPassword.getEditText()?.setText("")
-
+        btnClear.setOnClickListener OnClickListener@{
+            //Tombol Clear Hapus Text
+            val inputUsername = view.findViewById<TextInputEditText>(R.id.loginUsername)
+            val inputPassword = view.findViewById<TextInputEditText>(R.id.loginPassword)
+            inputUsername.setText("")
+            inputPassword.setText("")
             // Memunculkan SnackBar
-            Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(view, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
+
         }
 
         btnLogin.setOnClickListener  OnClickListener@{
 
             //Inisialisasi kondisi
             var checkLogin = false // 0
-            val username : String = inputUsername.getEditText()?.getText().toString()
-            val password : String = inputPassword.getEditText()?.getText().toString()
+            val tietLoginUsername = binding.loginUsername // tiet = TextInputEditText
+            val tietLoginPassword = binding.loginPassword
+            val username : String = tietLoginUsername.getText().toString()
+            val password : String = tietLoginPassword.getText().toString()
 
             CoroutineScope(Dispatchers.IO).launch {
                 val Profile = db.profileDAO().getProfile()
@@ -112,24 +116,24 @@ class LoginActivity : AppCompatActivity() {
                 }
                 catch(e : Error){
                     if(username.isEmpty()) {
-                        inputUsername.requestFocus()
-                        inputUsername.setError("username must be filled with text")
+                        tietLoginUsername.requestFocus()
+                        tietLoginUsername.setError("username must be filled with text")
                         checkLogin = false
                         Log.i("Test", "Pengecekan Username Kosong Sukses")
                     }else {
                         Log.i("Test", "Username tidak kosong : "+username)
-                        inputUsername.setError(null)
+                        tietLoginUsername.setError(null)
                     }
 
                     //Pengecekan apakah Inputan Password kosong
                     if(password.isEmpty()) {
-                        inputPassword.setError("password must be filled with text")
-                        Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                        tietLoginPassword.setError("password must be filled with text")
+                        Snackbar.make(binding.loginLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
                         checkLogin = false
                         Log.i("Test","Pengecekan Password Kosong Sukses ")
                     }else{
                         Log.i("Test", "Password Tidak Kosong : "+password)
-                        inputPassword.setError(null)
+                        tietLoginPassword.setError(null)
                     }
                 }
 
@@ -141,30 +145,30 @@ class LoginActivity : AppCompatActivity() {
                     if (checkLogin == true) {
                         startActivity(moveHome)
                     }else if(checkLogin == false){
-                        Snackbar.make(mainLayout, "Username/password salah", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(view, "Username/password salah", Snackbar.LENGTH_LONG).show()
                     }
                     else
                     {
                         //Pengecekan apakah inputan username kosong
                         if(username.isEmpty()) {
-                            inputUsername.requestFocus()
-                            inputUsername.setError("username must be filled with text")
+                            tietLoginUsername.requestFocus()
+                            tietLoginPassword.setError("username must be filled with text")
                             checkLogin = false
                             Log.i("Test", "Pengecekan Username Kosong Sukses")
                         }else {
                             Log.i("Test", "Username tidak kosong : "+username)
-                            inputUsername.setError(null)
+                            tietLoginUsername.setError(null)
                         }
 
                         //Pengecekan apakah Inputan Password kosong
                         if(password.isEmpty()) {
-                            inputPassword.setError("password must be filled with text")
-                            Snackbar.make(mainLayout,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
+                            tietLoginPassword.setError("password must be filled with text")
+                            Snackbar.make(view,"Passwordnya kosong boss",Snackbar.LENGTH_SHORT).show()
                             checkLogin = false
                             Log.i("Test","Pengecekan Password Kosong Sukses ")
                         }else{
                             Log.i("Test", "Password Tidak Kosong : "+password)
-                            inputPassword.setError(null)
+                            tietLoginPassword.setError(null)
                         }
                     }
                 }
@@ -174,7 +178,7 @@ class LoginActivity : AppCompatActivity() {
 
         //btnRegister untuk pindah ke ActivityRegister
         btnRegister.setOnClickListener {
-            inputPassword.setError("")
+            binding.loginPassword.setError("")
             val moveRegister = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(moveRegister)
         }
@@ -254,21 +258,21 @@ class LoginActivity : AppCompatActivity() {
         Log.i("Test","Success Get Bundle")
     }
 
-    fun initComponents()
-    {
-        //overridePendingTransition(0,1) --> niatannya mau buat reset condition
-        //Hubungkan variabel dengan view di layout
-        //Ubah Title pada AppBar Aplikasi
-        inputUsername = findViewById(R.id.inputLayoutUsername)
-        inputPassword = findViewById(R.id.inputLayoutPassword)
-        mainLayout = findViewById(R.id.loginLayout)
-        getSupportActionBar()?.hide();
-        val mBundle = intent.extras
-        if(mBundle!=null)
-        {
-            inputUsername.getEditText()?.setText(mbUsername)
-//            inputPassword.getEditText()?.setText(mbPassword)
-        }
-
-    }
+//    fun initComponents()
+//    {
+//        //overridePendingTransition(0,1) --> niatannya mau buat reset condition
+//        //Hubungkan variabel dengan view di layout
+//        //Ubah Title pada AppBar Aplikasi
+//        inputUsername = findViewById(R.id.inputLayoutUsername)
+//        inputPassword = findViewById(R.id.inputLayoutPassword)
+//        mainLayout = findViewById(R.id.loginLayout)
+//        getSupportActionBar()?.hide();
+//        val mBundle = intent.extras
+//        if(mBundle!=null)
+//        {
+//            inputUsername.getEditText()?.setText(mbUsername)
+////            inputPassword.getEditText()?.setText(mbPassword)
+//        }
+//
+//    }
 }
