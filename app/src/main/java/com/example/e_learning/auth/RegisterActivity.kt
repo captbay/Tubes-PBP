@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.example.e_learning.home.HomeActivity
 import com.example.e_learning.home.profile.ProfileApi
 import com.example.e_learning.R
-import com.example.e_learning.zroomdatabase.ELEARNINGDB
+
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.gson.Gson
@@ -33,7 +33,7 @@ import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class RegisterActivity : AppCompatActivity() {
-    val db by lazy { ELEARNINGDB(this) }
+
     private lateinit var binding : ActivityRegisterBinding
     private val channel_id ="channel_notification_01"
     private val notificationId1 =101
