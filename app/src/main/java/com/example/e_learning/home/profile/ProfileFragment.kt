@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,7 @@ import java.nio.charset.StandardCharsets
 
 class ProfileFragment : Fragment() {
     val db by lazy { activity?.let { ELEARNINGDB(it) } }
-    private val id = "idKey"
+//    private val id = "idKey"
     private val myPreference = "myPref"
     var sharedPreferences: SharedPreferences? = null
     private var _binding: FragmentProfileBinding? = null
@@ -140,8 +141,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun allProfile(){
+        val sp = requireActivity().getSharedPreferences("user", 0)
+        val idLoginProfile : Int = sp.getInt("id",0)
+        Log.d("idyanglogin", idLoginProfile.toString())
 //        binding.linearLayout3.showLoading()
-        val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + id,
+        val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + idLoginProfile,
             Response.Listener { response->
                 val gson = Gson()
                 val profile = gson.fromJson(response, ResponseProfile::class.java)
