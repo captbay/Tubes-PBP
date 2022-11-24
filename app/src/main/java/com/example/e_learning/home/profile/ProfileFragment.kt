@@ -27,6 +27,7 @@ import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.FragmentProfileBinding
 import com.example.e_learning.home.profile.camera.CameraActivity
+import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -147,13 +148,17 @@ class ProfileFragment : Fragment() {
 //        binding.linearLayout3.showLoading()
         val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + idLoginProfile,
             Response.Listener { response->
+                Log.d("Responss", response)
                 val gson = Gson()
-                val profile = gson.fromJson(response, ResponseProfile::class.java)
+//              val profile = gson.fromJson(response, ResponseProfile::class.java)
+                val profile = gson.fromJson(response, Array<Profile>::class.java)
+                Log.d("Profile", profile.toString())
 
-                binding!!.username.setText(profile.data.username)
-                binding!!.email.setText(profile.data.email)
-                binding!!.tglLahir.setText(profile.data.tglLahir)
-                binding!!.noTelp.setText(profile.data.tglLahir)
+
+                binding!!.username.setText(profile[0].username)
+                binding!!.email.setText(profile[0].email)
+                binding!!.tglLahir.setText(profile[0].tglLahir)
+                binding!!.noTelp.setText(profile[0].tglLahir)
 
                 Toast.makeText(requireActivity(),"Data Berhasil Diambil!", Toast.LENGTH_SHORT).show()
 //                binding.linearLayout3.hideLoading()
