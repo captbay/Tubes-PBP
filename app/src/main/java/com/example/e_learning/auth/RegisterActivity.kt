@@ -29,6 +29,7 @@ import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -119,7 +120,7 @@ class RegisterActivity : AppCompatActivity() {
                     val Profile = gson.fromJson(response, Profile::class.java)
 
                     if(Profile != null)
-                        Toast.makeText(this@RegisterActivity,"Berhasil Register", Toast.LENGTH_SHORT).show()
+                        FancyToast.makeText(this@RegisterActivity,"Berhasil Register !",FancyToast.LENGTH_LONG, FancyToast.SUCCESS,true).show();
 
                     val returnIntent = Intent()
                     setResult(RESULT_OK, returnIntent)
@@ -131,13 +132,9 @@ class RegisterActivity : AppCompatActivity() {
                     try{
                         val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                         val errors = JSONObject(responseBody)
-                        Toast.makeText(
-                            this@RegisterActivity,
-                            errors.getString("message"),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        FancyToast.makeText(this@RegisterActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     }catch (e: Exception){
-                        Toast.makeText(this@RegisterActivity,e.message, Toast.LENGTH_SHORT).show()
+                        FancyToast.makeText(this@RegisterActivity,e.message, FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     }
                 }
             ){
