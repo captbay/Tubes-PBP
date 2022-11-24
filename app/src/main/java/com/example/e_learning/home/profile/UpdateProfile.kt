@@ -13,7 +13,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-
+import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityUpdateProfileBinding
 import com.example.e_learning.home.profile.dataprofile.Profile
 import kotlinx.android.synthetic.main.activity_update_profile.*
@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets
 import com.google.gson.Gson
 
 class UpdateProfile : AppCompatActivity() {
-
+    val db by lazy { ELEARNINGDB(this) }
     private lateinit var binding: ActivityUpdateProfileBinding
     private var queue: RequestQueue? = null
 

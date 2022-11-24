@@ -22,7 +22,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.e_learning.auth.LoginActivity
 import com.example.e_learning.R
-
+import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.FragmentProfileBinding
 import com.example.e_learning.home.profile.camera.CameraActivity
@@ -33,7 +33,7 @@ import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class ProfileFragment : Fragment() {
-
+    val db by lazy { activity?.let { ELEARNINGDB(it) } }
     private val id = "idKey"
     private val myPreference = "myPref"
     var sharedPreferences: SharedPreferences? = null
