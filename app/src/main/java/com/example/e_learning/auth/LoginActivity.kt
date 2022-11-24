@@ -187,10 +187,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(){
+        val inputUsername = findViewById<TextInputEditText>(R.id.loginUsername)
+        val inputPassword = findViewById<TextInputEditText>(R.id.loginPassword)
         val profile = Profile(
             0,
-            "ages",
-            "12345",
+            inputUsername.getText().toString(),
+            inputPassword.getText().toString(),
             "","",""
         )
 
