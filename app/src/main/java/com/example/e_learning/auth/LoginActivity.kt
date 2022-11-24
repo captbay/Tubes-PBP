@@ -221,11 +221,11 @@ class LoginActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@LoginActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    FancyToast.makeText(this@LoginActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     Log.d("volleyerr",errors.getString("message"))
                 }
                 catch (e:Exception){
-                    FancyToast.makeText(this@LoginActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    FancyToast.makeText(this@LoginActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     Log.d("volleyerr",e.message.toString())
                 }
             }){

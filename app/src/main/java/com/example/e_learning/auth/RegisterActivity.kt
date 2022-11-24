@@ -132,7 +132,7 @@ class RegisterActivity : AppCompatActivity() {
                     try{
                         val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                         val errors = JSONObject(responseBody)
-                        FancyToast.makeText(this@RegisterActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                        FancyToast.makeText(this@RegisterActivity,errors.getString("message"), FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     }catch (e: Exception){
                         FancyToast.makeText(this@RegisterActivity,e.message, FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     }
