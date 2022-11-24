@@ -10,6 +10,6 @@ class ProfileApi {
         val UPDATE_URL = BASE_URL + "users/"
         val DELETE_URL = BASE_URL + "users/"
         val LOGIN_URL = BASE_URL + "login"
-//        val REGISTER_URL = BASE_URL + "register"
+        val REGISTER_URL = BASE_URL + "register"
     }
 }

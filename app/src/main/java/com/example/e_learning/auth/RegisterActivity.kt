@@ -27,6 +27,7 @@ import com.example.e_learning.R
 import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.home.profile.dataprofile.Profile
+import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
@@ -78,36 +79,41 @@ class RegisterActivity : AppCompatActivity() {
             if(binding.regisUsername.text!!.isNotEmpty() && binding.regisPass.text!!.isNotEmpty() && binding.regisTelp.text!!.isNotEmpty()
                 && binding.regisTgl.text!!.isNotEmpty()){
                 checkRegisterInput = true
+                val bundle = Bundle()
+                bundle.putString("username", binding.regisUsername.text.toString())
+                bundle.putString("password", binding.regisPass.text.toString())
+                moveLogin.putExtra("registerBundle", bundle)
+
+                register()
+                sendNotification1()
+                startActivity(moveLogin)
 
             }
             if(!checkRegisterInput)
             {
                 return@setOnClickListener
             }
-            val bundle = Bundle()
-            bundle.putString("username", binding.regisUsername.text.toString())
-            bundle.putString("password", binding.regisPass.text.toString())
-            moveLogin.putExtra("registerBundle", bundle)
 
-            register()
-            sendNotification1()
-            startActivity(moveLogin)
         }
     }
 
     private fun register(){
-        binding.btnRegisterAkun.setOnClickListener{
+        val inputUsername = findViewById<TextInputEditText>(R.id.regisUsername)
+        val inputPassword = findViewById<TextInputEditText>(R.id.regisPass)
+        val inputEmail = findViewById<TextInputEditText>(R.id.regisEmail)
+        val inputTgl = findViewById<TextInputEditText>(R.id.regisTgl)
+        val inputTelp = findViewById<TextInputEditText>(R.id.regisTelp)
             setLoading(true)
             val mahasiswa = Profile(
                 0,
-                binding!!.regisUsername.text.toString(),
-                binding!!.regisPass.text.toString(),
-                binding!!.regisEmail.text.toString(),
-                binding!!.regisTgl.text.toString(),
-                binding!!.regisTelp.text.toString(),
+                inputUsername.getText().toString(),
+                inputPassword.getText().toString(),
+                inputEmail.getText().toString(),
+                inputTgl.getText().toString(),
+                inputTelp.getText().toString(),
             )
 
-            val StringRequest: StringRequest = object : StringRequest(Method.POST, ProfileApi.ADD_URL,
+            val StringRequest: StringRequest = object : StringRequest(Method.POST, ProfileApi.REGISTER_URL,
                 Response.Listener { response ->
                     val gson = Gson()
                     val Profile = gson.fromJson(response, Profile::class.java)
@@ -153,7 +159,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
             queue!!.add(StringRequest)
-        }
 
     }
 
