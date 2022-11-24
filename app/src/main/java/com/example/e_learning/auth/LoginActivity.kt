@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -203,7 +204,7 @@ class LoginActivity : AppCompatActivity() {
                 val mahasiswa = gson.fromJson(response, ResponseProfile::class.java)
 
                 if(mahasiswa != null)
-                    Toast.makeText(this@LoginActivity, "Berhasil Login", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this,"Berhasil Login!",FancyToast.LENGTH_LONG, FancyToast.SUCCESS,true).show();
 
                 val sp = this@LoginActivity.getSharedPreferences("user", 0)
                 val editor = sp.edit()
@@ -220,11 +221,11 @@ class LoginActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(this@LoginActivity, errors.getString("message"), Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@LoginActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     Log.d("volleyerr",errors.getString("message"))
                 }
                 catch (e:Exception){
-                    Toast.makeText(this@LoginActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@LoginActivity,"message",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
                     Log.d("volleyerr",e.message.toString())
                 }
             }){
