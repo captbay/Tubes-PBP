@@ -19,6 +19,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
@@ -34,7 +36,7 @@ class AddEditActivity : AppCompatActivity() {
         binding = ActivityAddEditBinding.inflate(layoutInflater)
         val view =binding.root
         setContentView(view)
-
+        Logger.addLogAdapter(AndroidLogAdapter())
 
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)
@@ -47,7 +49,7 @@ class AddEditActivity : AppCompatActivity() {
         }else
         {
             binding.tvJudulAddedit.setText("Edit Todo")
-            Log.d("ini_id",id.toString())
+            Logger.d("ini_id",id.toString())
             getTodoById(id)
             binding.btnSave.setOnClickListener { updateTodo(id) }
         }
@@ -61,13 +63,13 @@ class AddEditActivity : AppCompatActivity() {
         var pesan = binding.etPesan?.getText().toString()
         var dibuat = binding.etDibuat?.getText().toString()
         var deadline = binding.etDeadline?.getText().toString()
-        Log.d("inputan" , judul + pesan + dibuat +deadline)
+        Logger.d("inputan" , judul + pesan + dibuat +deadline)
         val todoo = ToDoList( judul, pesan, dibuat, deadline,0)
         Log.d("initodo",todoo.pesan + todoo.tglDeadline + current)
         val stringRequest: StringRequest =
             object : StringRequest(Request.Method.POST,
                 TodoApi.ADD_URL, Response.Listener { response ->
-                Log.d("iniresponse",response)
+                Logger.d("iniresponse",response)
                 val gson = Gson()
                 var todoo = gson.fromJson(response, ToDoList::class.java)
 
@@ -81,7 +83,7 @@ class AddEditActivity : AppCompatActivity() {
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
-                Log.d("responseror",error.toString())
+                Logger.d("responseror",error.toString())
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
@@ -183,7 +185,7 @@ class AddEditActivity : AppCompatActivity() {
         setLoading(true)
         val stringRequest: StringRequest = object :
             StringRequest(Method.GET, TodoApi.GET_BY_ID_URL + id, Response.Listener { response ->
-                Log.d("iniresponeget", response)
+                Logger.d("iniresponeget", response)
                 val gson = Gson()
                 val todoo = gson.fromJson(response, Array<ToDoList>::class.java)
 //

@@ -11,6 +11,7 @@ import com.example.e_learning.home.kelas.KelasFragment
 import com.example.e_learning.home.profile.ProfileFragment
 import com.google.android.material.navigation.NavigationBarView
 import com.master.permissionhelper.PermissionHelper
+import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 
 
@@ -22,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
        // supportActionBar()?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        Logger.addLogAdapter(AndroidLogAdapter())
         //Untuk Default Fragment
         if(savedInstanceState ==null)
         {

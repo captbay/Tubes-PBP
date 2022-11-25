@@ -29,6 +29,8 @@ import com.example.e_learning.databinding.ActivityRegisterBinding
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_register.*
 import org.json.JSONObject
@@ -49,7 +51,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        Logger.addLogAdapter(AndroidLogAdapter())
         createNotificationChannel()
         val moveLogin = Intent(this, LoginActivity::class.java)
 //      initComponent()

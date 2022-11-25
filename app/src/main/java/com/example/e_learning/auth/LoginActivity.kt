@@ -121,9 +121,9 @@ class LoginActivity : AppCompatActivity() {
                         tietLoginUsername.requestFocus()
                         tietLoginUsername.setError("username must be filled with text")
                         checkLogin = false
-                        Log.i("Test", "Pengecekan Username Kosong Sukses")
+                        Logger.i("Test", "Pengecekan Username Kosong Sukses")
                     }else {
-                        Log.i("Test", "Username tidak kosong : "+username)
+                        Logger.i("Test", "Username tidak kosong : "+username)
                         tietLoginUsername.setError(null)
                     }
 
@@ -200,7 +200,7 @@ class LoginActivity : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.POST, ProfileApi.LOGIN_URL, Response.Listener { response ->
                 val gson = Gson()
-                Log.d("volleyerr",response.toString())
+                Logger.d("volleyerr",response.toString())
                 val mahasiswa = gson.fromJson(response, ResponseProfile::class.java)
 
                 if(mahasiswa != null)
@@ -217,16 +217,16 @@ class LoginActivity : AppCompatActivity() {
 
 
             }, Response.ErrorListener { error ->
-                Log.d("volleyerr",error.toString())
+                Logger.d("volleyerr",error.toString())
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
                     FancyToast.makeText(this@LoginActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-                    Log.d("volleyerr",errors.getString("message"))
+                    Logger.d("volleyerr",errors.getString("message"))
                 }
                 catch (e:Exception){
                     FancyToast.makeText(this@LoginActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
-                    Log.d("volleyerr",e.message.toString())
+                    Logger.d("volleyerr",e.message.toString())
                 }
             }){
             @Throws(AuthFailureError::class)
