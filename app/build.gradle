@@ -78,4 +78,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.8'
 
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+    implementation 'com.orhanobut:logger:2.2.0'
 }

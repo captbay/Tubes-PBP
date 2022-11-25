@@ -26,32 +26,30 @@ class UpdateProfile : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateProfileBinding
     private var queue: RequestQueue? = null
 
-    private val id = "idKey"
-    private val myPreference = "myPref"
+
     var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getSupportActionBar()?.hide()
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
-
+        val sp = getSharedPreferences("user", 0)
+        val id : Int = sp.getInt("id", 0)
         val view = binding.root
         setContentView(view)
-        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
-        val id = sharedPreferences!!.getString(id,"")!!.toInt()
 //        loadData(id)
         queue = Volley.newRequestQueue(this)
 
         setLoading(true)
-        val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + id,
+        val StringRequest: StringRequest = object : StringRequest(Method.GET + id , ProfileApi.GET_BY_ID_URL + id,
             Response.Listener { response->
                 val gson = Gson()
-                val Profile = gson.fromJson(response, Profile::class.java)
+                val Profile = gson.fromJson(response, Array<Profile>::class.java)
 
-                binding!!.editUsername.setText(Profile?.username)
-                binding!!.editEmail.setText(Profile?.email)
-                binding!!.editTglLahir.setText(Profile?.tglLahir)
-                binding!!.editNoTelp.setText(Profile?.noTelp)
+                binding!!.editUsername.setText(Profile[0].username)
+                binding!!.editEmail.setText(Profile[0].email)
+                binding!!.editTglLahir.setText(Profile[0].tglLahir)
+                binding!!.editNoTelp.setText(Profile[0].noTelp)
 
                 Toast.makeText(this,"Data Berhasil Diambil!", Toast.LENGTH_SHORT).show()
                 setLoading(false)

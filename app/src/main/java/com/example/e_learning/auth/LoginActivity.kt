@@ -5,36 +5,32 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.e_learning.R
+import com.example.e_learning.databinding.ActivityLoginBinding
 import com.example.e_learning.home.HomeActivity
 import com.example.e_learning.home.profile.ProfileApi
-import com.example.e_learning.R
-import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
-import com.example.e_learning.databinding.ActivityLoginBinding
+import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -66,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(view)
         //Akhir dari binding
         getBundle()
+        Logger.addLogAdapter(AndroidLogAdapter())
 //        initComponents()
 
         //init button -> val ( kegunaan tidak pernah berubah)
@@ -82,6 +79,8 @@ class LoginActivity : AppCompatActivity() {
 
         // Aksi btnClear ketika di klik
         btnClear.setOnClickListener OnClickListener@{
+            //Untuk kebutuhan Debbugging
+            Logger.d("Masuk ke btn clear listener")
             //Tombol Clear Hapus Text
 
             inputUsername.setText("")
@@ -92,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener  OnClickListener@{
-
+            Logger.d("Masuk ke btn login listener")
             //Inisialisasi kondisi
             var checkLogin = false // 0
             val tietLoginUsername = binding.loginUsername // tiet = TextInputEditText
@@ -188,6 +187,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(){
+        Logger.d("Masuk ke fungsi login listener")
         val inputUsername = findViewById<TextInputEditText>(R.id.loginUsername)
         val inputPassword = findViewById<TextInputEditText>(R.id.loginPassword)
         val profile = Profile(
