@@ -49,6 +49,7 @@ import com.itextpdf.layout.element.Paragraph
 import com.itextpdf.layout.element.Table
 import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
+import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -208,20 +209,15 @@ class ProfileFragment : Fragment() {
                 binding!!.tglLahir.setText(profile[0].tglLahir)
                 binding!!.noTelp.setText(profile[0].tglLahir)
 
-                Toast.makeText(requireActivity(),"Data Berhasil Diambil!", Toast.LENGTH_SHORT).show()
 //                binding.linearLayout3.hideLoading()
             }, Response.ErrorListener { error->
 //                binding.linearLayout3.hideLoading()
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        requireActivity(),
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(requireActivity(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 }catch (e: Exception){
-                    Toast.makeText(requireActivity(),e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 }
             }
         ){
@@ -240,7 +236,7 @@ class ProfileFragment : Fragment() {
         //ini berguna untuk akses Writing ke Storage HP kalian dalam mode Download.
         //harus diketik jangan COPAS!!!!
         val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
-        val file = File(pdfPath, "PDFHasil.pdf")
+        val file = File(pdfPath, "PDFNameTag.pdf")
         FileOutputStream(file)
 //        val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
 //        val file = File(pdfPath, "pdf_10541.pdf")
@@ -250,23 +246,23 @@ class ProfileFragment : Fragment() {
         val writer = PdfWriter(file)
         val pdfDocument = PdfDocument(writer)
         val document = Document(pdfDocument)
-        pdfDocument.defaultPageSize = PageSize.A4
-        document.setMargins(5f, 5f, 5f, 5f)
+        pdfDocument.defaultPageSize = PageSize.A6
+        document.setMargins(2f, 1f, 2f, 1f)
         @SuppressLint("UseCompatLoadingForDrawables") val d = getDrawable(requireContext(),R.drawable.welcome_notif2)
 
         //penambahan gambar pada Gambar atas
-        val bitmap = (d as BitmapDrawable?)!!.bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        val bitmapData = stream.toByteArray()
-        val imageData = ImageDataFactory.create(bitmapData)
-        val image = Image(imageData)
+//        val bitmap = (d as BitmapDrawable?)!!.bitmap
+//        val stream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+//        val bitmapData = stream.toByteArray()
+//        val imageData = ImageDataFactory.create(bitmapData)
+//        val image = Image(imageData)
         val namapengguna = Paragraph("Identitas Pengguna").setBold().setFontSize(24f)
             .setTextAlignment(TextAlignment.CENTER)
         val group = Paragraph(
             """
                         Berikut adalah
-                        Nama Pengguna UAJY 2022/2023
+                        Name Tag Aplikasi E-Learning A3
                         """.trimIndent()).setTextAlignment(TextAlignment.CENTER).setFontSize(12f)
 
         //proses pembuatan table
@@ -295,7 +291,7 @@ class ProfileFragment : Fragment() {
         val qrCodeObject = barcodeQRCode.createFormXObject(ColorConstants.BLACK, pdfDocument)
         val qrCodeImage = Image(qrCodeObject).setWidth(80f).setHorizontalAlignment(HorizontalAlignment.CENTER)
 
-        document.add(image)
+//        document.add(image)
         document.add(namapengguna)
         document.add(group)
         document.add(table)
@@ -303,7 +299,7 @@ class ProfileFragment : Fragment() {
 
 
         document.close()
-        Toast.makeText(requireContext(), "Pdf Created", Toast   .LENGTH_LONG).show()
+        FancyToast.makeText(requireContext(),"Name Tag Created",FancyToast.LENGTH_LONG, FancyToast.INFO,true).show();
     }
 }
 

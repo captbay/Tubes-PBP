@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
@@ -74,7 +75,7 @@ class AddEditActivity : AppCompatActivity() {
                 var todoo = gson.fromJson(response, ToDoList::class.java)
 
                 if(todoo != null)
-                    Toast.makeText(this@AddEditActivity, "Data Berhasil Ditambah", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -87,13 +88,9 @@ class AddEditActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@AddEditActivity,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@AddEditActivity,errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 } catch (e: Exception) {
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,true).show();
                 }
             }) {
                 @Throws(AuthFailureError::class)
@@ -135,11 +132,7 @@ class AddEditActivity : AppCompatActivity() {
                 var todo = gson.fromJson(response, Todo::class.java)
 
                 if (todo != null)
-                    Toast.makeText(
-                        this@AddEditActivity,
-                        "Data berhasil diupdate",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -151,13 +144,9 @@ class AddEditActivity : AppCompatActivity() {
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@AddEditActivity,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 } catch (e: Exception) {
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -196,20 +185,16 @@ class AddEditActivity : AppCompatActivity() {
 
 
 
-                Toast.makeText(this@AddEditActivity, "Data berhasil diambil!", Toast.LENGTH_SHORT).show()
+                FancyToast.makeText(this@AddEditActivity,"Data berhasil diambil!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@AddEditActivity,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 } catch (e: Exception) {
-                    Toast.makeText(this@AddEditActivity, e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this@AddEditActivity, e.message, FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
                 }
             }) {
             @Throws(AuthFailureError::class)
