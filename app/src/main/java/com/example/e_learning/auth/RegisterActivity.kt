@@ -104,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
         val inputEmail = findViewById<TextInputEditText>(R.id.regisEmail)
         val inputTgl = findViewById<TextInputEditText>(R.id.regisTgl)
         val inputTelp = findViewById<TextInputEditText>(R.id.regisTelp)
-            setLoading(true)
+        setLoading(true)
             val mahasiswa = Profile(
                 0,
                 inputUsername.getText().toString(),

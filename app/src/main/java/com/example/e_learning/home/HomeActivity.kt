@@ -30,7 +30,8 @@ class HomeActivity : AppCompatActivity() {
         }
         val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
 
-        val permissionHelper = PermissionHelper(this, arrayOf(Manifest.permission.CAMERA), 100)
+        val permissionHelper = PermissionHelper(this, arrayOf(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ,Manifest.permission.MANAGE_EXTERNAL_STORAGE,Manifest.permission.INTERNET ), 100)
         permissionHelper.requestAll {
             Logger.d("Berhasil Request")
         }

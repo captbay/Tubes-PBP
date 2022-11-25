@@ -1,18 +1,23 @@
 package com.example.e_learning.home.profile
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
@@ -30,9 +35,44 @@ import com.example.e_learning.home.profile.camera.CameraActivity
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
+import com.itextpdf.barcodes.BarcodeQRCode
+import com.itextpdf.io.image.ImageDataFactory
+import com.itextpdf.io.source.ByteArrayOutputStream
+import com.itextpdf.kernel.colors.ColorConstants
+import com.itextpdf.kernel.geom.PageSize
+import com.itextpdf.kernel.pdf.PdfDocument
+import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.layout.Document
+import com.itextpdf.layout.element.Cell
+import com.itextpdf.layout.element.Image
+import com.itextpdf.layout.element.Paragraph
+import com.itextpdf.layout.element.Table
+import com.itextpdf.layout.property.HorizontalAlignment
+import com.itextpdf.layout.property.TextAlignment
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+//import com.itextpdf.barcodes.BarcodeQRCode
+//import com.itextpdf.io.image.ImageDataFactory
+//import com.itextpdf.io.source.ByteArrayOutputStream
+//import com.itextpdf.kernel.colors.ColorConstants
+//import com.itextpdf.kernel.geom.PageSize
+//import com.itextpdf.kernel.pdf.PdfDocument
+//import com.itextpdf.kernel.pdf.PdfName.Table
+//import com.itextpdf.kernel.pdf.PdfWriter
+//import com.itextpdf.layout.Document
+//import com.itextpdf.layout.element.Cell
+//import com.itextpdf.layout.element.Image
+//import com.itextpdf.layout.element.Paragraph
+//import com.itextpdf.layout.element.Table
+//import com.itextpdf.layout.property.HorizontalAlignment
+//import com.itextpdf.layout.property.TextAlignment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
+//import java.io.File
+//import java.io.FileOutputStream
 import java.nio.charset.StandardCharsets
+
 
 class ProfileFragment : Fragment() {
     val db by lazy { activity?.let { ELEARNINGDB(it) } }
@@ -106,6 +146,14 @@ class ProfileFragment : Fragment() {
             alert11.show()
 
 
+        }
+
+        binding.buttonPdf.setOnClickListener{
+            val username = binding.username.getText().toString()
+            val email = binding.email.getText().toString()
+            val tanggalLahir = binding.tglLahir.getText().toString()
+            val notelp = binding.noTelp.getText().toString()
+            createPdf(username, email,tanggalLahir,notelp)
         }
     }
 
@@ -185,6 +233,77 @@ class ProfileFragment : Fragment() {
             }
         }
         queue!!.add(StringRequest)
+    }
+
+
+    private fun createPdf(username: String, email: String, tlp: String, tglLahir: String) {
+        //ini berguna untuk akses Writing ke Storage HP kalian dalam mode Download.
+        //harus diketik jangan COPAS!!!!
+        val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+        val file = File(pdfPath, "PDFHasil.pdf")
+        FileOutputStream(file)
+//        val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+//        val file = File(pdfPath, "pdf_10541.pdf")
+//        FileOutputStream(file)
+
+        //inisaliasi pembuatan PDF
+        val writer = PdfWriter(file)
+        val pdfDocument = PdfDocument(writer)
+        val document = Document(pdfDocument)
+        pdfDocument.defaultPageSize = PageSize.A4
+        document.setMargins(5f, 5f, 5f, 5f)
+        @SuppressLint("UseCompatLoadingForDrawables") val d = getDrawable(requireContext(),R.drawable.welcome_notif2)
+
+        //penambahan gambar pada Gambar atas
+        val bitmap = (d as BitmapDrawable?)!!.bitmap
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val bitmapData = stream.toByteArray()
+        val imageData = ImageDataFactory.create(bitmapData)
+        val image = Image(imageData)
+        val namapengguna = Paragraph("Identitas Pengguna").setBold().setFontSize(24f)
+            .setTextAlignment(TextAlignment.CENTER)
+        val group = Paragraph(
+            """
+                        Berikut adalah
+                        Nama Pengguna UAJY 2022/2023
+                        """.trimIndent()).setTextAlignment(TextAlignment.CENTER).setFontSize(12f)
+
+        //proses pembuatan table
+        val width = floatArrayOf(100f, 100f)
+        val table = Table(width)
+        //pengisian table dengan data-data
+        table.setHorizontalAlignment(HorizontalAlignment.CENTER)
+        table.addCell(Cell().add(Paragraph("Nama Pengguna")))
+        table.addCell(Cell().add(Paragraph(username)))
+        table.addCell(Cell().add(Paragraph("Email")))
+        table.addCell(Cell().add(Paragraph(email)))
+        table.addCell(Cell().add(Paragraph("No Telepon")))
+        table.addCell(Cell().add(Paragraph(tlp)))
+        table.addCell(Cell().add(Paragraph("Tanggal Lahir")))
+        table.addCell(Cell().add(Paragraph(tglLahir)))
+
+
+        //pembuatan QR CODE secara generate dengan bantuan IText7
+        val barcodeQRCode = BarcodeQRCode(
+            """
+                                        $username
+                                        $email
+                                        $tlp
+                                        $tglLahir
+                                        """.trimIndent())
+        val qrCodeObject = barcodeQRCode.createFormXObject(ColorConstants.BLACK, pdfDocument)
+        val qrCodeImage = Image(qrCodeObject).setWidth(80f).setHorizontalAlignment(HorizontalAlignment.CENTER)
+
+        document.add(image)
+        document.add(namapengguna)
+        document.add(group)
+        document.add(table)
+        document.add(qrCodeImage)
+
+
+        document.close()
+        Toast.makeText(requireContext(), "Pdf Created", Toast   .LENGTH_LONG).show()
     }
 }
 

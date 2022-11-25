@@ -80,4 +80,7 @@ dependencies {
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
     implementation 'com.orhanobut:logger:2.2.0'
     implementation 'com.github.pankaj89:PermissionHelper:2.3'
+
+    //Itext
+    implementation 'com.itextpdf:itext7-core:7.1.13'
 }
