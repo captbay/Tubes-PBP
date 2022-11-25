@@ -13,12 +13,11 @@ import com.google.android.material.navigation.NavigationBarView
 import com.master.permissionhelper.PermissionHelper
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import nl.joery.animatedbottombar.AnimatedBottomBar
 
 
 class HomeActivity : AppCompatActivity() {
-//    companion object {
-//        const val LAUNCH_ADD_ACTIVITY = 123
-//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
        // supportActionBar()?.hide()
         super.onCreate(savedInstanceState)
@@ -29,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
         {
             changeFragment(BerandaFragment())
         }
-        val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
+        val bottomNav : AnimatedBottomBar = findViewById(R.id.bottom_navigation)
 
         val permissionHelper = PermissionHelper(this, arrayOf(Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
             ,Manifest.permission.MANAGE_EXTERNAL_STORAGE,Manifest.permission.INTERNET ), 100)
@@ -40,21 +39,21 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-        bottomNav.setOnItemSelectedListener{ item ->
-            when(item.itemId){
-                R.id.beranda -> {
+        bottomNav.onTabSelected = { item ->
+            when(item.id){
+                R.id.tab_beranda -> {
                     changeFragment(BerandaFragment())
                     true
                 }
-                R.id.kelas -> {
+                R.id.tab_kelas -> {
                     changeFragment(KelasFragment())
                     true
                 }
-                R.id.tugas -> {
+                R.id.tab_tugas -> {
                     changeFragment(TugasFragment())
                     true
                 }
-                R.id.profile -> {
+                R.id.tab_profile -> {
 
                     changeFragment(ProfileFragment())
                     true

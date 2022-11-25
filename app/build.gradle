@@ -77,10 +77,15 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.8'
 
+    //library fancytoast
     implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+    //library logger
     implementation 'com.orhanobut:logger:2.2.0'
+    //libbrary permission helper
     implementation 'com.github.pankaj89:PermissionHelper:2.3'
-
     //Itext
     implementation 'com.itextpdf:itext7-core:7.1.13'
+    //bottom bar
+    implementation 'nl.joery.animatedbottombar:library:1.1.0'
+
 }
