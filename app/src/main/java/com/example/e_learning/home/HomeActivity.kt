@@ -1,5 +1,6 @@
 package com.example.e_learning.home
 
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,8 @@ import com.example.e_learning.home.beranda.BerandaFragment
 import com.example.e_learning.home.kelas.KelasFragment
 import com.example.e_learning.home.profile.ProfileFragment
 import com.google.android.material.navigation.NavigationBarView
+import com.master.permissionhelper.PermissionHelper
+import com.orhanobut.logger.Logger
 
 
 class HomeActivity : AppCompatActivity() {
@@ -26,6 +29,12 @@ class HomeActivity : AppCompatActivity() {
             changeFragment(BerandaFragment())
         }
         val bottomNav : NavigationBarView = findViewById(R.id.bottom_navigation)
+
+        val permissionHelper = PermissionHelper(this, arrayOf(Manifest.permission.CAMERA), 100)
+        permissionHelper.requestAll {
+            Logger.d("Berhasil Request")
+        }
+        // , Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONEs
 
 
 
