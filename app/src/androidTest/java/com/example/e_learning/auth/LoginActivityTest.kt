@@ -31,16 +31,6 @@ class LoginActivityTest {
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(LoginActivity::class.java)
 
-    @Rule
-    @JvmField
-    var mGrantPermissionRule =
-        GrantPermissionRule.grant(
-            "android.permission.CAMERA",
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.MANAGE_EXTERNAL_STORAGE"
-        )
-
     @Test
     fun loginActivityTest() {
         val textInputEditText = onView(
@@ -142,7 +132,6 @@ class LoginActivityTest {
         )
         materialButton3.perform(click())
         onView(isRoot()).perform(waitFor(3000))
-        pressBack()
 
         val materialButton4 = onView(
             allOf(
@@ -192,7 +181,7 @@ class LoginActivityTest {
         )
         textInputEditText5.perform(replaceText("1"), closeSoftKeyboard())
         onView(isRoot()).perform(waitFor(3000))
-        pressBack()
+
 
         val materialButton5 = onView(
             allOf(
