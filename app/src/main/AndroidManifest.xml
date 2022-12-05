@@ -35,7 +35,7 @@
             android:exported="false"></activity>
         <activity
             android:name=".home.beranda.todoList.AddEditActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".home.profile.UpdateProfile"
             android:exported="false" />

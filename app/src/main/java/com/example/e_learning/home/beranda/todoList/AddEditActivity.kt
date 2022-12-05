@@ -58,61 +58,72 @@ class AddEditActivity : AppCompatActivity() {
 
     private fun createTodo()
     {
-        setLoading(true)
+//        setLoading(true)
         val current = LocalDate.now().toString()
-        var judul = binding.etTodo?.getText().toString()
-        var pesan = binding.etPesan?.getText().toString()
-        var dibuat = binding.etDibuat?.getText().toString()
-        var deadline = binding.etDeadline?.getText().toString()
-        Logger.d("inputan" , judul + pesan + dibuat +deadline)
-        val todoo = ToDoList( judul, pesan, dibuat, deadline,0)
-        Log.d("initodo",todoo.pesan + todoo.tglDeadline + current)
-        val stringRequest: StringRequest =
-            object : StringRequest(Request.Method.POST,
-                TodoApi.ADD_URL, Response.Listener { response ->
-                Logger.d("iniresponse",response)
-                val gson = Gson()
-                var todoo = gson.fromJson(response, ToDoList::class.java)
+        if(binding.etTodo?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Judul tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+        }else if(binding.etPesan?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Pesan tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+        }else if(binding.etDibuat?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Tanggal Dibuat tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+        }else if(binding.etDeadline?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Tanggal Deadline tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+        }else{
+            var judul = binding.etTodo?.getText().toString()
+            var pesan = binding.etPesan?.getText().toString()
+            var dibuat = binding.etDibuat?.getText().toString()
+            var deadline = binding.etDeadline?.getText().toString()
+            Logger.d("inputan" , judul + pesan + dibuat +deadline)
+            val todoo = ToDoList( judul, pesan, dibuat, deadline,0)
+            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current)
+            val stringRequest: StringRequest =
+                object : StringRequest(Request.Method.POST,
+                    TodoApi.ADD_URL, Response.Listener { response ->
+                        Logger.d("iniresponse",response)
+                        val gson = Gson()
+                        var todoo = gson.fromJson(response, ToDoList::class.java)
 
-                if(todoo != null)
-                    FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
+                        if(todoo != null)
+                            FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
 
-                val returnIntent = Intent()
-                setResult(RESULT_OK, returnIntent)
-                finish()
+                        val returnIntent = Intent()
+                        setResult(RESULT_OK, returnIntent)
+                        finish()
 
-                setLoading(false)
-            }, Response.ErrorListener { error ->
-                setLoading(false)
-                Logger.d("responseror",error.toString())
-                try{
-                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditActivity,errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
-                } catch (e: Exception) {
-                    FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,true).show();
+                        setLoading(false)
+                    }, Response.ErrorListener { error ->
+                        setLoading(false)
+                        Logger.d("responseror",error.toString())
+                        try{
+                            val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                            val errors = JSONObject(responseBody)
+                            FancyToast.makeText(this@AddEditActivity,errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                        } catch (e: Exception) {
+                            FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,true).show();
+                        }
+                    }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getHeaders(): Map<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Accept"] = "application/json"
+                        return headers
+                    }
+
+                    @Throws(AuthFailureError::class)
+                    override fun getBody(): ByteArray {
+                        val gson = Gson()
+                        val requestBody = gson.toJson(todoo)
+                        return requestBody.toByteArray(StandardCharsets.UTF_8)
+                    }
+
+                    override fun getBodyContentType(): String {
+                        return "application/json"
+                    }
                 }
-            }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers["Accept"] = "application/json"
-                    return headers
-                }
+            // Menambahkan request ke request queue
+            queue!!.add(stringRequest)
+        }
 
-                @Throws(AuthFailureError::class)
-                override fun getBody(): ByteArray {
-                    val gson = Gson()
-                    val requestBody = gson.toJson(todoo)
-                    return requestBody.toByteArray(StandardCharsets.UTF_8)
-                }
-
-                override fun getBodyContentType(): String {
-                    return "application/json"
-                }
-            }
-        // Menambahkan request ke request queue
-        queue!!.add(stringRequest)
     }
 
     private fun updateTodo(id : Long) {
