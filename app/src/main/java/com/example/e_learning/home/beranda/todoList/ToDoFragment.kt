@@ -82,11 +82,11 @@ class ToDoFragment : Fragment() {
                 val gson = Gson()
                 var todo: Array<ToDoList> =
                     gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
-                Log.d("todonyawoiii", todo[0].judul)
-                Log.d("gson", gson.toString())
-                Log.d("ArrayHasil", todo.toString())
-                Log.d("todo", todo[0].judul)
-                Log.d("responsenya", response.toString())
+//                Log.d("todonyawoiii", todo[0].judul)
+//                Log.d("gson", gson.toString())
+//                Log.d("ArrayHasil", todo.toString())
+//                Log.d("todo", todo[0].judul)
+//                Log.d("responsenya", response.toString())
                 adapter!!.setTodoList(todo)
                 adapter!!.filter.filter(binding.svTodo!!.query)
                 binding.srTodo!!.isRefreshing = false
