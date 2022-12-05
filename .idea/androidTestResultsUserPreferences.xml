@@ -8,9 +8,13 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+<<<<<<< Updated upstream
                   <entry key="06119250BJ001015" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="INFINIX MOBILITY LIMITED" value="120" />
+=======
+                  <entry key="Duration" value="90" />
+>>>>>>> Stashed changes
                   <entry key="INFINIX MOBILITY LIMITED&#10; Infinix X682C" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
@@ -18,6 +22,7 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+<<<<<<< Updated upstream
         <entry key="-889896410">
           <value>
             <AndroidTestResultsTableState>
@@ -32,6 +37,8 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+=======
+>>>>>>> Stashed changes
       </map>
     </option>
   </component>
