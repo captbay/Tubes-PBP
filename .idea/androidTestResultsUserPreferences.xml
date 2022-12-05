@@ -3,42 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
-        <entry key="-967211510">
+        <entry key="1221651585">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
-<<<<<<< Updated upstream
-                  <entry key="06119250BJ001015" value="120" />
                   <entry key="Duration" value="90" />
-                  <entry key="INFINIX MOBILITY LIMITED" value="120" />
-=======
-                  <entry key="Duration" value="90" />
->>>>>>> Stashed changes
-                  <entry key="INFINIX MOBILITY LIMITED&#10; Infinix X682C" value="120" />
+                  <entry key="Pixel_3_API_26" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
           </value>
         </entry>
-<<<<<<< Updated upstream
-        <entry key="-889896410">
-          <value>
-            <AndroidTestResultsTableState>
-              <option name="preferredColumnWidths">
-                <map>
-                  <entry key="518a90a6" value="120" />
-                  <entry key="Duration" value="90" />
-                  <entry key="Tests" value="360" />
-                  <entry key="samsung&#10; SM-G885F" value="120" />
-                </map>
-              </option>
-            </AndroidTestResultsTableState>
-          </value>
-        </entry>
-=======
->>>>>>> Stashed changes
       </map>
     </option>
   </component>
