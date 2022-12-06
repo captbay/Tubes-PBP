@@ -1,25 +1,30 @@
 package com.example.e_learning.home.profile
 
-import android.content.Context
+import android.R
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.databinding.ActivityUpdateProfileBinding
+import com.example.e_learning.home.HomeActivity
 import com.example.e_learning.home.profile.dataprofile.Profile
+import com.example.e_learning.zroomdatabase.ELEARNINGDB
+import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_update_profile.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
-import com.google.gson.Gson
+
 
 class UpdateProfile : AppCompatActivity() {
     val db by lazy { ELEARNINGDB(this) }
@@ -35,36 +40,40 @@ class UpdateProfile : AppCompatActivity() {
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         val sp = getSharedPreferences("user", 0)
         val id : Int = sp.getInt("id", 0)
+        Log.d("IDuser : " , id.toString())
         val view = binding.root
         setContentView(view)
-//        loadData(id)
         queue = Volley.newRequestQueue(this)
-
-        setLoading(true)
-        val StringRequest: StringRequest = object : StringRequest(Method.GET + id , ProfileApi.GET_BY_ID_URL + id,
+        val idLoginProfile : Int = sp.getInt("id",0)
+        Log.d("idyanglogin", idLoginProfile.toString())
+//        binding.linearLayout3.showLoading()
+        val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + idLoginProfile,
             Response.Listener { response->
+                Log.d("Responss", response)
                 val gson = Gson()
-                val Profile = gson.fromJson(response, Array<Profile>::class.java)
+//              val profile = gson.fromJson(response, ResponseProfile::class.java)
+                val profile = gson.fromJson(response, Array<Profile>::class.java)
+                Log.d("Profile", profile.toString())
 
-                binding!!.editUsername.setText(Profile[0].username)
-                binding!!.editEmail.setText(Profile[0].email)
-                binding!!.editTglLahir.setText(Profile[0].tglLahir)
-                binding!!.editNoTelp.setText(Profile[0].noTelp)
 
-                Toast.makeText(this,"Data Berhasil Diambil!", Toast.LENGTH_SHORT).show()
-                setLoading(false)
+                binding!!.editUsername.setText(profile[0].username)
+                binding!!.editEmail.setText(profile[0].email)
+                binding!!.editTglLahir.setText(profile[0].tglLahir)
+                binding!!.editNoTelp.setText(profile[0].noTelp)
+
+//                binding.linearLayout3.hideLoading()
             }, Response.ErrorListener { error->
-                setLoading(false)
+//                binding.linearLayout3.hideLoading()
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@UpdateProfile,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(this,errors.getString("message"),
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.WARNING,true).show();
                 }catch (e: Exception){
-                    Toast.makeText(this@UpdateProfile,e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this,e.message,
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.WARNING,true).show();
                 }
             }
         ){
@@ -96,8 +105,9 @@ class UpdateProfile : AppCompatActivity() {
                     if(mahasiswa != null)
                         Toast.makeText(this@UpdateProfile,"Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
 
-                    val returnIntent = Intent()
+                    val returnIntent = Intent(this@UpdateProfile, ProfileFragment::class.java)
                     setResult(RESULT_OK, returnIntent)
+//                    startActivity(returnIntent)
                     finish()
 
                     setLoading(false)
@@ -149,5 +159,14 @@ class UpdateProfile : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             binding.layoutLoading?.root?.visibility = View.VISIBLE
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val moveBack = Intent(this, HomeActivity::class.java).putExtra("back", "back")
+        val mBundle = Bundle()
+        mBundle.putString("back","back")
+        moveBack.putExtra("back", mBundle)
+        startActivity(moveBack)
     }
 }

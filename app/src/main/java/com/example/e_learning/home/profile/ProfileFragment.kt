@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
@@ -31,6 +32,7 @@ import com.example.e_learning.R
 import com.example.e_learning.zroomdatabase.ELEARNINGDB
 import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.FragmentProfileBinding
+import com.example.e_learning.home.beranda.todoList.ToDoFragment
 import com.example.e_learning.home.profile.camera.CameraActivity
 import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,7 +87,9 @@ class ProfileFragment : Fragment() {
     private val channelLogout = "channelLogoutNotification"
     private val notificationId = 10
     private var queue: RequestQueue? = null
-
+    companion object {
+        val LAUNCH_ADD_ACTIVITY = 123
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -122,8 +126,7 @@ class ProfileFragment : Fragment() {
 //
             binding.floatingActionUpdate.setOnClickListener {
                 val moveEdit = Intent(activity, UpdateProfile::class.java)
-                startActivity(moveEdit)
-                activity?.finish()
+                startActivityForResult(moveEdit, LAUNCH_ADD_ACTIVITY)
             }
 //        }
 
@@ -207,7 +210,7 @@ class ProfileFragment : Fragment() {
                 binding!!.username.setText(profile[0].username)
                 binding!!.email.setText(profile[0].email)
                 binding!!.tglLahir.setText(profile[0].tglLahir)
-                binding!!.noTelp.setText(profile[0].tglLahir)
+                binding!!.noTelp.setText(profile[0].noTelp)
 
 //                binding.linearLayout3.hideLoading()
             }, Response.ErrorListener { error->
@@ -300,6 +303,19 @@ class ProfileFragment : Fragment() {
 
         document.close()
         FancyToast.makeText(requireContext(),"Name Tag Created",FancyToast.LENGTH_LONG, FancyToast.INFO,false).show();
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
+            requireActivity().window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+//            layoutLoading!!.visibility = View.VISIBLE
+        } else {
+            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+//            layoutLoading!!.visibility = View.GONE
+        }
     }
 }
 
