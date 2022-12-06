@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
@@ -87,6 +88,7 @@ class ProfileFragment : Fragment() {
     private val channelLogout = "channelLogoutNotification"
     private val notificationId = 10
     private var queue: RequestQueue? = null
+    private var layoutLoading: LinearLayout? = null
     companion object {
         val LAUNCH_ADD_ACTIVITY = 123
     }
@@ -103,6 +105,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        layoutLoading = view.findViewById(R.id.layout_loading)
         val LogoutButton: FloatingActionButton = view.findViewById(R.id.floatingActionLogout)
         val logout = Intent(this.getActivity(), LoginActivity::class.java)
         val camera = button
@@ -194,12 +197,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun allProfile(){
+        setLoading(true)
         val sp = requireActivity().getSharedPreferences("user", 0)
         val idLoginProfile : Int = sp.getInt("id",0)
         Log.d("idyanglogin", idLoginProfile.toString())
 //        binding.linearLayout3.showLoading()
         val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + idLoginProfile,
             Response.Listener { response->
+                setLoading(false)
                 Log.d("Responss", response)
                 val gson = Gson()
 //              val profile = gson.fromJson(response, ResponseProfile::class.java)
@@ -214,6 +219,7 @@ class ProfileFragment : Fragment() {
 
 //                binding.linearLayout3.hideLoading()
             }, Response.ErrorListener { error->
+                setLoading(false)
 //                binding.linearLayout3.hideLoading()
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
@@ -311,10 +317,10 @@ class ProfileFragment : Fragment() {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             )
-//            layoutLoading!!.visibility = View.VISIBLE
+            layoutLoading!!.visibility = View.VISIBLE
         } else {
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-//            layoutLoading!!.visibility = View.GONE
+            layoutLoading!!.visibility = View.GONE
         }
     }
 }

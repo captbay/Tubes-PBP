@@ -1,12 +1,13 @@
 package com.example.e_learning.home.profile
 
-import android.R
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
@@ -24,13 +25,14 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_update_profile.*
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
+import com.example.e_learning.R
 
 
 class UpdateProfile : AppCompatActivity() {
     val db by lazy { ELEARNINGDB(this) }
     private lateinit var binding: ActivityUpdateProfileBinding
     private var queue: RequestQueue? = null
-
+    private var layoutLoading: LinearLayout? = null
 
     var sharedPreferences: SharedPreferences? = null
 
@@ -43,17 +45,21 @@ class UpdateProfile : AppCompatActivity() {
         Log.d("IDuser : " , id.toString())
         val view = binding.root
         setContentView(view)
+        layoutLoading = findViewById(R.id.layout_loading)
+        Log.d("Layoutnya : " , layoutLoading.toString())
         queue = Volley.newRequestQueue(this)
+
         val idLoginProfile : Int = sp.getInt("id",0)
         Log.d("idyanglogin", idLoginProfile.toString())
 //        binding.linearLayout3.showLoading()
+        setLoading(true)
         val StringRequest: StringRequest = object : StringRequest(Method.GET, ProfileApi.GET_BY_ID_URL + idLoginProfile,
             Response.Listener { response->
-                Log.d("Responss", response)
+//                Log.d("Responss", response)
                 val gson = Gson()
 //              val profile = gson.fromJson(response, ResponseProfile::class.java)
                 val profile = gson.fromJson(response, Array<Profile>::class.java)
-                Log.d("Profile", profile.toString())
+//                Log.d("Profile", profile.toString())
 
 
                 binding!!.editUsername.setText(profile[0].username)
@@ -62,7 +68,9 @@ class UpdateProfile : AppCompatActivity() {
                 binding!!.editNoTelp.setText(profile[0].noTelp)
 
 //                binding.linearLayout3.hideLoading()
+                setLoading(false)
             }, Response.ErrorListener { error->
+                setLoading(false)
 //                binding.linearLayout3.hideLoading()
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
@@ -88,7 +96,6 @@ class UpdateProfile : AppCompatActivity() {
 
         binding.buttonUpdate.setOnClickListener {
             setLoading(true)
-
             val profile = Profile(
                 id,
                 binding!!.editUsername.text.toString(),
@@ -105,11 +112,9 @@ class UpdateProfile : AppCompatActivity() {
                     if(mahasiswa != null)
                         Toast.makeText(this@UpdateProfile,"Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
 
-                    val returnIntent = Intent(this@UpdateProfile, ProfileFragment::class.java)
+                    val returnIntent = Intent()//this@UpdateProfile, ProfileFragment::class.java
                     setResult(RESULT_OK, returnIntent)
-//                    startActivity(returnIntent)
                     finish()
-
                     setLoading(false)
                 }, Response.ErrorListener { error->
                     setLoading(false)
@@ -145,19 +150,18 @@ class UpdateProfile : AppCompatActivity() {
             }
             queue!!.add(StringRequest)
         }
-        setContentView(binding?.root)
     }
 
-    fun setLoading(isLoading:Boolean){
-        if(isLoading){
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             )
-            binding.layoutLoading?.root?.visibility = View.VISIBLE
-        }else{
+            layoutLoading?.visibility = View.VISIBLE
+        } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            binding.layoutLoading?.root?.visibility = View.VISIBLE
+            layoutLoading?.visibility = View.GONE
         }
     }
 
