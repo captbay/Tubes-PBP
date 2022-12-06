@@ -84,7 +84,7 @@ class MapsActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         } catch (ignored: IOException) {
-            FancyToast.makeText(this@MapsActivity,"Oops, ada yang tidak beres. Coba ulangi beberapa saat lagi.", FancyToast.LENGTH_LONG,FancyToast.WARNING,true).show();
+            FancyToast.makeText(this@MapsActivity,"Oops, ada yang tidak beres. Coba ulangi beberapa saat lagi.", FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show();
         }
     }
 

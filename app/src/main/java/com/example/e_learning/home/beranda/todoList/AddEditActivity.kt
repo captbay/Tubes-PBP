@@ -61,13 +61,13 @@ class AddEditActivity : AppCompatActivity() {
 //        setLoading(true)
         val current = LocalDate.now().toString()
         if(binding.etTodo?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Judul tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+            FancyToast.makeText(this@AddEditActivity,"Judul tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
         }else if(binding.etPesan?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Pesan tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+            FancyToast.makeText(this@AddEditActivity,"Pesan tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
         }else if(binding.etDibuat?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Tanggal Dibuat tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+            FancyToast.makeText(this@AddEditActivity,"Tanggal Dibuat tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
         }else if(binding.etDeadline?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Tanggal Deadline tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+            FancyToast.makeText(this@AddEditActivity,"Tanggal Deadline tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
         }else{
             var judul = binding.etTodo?.getText().toString()
             var pesan = binding.etPesan?.getText().toString()
@@ -84,7 +84,7 @@ class AddEditActivity : AppCompatActivity() {
                         var todoo = gson.fromJson(response, ToDoList::class.java)
 
                         if(todoo != null)
-                            FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
+                            FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
 
                         val returnIntent = Intent()
                         setResult(RESULT_OK, returnIntent)
@@ -97,9 +97,9 @@ class AddEditActivity : AppCompatActivity() {
                         try{
                             val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                             val errors = JSONObject(responseBody)
-                            FancyToast.makeText(this@AddEditActivity,errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                            FancyToast.makeText(this@AddEditActivity,errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                         } catch (e: Exception) {
-                            FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,true).show();
+                            FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,false).show();
                         }
                     }) {
                     @Throws(AuthFailureError::class)
@@ -143,7 +143,7 @@ class AddEditActivity : AppCompatActivity() {
                 var todo = gson.fromJson(response, Todo::class.java)
 
                 if (todo != null)
-                    FancyToast.makeText(this,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
+                    FancyToast.makeText(this,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
 
                 val returnIntent = Intent()
                 setResult(RESULT_OK, returnIntent)
@@ -155,9 +155,9 @@ class AddEditActivity : AppCompatActivity() {
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 } catch (e: Exception) {
-                    FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(this@AddEditActivity,e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -196,16 +196,16 @@ class AddEditActivity : AppCompatActivity() {
 
 
 
-                FancyToast.makeText(this@AddEditActivity,"Data berhasil diambil!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show();
+                FancyToast.makeText(this@AddEditActivity,"Data berhasil diambil!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(this@AddEditActivity, errors.getString("message"), FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 } catch (e: Exception) {
-                    FancyToast.makeText(this@AddEditActivity, e.message, FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(this@AddEditActivity, e.message, FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 }
             }) {
             @Throws(AuthFailureError::class)

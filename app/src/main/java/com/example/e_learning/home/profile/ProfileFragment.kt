@@ -215,9 +215,9 @@ class ProfileFragment : Fragment() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    FancyToast.makeText(requireActivity(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(requireActivity(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 }catch (e: Exception){
-                    FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,true).show();
+                    FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
                 }
             }
         ){
@@ -299,7 +299,7 @@ class ProfileFragment : Fragment() {
 
 
         document.close()
-        FancyToast.makeText(requireContext(),"Name Tag Created",FancyToast.LENGTH_LONG, FancyToast.INFO,true).show();
+        FancyToast.makeText(requireContext(),"Name Tag Created",FancyToast.LENGTH_LONG, FancyToast.INFO,false).show();
     }
 }
 

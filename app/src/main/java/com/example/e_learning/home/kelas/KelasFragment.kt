@@ -27,6 +27,7 @@ import com.example.e_learning.databinding.KelasFragmentBinding
 import com.example.e_learning.home.kelas.data.Kelas
 import com.example.e_learning.home.kelas.data.ResponseKelas
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -87,11 +88,10 @@ class KelasFragment : Fragment() {
 
 
                 if(!kelas.isEmpty())
-                    Toast.makeText(requireContext(), "Data Berhasil Diambil!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(requireContext(),"Data Berhasil Diambil!",FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,false).show()
                 else
-                    Toast.makeText(requireContext(), "Data Kosong!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(requireContext(),"Data Kosong!",FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
 
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
@@ -100,13 +100,9 @@ class KelasFragment : Fragment() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        requireContext(),
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(requireContext(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 } catch (e: Exception){
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(requireContext(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 }
             }) {
             @Throws(AuthFailureError::class)

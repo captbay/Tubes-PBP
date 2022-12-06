@@ -23,6 +23,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -92,11 +93,12 @@ class ToDoFragment : Fragment() {
                 binding.srTodo!!.isRefreshing = false
 
                 if (!todo.isEmpty())
-                    Toast.makeText(requireContext(), "Data Berhasil Diambil!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(requireContext(),"Data Berhasil Diambil!",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,false).show()
                 else
-                    Toast.makeText(requireContext(), "Data Kosong!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(requireContext(),"Data Kosong!",FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
                 binding.srTodo!!.isRefreshing = false
@@ -104,13 +106,9 @@ class ToDoFragment : Fragment() {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        requireContext(),
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(requireContext(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(requireContext(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 }
             }) {
             // Menambahkan header pada request
@@ -137,21 +135,16 @@ class ToDoFragment : Fragment() {
                 val gson = Gson()
                 var mahasiswa = gson.fromJson(response, TodoApi::class.java)
                 if (mahasiswa != null)
-                    Toast.makeText(requireContext(), "Data Berhasil Dihapus!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(requireContext(),"Data Berhasil Dihapus!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show()
                 allTodo()
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        requireContext(),
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    FancyToast.makeText(requireContext(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 } catch (e: java.lang.Exception) {
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(requireContext(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
                 }
             }) {
             // Menambahkan header pada request

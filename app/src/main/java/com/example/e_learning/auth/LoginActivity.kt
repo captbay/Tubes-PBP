@@ -204,7 +204,7 @@ class LoginActivity : AppCompatActivity() {
                 val mahasiswa = gson.fromJson(response, ResponseProfile::class.java)
 
                 if(mahasiswa != null)
-                    FancyToast.makeText(this,"Berhasil Login!",FancyToast.LENGTH_LONG, FancyToast.SUCCESS,true).show();
+                    FancyToast.makeText(this,"Berhasil Login!",FancyToast.LENGTH_LONG, FancyToast.SUCCESS,false).show();
 
                 val sp = this@LoginActivity.getSharedPreferences("user", 0)
                 val editor = sp.edit()
@@ -221,11 +221,11 @@ class LoginActivity : AppCompatActivity() {
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-                    FancyToast.makeText(this@LoginActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    FancyToast.makeText(this@LoginActivity,errors.getString("message"),FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                     Logger.d("volleyerr",errors.getString("message"))
                 }
                 catch (e:Exception){
-                    FancyToast.makeText(this@LoginActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show();
+                    FancyToast.makeText(this@LoginActivity,e.message,FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
                     Logger.d("volleyerr",e.message.toString())
                 }
             }){
