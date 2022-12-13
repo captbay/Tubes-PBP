@@ -95,56 +95,72 @@ class UpdateProfile : AppCompatActivity() {
         queue!!.add(StringRequest)
 
         binding.buttonUpdate.setOnClickListener {
-            setLoading(true)
-            val profile = Profile(
-                id,
-                binding!!.editUsername.text.toString(),
-                binding!!.editPassword.text.toString(),
-                binding!!.editEmail.text.toString(),
-                binding!!.editTglLahir.text.toString(),
-                binding!!.editNoTelp.text.toString(),
-            )
-            val StringRequest: StringRequest = object : StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id,
-                Response.Listener { response ->
-                    val gson = Gson()
-                    val mahasiswa = gson.fromJson(response, Profile::class.java)
+            var checkRegisterInput = false
+            if (binding.editUsername.text.toString().isEmpty() || binding.editPassword.text.toString().isEmpty() || binding.editEmail.text.toString().isEmpty()
+                || binding.editTglLahir.text.toString().isEmpty() || binding.editNoTelp.text.toString().isEmpty()
+            ){
+                FancyToast.makeText(this@UpdateProfile,"Data harus isi !",FancyToast.LENGTH_LONG, FancyToast.ERROR,false).show();
+            }else{
+                setLoading(true)
+                checkRegisterInput = true
+                val profile = Profile(
+                    id,
+                    binding!!.editUsername.text.toString(),
+                    binding!!.editPassword.text.toString(),
+                    binding!!.editEmail.text.toString(),
+                    binding!!.editTglLahir.text.toString(),
+                    binding!!.editNoTelp.text.toString(),
+                )
+                val StringRequest: StringRequest = object : StringRequest(Method.PUT, ProfileApi.UPDATE_URL + id,
+                    Response.Listener { response ->
+                        val gson = Gson()
+                        val mahasiswa = gson.fromJson(response, Profile::class.java)
 
-                    if(mahasiswa != null)
-                        FancyToast.makeText(this@UpdateProfile,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,false).show();
+                        if(mahasiswa != null)
+                            Toast.makeText(this@UpdateProfile,"Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
 
-                    val returnIntent = Intent()//this@UpdateProfile, ProfileFragment::class.java
-                    setResult(RESULT_OK, returnIntent)
-                    finish()
-                    setLoading(false)
-                }, Response.ErrorListener { error->
-                    setLoading(false)
-                    try{
-                        val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                        val errors = JSONObject(responseBody)
-                        FancyToast.makeText(this@UpdateProfile,errors.getString("message"),FancyToast.LENGTH_SHORT, FancyToast.WARNING,false).show();
-                    }catch (e: Exception){
-                        Toast.makeText(this@UpdateProfile,e.message, Toast.LENGTH_SHORT).show()
+                        val returnIntent = Intent()//this@UpdateProfile, ProfileFragment::class.java
+                        setResult(RESULT_OK, returnIntent)
+                        finish()
+                        setLoading(false)
+                    }, Response.ErrorListener { error->
+                        setLoading(false)
+                        try{
+                            val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                            val errors = JSONObject(responseBody)
+                            Toast.makeText(
+                                this@UpdateProfile,
+                                errors.getString("message"),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }catch (e: Exception){
+                            Toast.makeText(this@UpdateProfile,e.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                ){
+                    @Throws(AuthFailureError::class)
+                    override fun getHeaders(): Map<String, String> {
+                        val headers = HashMap<String,String>()
+                        headers["Accept"] = "application/json"
+                        return headers
+                    }
+                    @Throws(AuthFailureError::class)
+                    override fun getBody(): ByteArray {
+                        val gson = Gson()
+                        val requestBody = gson.toJson(profile)
+                        return requestBody.toByteArray(StandardCharsets.UTF_8)
+                    }
+
+                    override fun getBodyContentType(): String {
+                        return "application/json"
                     }
                 }
-            ){
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String,String>()
-                    headers["Accept"] = "application/json"
-                    return headers
-                }
-                @Throws(AuthFailureError::class)
-                override fun getBody(): ByteArray {
-                    val gson = Gson()
-                    val requestBody = gson.toJson(profile)
-                    return requestBody.toByteArray(StandardCharsets.UTF_8)
-                }
-
-                override fun getBodyContentType(): String {
-                    return "application/json"
-                }
+                queue!!.add(StringRequest)
             }
-            queue!!.add(StringRequest)
+            if(!checkRegisterInput)
+            {
+                return@setOnClickListener
+            }
         }
     }
 
