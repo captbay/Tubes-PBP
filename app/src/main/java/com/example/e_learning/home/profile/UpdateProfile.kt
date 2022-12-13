@@ -116,8 +116,9 @@ class UpdateProfile : AppCompatActivity() {
                         val gson = Gson()
                         val mahasiswa = gson.fromJson(response, Profile::class.java)
 
-                        if(mahasiswa != null)
-                            Toast.makeText(this@UpdateProfile,"Data Berhasil Diupdate", Toast.LENGTH_SHORT).show()
+                        if(mahasiswa != null){
+                            FancyToast.makeText(this@UpdateProfile,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,false).show();
+                        }
 
                         val returnIntent = Intent()//this@UpdateProfile, ProfileFragment::class.java
                         setResult(RESULT_OK, returnIntent)
@@ -128,13 +129,9 @@ class UpdateProfile : AppCompatActivity() {
                         try{
                             val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                             val errors = JSONObject(responseBody)
-                            Toast.makeText(
-                                this@UpdateProfile,
-                                errors.getString("message"),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            FancyToast.makeText(this@UpdateProfile,errors.getString("message"),FancyToast.LENGTH_SHORT, FancyToast.WARNING,false).show();
                         }catch (e: Exception){
-                            Toast.makeText(this@UpdateProfile,e.message, Toast.LENGTH_SHORT).show()
+                            FancyToast.makeText(this@UpdateProfile,e.message,FancyToast.LENGTH_SHORT, FancyToast.WARNING,false).show();
                         }
                     }
                 ){
