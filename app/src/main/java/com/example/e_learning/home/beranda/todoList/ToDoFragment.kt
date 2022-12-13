@@ -1,5 +1,6 @@
 package com.example.e_learning.home.beranda.todoList
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -98,24 +99,31 @@ class ToDoFragment : Fragment() {
                 adapter!!.filter.filter(binding.svTodo!!.query)
                 binding.srTodo!!.isRefreshing = false
 
-                if (!todo.isEmpty())
-                    FancyToast.makeText(requireContext(),"Data Berhasil Diambil!",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,false).show()
-                else
-                    FancyToast.makeText(requireContext(),"Data Kosong!",FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+                checkIfFragmentAttached {
+                    if (!todo.isEmpty())
+                        FancyToast.makeText(requireContext(),"Data Berhasil Diambil!",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,false).show()
+                    else
+                        FancyToast.makeText(requireContext(),"Data Kosong!",FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+                }
+
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
                 binding.srTodo!!.isRefreshing = false
-                try {
-                    val responseBody =
-                        String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(requireContext(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
-                } catch (e: Exception) {
-                    FancyToast.makeText(requireContext(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+
+                checkIfFragmentAttached {
+                    try {
+                        val responseBody =
+                            String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(requireContext(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+                    } catch (e: Exception) {
+                        FancyToast.makeText(requireContext(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
+                    }
                 }
+
             }) {
             // Menambahkan header pada request
             @Throws(AuthFailureError::class)
@@ -175,6 +183,12 @@ class ToDoFragment : Fragment() {
         } else {
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             layoutLoading!!.visibility = View.GONE
+        }
+    }
+
+    fun checkIfFragmentAttached(operation: Context.() -> Unit) {
+        if (isAdded && context != null) {
+            operation(requireContext())
         }
     }
 

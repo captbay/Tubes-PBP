@@ -222,13 +222,17 @@ class ProfileFragment : Fragment() {
             }, Response.ErrorListener { error->
                 setLoading(false)
 //                binding.linearLayout3.hideLoading()
-                try{
-                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    FancyToast.makeText(requireActivity(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
-                }catch (e: Exception){
-                    FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
+
+                checkIfFragmentAttached {
+                    try{
+                        val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        FancyToast.makeText(requireActivity(),errors.getString("message"),FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
+                    }catch (e: Exception){
+                        FancyToast.makeText(requireActivity(),e.message,FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show();
+                    }
                 }
+
             }
         ){
             @Throws(AuthFailureError::class)
@@ -322,6 +326,12 @@ class ProfileFragment : Fragment() {
         } else {
             requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             layoutLoading!!.visibility = View.GONE
+        }
+    }
+
+    fun checkIfFragmentAttached(operation: Context.() -> Unit) {
+        if (isAdded && context != null) {
+            operation(requireContext())
         }
     }
 
