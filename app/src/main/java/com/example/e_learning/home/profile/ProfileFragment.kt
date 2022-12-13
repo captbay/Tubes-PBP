@@ -333,5 +333,6 @@ class ProfileFragment : Fragment() {
             allProfile()
         }
     }
+
 }
 

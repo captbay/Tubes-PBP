@@ -2,6 +2,8 @@ package com.example.e_learning.home.beranda
 
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -93,14 +95,16 @@ class BerandaFragment : Fragment() {
                 adapter!!.setkelasList(kelas)
                 binding.srTodo!!.isRefreshing = false
 
+                checkIfFragmentAttached {
+                    if(!kelas.isEmpty())
+                        FancyToast.makeText(requireContext(),"Data Berhasil Diambil!", FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS,false).show()
+                    else
+                        FancyToast.makeText(requireContext(),"Data Kosong!",
+                            FancyToast.LENGTH_SHORT,
+                            FancyToast.WARNING,false).show()
+                }
 
-                if(!kelas.isEmpty())
-                    FancyToast.makeText(requireContext(),"Data Berhasil Diambil!", FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,false).show()
-                else
-                    FancyToast.makeText(requireContext(),"Data Kosong!",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.WARNING,false).show()
 
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
@@ -143,6 +147,13 @@ class BerandaFragment : Fragment() {
             layoutLoading!!.visibility = View.GONE
         }
     }
+
+    fun checkIfFragmentAttached(operation: Context.() -> Unit) {
+        if (isAdded && context != null) {
+            operation(requireContext())
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

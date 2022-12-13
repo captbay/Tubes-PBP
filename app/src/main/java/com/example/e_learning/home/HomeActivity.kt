@@ -42,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
 
         if(mBundle == "back")
         {
-
             changeFragment(ProfileFragment())
         }
         // , Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONEs
