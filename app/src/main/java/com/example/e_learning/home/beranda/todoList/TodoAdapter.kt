@@ -38,7 +38,7 @@ class TodoAdapter(private var todoList : List<ToDoList>, context: Context, fragm
         var tvPesan : TextView
         var tglDibuat : TextView
         var tglDeadline : TextView
-        var status : TextView
+//        var status : TextView
         var cvTodo : CardView
         var btnDelete : ImageButton
 
@@ -47,7 +47,7 @@ class TodoAdapter(private var todoList : List<ToDoList>, context: Context, fragm
             tvPesan = itemView.findViewById(R.id.tv_pesan)
             tglDibuat = itemView.findViewById(R.id.tv_tgldibuat)
             tglDeadline = itemView.findViewById(R.id.tv_tgldeadline)
-            status = itemView.findViewById(R.id.tv_status)
+//            status = itemView.findViewById(R.id.tv_status)
             cvTodo = itemView.findViewById(R.id.cv_todo)
             btnDelete = itemView.findViewById(R.id.btn_delete)
         }
@@ -65,7 +65,7 @@ class TodoAdapter(private var todoList : List<ToDoList>, context: Context, fragm
         holder.tvPesan.text = todolist.pesan
         holder.tglDibuat.text = todolist.tglDibuat.toString()
         holder.tglDeadline.text = todolist.tglDeadline.toString()
-        holder.status.text = todolist.status.toString()
+//        holder.status.text = todolist.status.toString()
 
         holder.btnDelete.setOnClickListener{
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)

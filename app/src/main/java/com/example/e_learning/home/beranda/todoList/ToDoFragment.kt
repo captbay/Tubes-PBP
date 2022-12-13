@@ -77,12 +77,18 @@ class ToDoFragment : Fragment() {
     private fun allTodo() {
         binding.srTodo!!.isRefreshing = true
         //val url = "https://elearning-pbp.herokuapp.com/todolists"
+        val sharedPreferences = requireContext().getSharedPreferences("user", 0)
+        var user_id = sharedPreferences.getInt("id", 0)
         val stringRequest: StringRequest = object :
             StringRequest(Request.Method.GET, TodoApi.GET_ALL_URL, Response.Listener { response ->
                 Log.d("responsee", response)
                 val gson = Gson()
-                var todo: Array<ToDoList> =
-                    gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
+                var todo: Array<ToDoList> = gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
+                    todo = todo.filter { td -> td.user_id ==  user_id}.toTypedArray()
+                    Log.d("ini todo" , todo.toString())
+//                filter {
+//                        doList -> doList.user_id == user_id
+//                }.toTypedArray()
 //                Log.d("todonyawoiii", todo[0].judul)
 //                Log.d("gson", gson.toString())
 //                Log.d("ArrayHasil", todo.toString())
@@ -98,7 +104,7 @@ class ToDoFragment : Fragment() {
                         FancyToast.SUCCESS,false).show()
                 else
                     FancyToast.makeText(requireContext(),"Data Kosong!",FancyToast.LENGTH_SHORT,FancyToast.WARNING,false).show()
-
+                setLoading(false)
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
                 binding.srTodo!!.isRefreshing = false
@@ -137,6 +143,7 @@ class ToDoFragment : Fragment() {
                 if (mahasiswa != null)
                     FancyToast.makeText(requireContext(),"Data Berhasil Dihapus!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show()
                 allTodo()
+                setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try {

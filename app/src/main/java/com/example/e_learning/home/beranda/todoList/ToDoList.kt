@@ -1,7 +1,7 @@
 package com.example.e_learning.home.beranda.todoList
 
 
-class ToDoList(var judul:String, var pesan:String, var tglDibuat: String, var tglDeadline: String, var status: Int) {
+class ToDoList(var judul:String, var pesan:String, var tglDibuat: String, var tglDeadline: String, var status: Int, var user_id: Int) {
     var id: Long? = null
 }
 

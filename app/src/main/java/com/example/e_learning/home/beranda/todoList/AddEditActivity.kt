@@ -1,23 +1,23 @@
 package com.example.e_learning.home.beranda.todoList
 
 
+//import com.example.e_learning.databinding.ActivityAuthBinding
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
-import android.widget.Toast
-import com.example.e_learning.R
-import com.example.e_learning.databinding.ActivityAddEditBinding
-//import com.example.e_learning.databinding.ActivityAuthBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.e_learning.R
+import com.example.e_learning.databinding.ActivityAddEditBinding
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -25,6 +25,7 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
+
 
 class AddEditActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddEditBinding
@@ -41,22 +42,24 @@ class AddEditActivity : AppCompatActivity() {
 
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)
-
+        val sharedPreferences = getSharedPreferences("user", 0)
+        val user_id = sharedPreferences.getInt("id", 0)
+        Log.d("User ID : " , user_id.toString())
         val id = intent.getLongExtra("id", -1)
         if(id==-1L)
         {
             binding.tvJudulAddedit.setText("Tambah Todo")
-            binding.btnSave.setOnClickListener{ createTodo()}
+            binding.btnSave.setOnClickListener{ createTodo(user_id)}
         }else
         {
             binding.tvJudulAddedit.setText("Edit Todo")
             Logger.d("ini_id",id.toString())
             getTodoById(id)
-            binding.btnSave.setOnClickListener { updateTodo(id) }
+            binding.btnSave.setOnClickListener { updateTodo(id, user_id) }
         }
     }
 
-    private fun createTodo()
+    private fun createTodo(user_id : Int)
     {
 //        setLoading(true)
         val current = LocalDate.now().toString()
@@ -73,9 +76,12 @@ class AddEditActivity : AppCompatActivity() {
             var pesan = binding.etPesan?.getText().toString()
             var dibuat = binding.etDibuat?.getText().toString()
             var deadline = binding.etDeadline?.getText().toString()
-            Logger.d("inputan" , judul + pesan + dibuat +deadline)
-            val todoo = ToDoList( judul, pesan, dibuat, deadline,0)
-            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current)
+            var userID = user_id
+//            Logger.d("Ini user idnya : "+ user_id)
+//            Logger.d("inputan" , judul + pesan + dibuat +deadline)
+            val todoo = ToDoList( judul, pesan, dibuat, deadline,0, userID)
+            Logger.d("Ini  objek todonya", ToDoList::class.java)
+            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current + todoo.user_id)
             val stringRequest: StringRequest =
                 object : StringRequest(Request.Method.POST,
                     TodoApi.ADD_URL, Response.Listener { response ->
@@ -126,7 +132,7 @@ class AddEditActivity : AppCompatActivity() {
 
     }
 
-    private fun updateTodo(id : Long) {
+    private fun updateTodo(id : Long, user_id : Int) {
         setLoading(true)
         val current = LocalDate.now()
         val Todo = ToDoList(
@@ -134,7 +140,7 @@ class AddEditActivity : AppCompatActivity() {
             binding.etPesan.getText().toString(),
             binding.etDibuat.getText().toString(),
             binding.etDeadline.getText().toString(),
-            0
+            0, user_id
         )
 
         val stringRequest: StringRequest = object :

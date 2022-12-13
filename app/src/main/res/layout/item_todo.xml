@@ -65,17 +65,17 @@
                 android:text="Deadline"
                 android:textSize="15sp"
                 />
-            <TextView
-                android:id="@+id/tv_status"
-                style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Status :"
-                android:textSize="15sp"
-                />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_status"-->
+<!--                style="@style/TextAppearance.MaterialComponents.Subtitle2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:ellipsize="end"-->
+<!--                android:maxLines="1"-->
+<!--                android:text="Status :"-->
+<!--                android:textSize="15sp"-->
+<!--                />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
