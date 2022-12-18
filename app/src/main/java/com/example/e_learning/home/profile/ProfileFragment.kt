@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -17,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
@@ -32,7 +29,6 @@ import com.android.volley.toolbox.Volley
 import com.example.e_learning.auth.LoginActivity
 import com.example.e_learning.R
 import com.example.e_learning.zroomdatabase.ELEARNINGDB
-import com.example.e_learning.home.profile.dataprofile.ResponseProfile
 import com.example.e_learning.databinding.FragmentProfileBinding
 import com.example.e_learning.home.beranda.todoList.ToDoFragment
 import com.example.e_learning.home.profile.camera.CameraActivity
@@ -40,8 +36,6 @@ import com.example.e_learning.home.profile.dataprofile.Profile
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.itextpdf.barcodes.BarcodeQRCode
-import com.itextpdf.io.image.ImageDataFactory
-import com.itextpdf.io.source.ByteArrayOutputStream
 import com.itextpdf.kernel.colors.ColorConstants
 import com.itextpdf.kernel.geom.PageSize
 import com.itextpdf.kernel.pdf.PdfDocument
@@ -55,7 +49,6 @@ import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
 import com.shashank.sony.fancytoastlib.FancyToast
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
 //import com.itextpdf.barcodes.BarcodeQRCode
 //import com.itextpdf.io.image.ImageDataFactory

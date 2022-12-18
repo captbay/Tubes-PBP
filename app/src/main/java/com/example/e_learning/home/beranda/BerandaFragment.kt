@@ -2,7 +2,6 @@ package com.example.e_learning.home.beranda
 
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
-import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.AuthFailureError
@@ -25,7 +23,7 @@ import com.android.volley.toolbox.Volley
 import com.example.e_learning.R
 import com.example.e_learning.home.beranda.maps.MapsActivity
 import com.example.e_learning.databinding.FragmentBerandaBinding
-import com.example.e_learning.home.beranda.todoList.ToDoFragment
+import com.example.e_learning.home.beranda.todoList.SpamasFragment
 import com.example.e_learning.home.kelas.KelasFragment
 import com.example.e_learning.home.kelas.data.Kelas
 import com.example.e_learning.home.kelas.data.KelasAdapter
@@ -70,7 +68,7 @@ class BerandaFragment : Fragment() {
         binding.buttonCreate.setOnClickListener {
                 getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.layout_fragment, ToDoFragment())
+                    .replace(R.id.layout_fragment, SpamasFragment())
                     .addToBackStack(null)
                     .commit()
 

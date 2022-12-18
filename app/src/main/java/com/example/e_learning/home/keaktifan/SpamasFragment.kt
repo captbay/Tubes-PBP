@@ -4,30 +4,30 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.SearchView
 import android.widget.LinearLayout
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.e_learning.R
-import com.example.e_learning.databinding.FragmentTodoBinding
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.e_learning.R
+import com.example.e_learning.databinding.FragmentTodoBinding
 import com.google.gson.Gson
 import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
-class ToDoFragment : Fragment() {
+class SpamasFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
     private var adapter: SpamasAdapter? = null
@@ -68,7 +68,7 @@ class ToDoFragment : Fragment() {
             val i = Intent(requireActivity(), AddEditActivity::class.java)
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
-        adapter = SpamasAdapter(ArrayList(), requireContext(), this@ToDoFragment)
+        adapter = SpamasAdapter(ArrayList(), requireContext(), this@SpamasFragment)
         binding.rvTodo.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTodo.adapter = adapter
         allTodo()

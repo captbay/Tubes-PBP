@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda.todoList
+package com.example.e_learning.home.beranda.keaktifan
 
 
 //import com.example.e_learning.databinding.ActivityAuthBinding
@@ -16,7 +16,10 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.e_learning.R
-import com.example.e_learning.databinding.ActivityAddEditBinding
+import com.example.e_learning.databinding.ActivityAddEditSpamasBinding
+import com.example.e_learning.home.beranda.keaktifan.AddEditActivity
+import com.example.e_learning.home.beranda.todoList.Spamas
+import com.example.e_learning.home.beranda.todoList.TodoApi
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -27,14 +30,14 @@ import java.time.LocalDate
 
 
 class AddEditActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityAddEditBinding
+    private lateinit var binding : ActivityAddEditSpamasBinding
     private var queue: RequestQueue? = null
     private var layoutLoading: LinearLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddEditBinding.inflate(layoutInflater)
+        binding = ActivityAddEditSpamasBinding.inflate(layoutInflater)
         val view =binding.root
         setContentView(view)
         Logger.addLogAdapter(AndroidLogAdapter())
@@ -78,9 +81,9 @@ class AddEditActivity : AppCompatActivity() {
             var userID = user_id
 //            Logger.d("Ini user idnya : "+ user_id)
 //            Logger.d("inputan" , judul + pesan + dibuat +deadline)
-            val todoo = ToDoList( judul, pesan, dibuat, deadline,0, userID)
+            val todoo = Spamas( judul, pesan.toInt(), dibuat, deadline,0, userID)
             Logger.d("Ini  objek todonya", Spamas::class.java)
-            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current + todoo.user_id)
+//            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current + todoo.user_id)
             val stringRequest: StringRequest =
                 object : StringRequest(Request.Method.POST,
                     TodoApi.ADD_URL, Response.Listener { response ->
@@ -134,9 +137,9 @@ class AddEditActivity : AppCompatActivity() {
     private fun updateTodo(id : Long, user_id : Int) {
         setLoading(true)
         val current = LocalDate.now()
-        val Todo = ToDoList(
+        val Todo = Spamas(
             binding.etTodo.getText().toString(),
-            binding.etPesan.getText().toString(),
+            binding.etPesan.getText().toString().toInt(),
             binding.etDibuat.getText().toString(),
             binding.etDeadline.getText().toString(),
             0, user_id
@@ -192,12 +195,12 @@ class AddEditActivity : AppCompatActivity() {
             StringRequest(Method.GET, TodoApi.GET_BY_ID_URL + id, Response.Listener { response ->
                 Logger.d("iniresponeget", response)
                 val gson = Gson()
-                val todoo = gson.fromJson(response, Array<ToDoList>::class.java)
+                val todoo = gson.fromJson(response, Array<Spamas>::class.java)
 //
-                binding.etTodo!!.setText(todoo[0].judul)
-                binding.etPesan!!.setText(todoo[0].pesan)
+                binding.etTodo!!.setText(todoo[0].ketSpama)
+                binding.etPesan!!.setText(todoo[0].namaSpama)
                 binding.etDibuat!!.setText(todoo[0].tglDibuat)
-                binding.etDeadline!!.setText(todoo[0].tglDeadline)
+                binding.etDeadline!!.setText(todoo[0].poinSpama.toString())
 
 
 
