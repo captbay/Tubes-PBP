@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cv_todo"
+    android:id="@+id/cv_spama"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
@@ -23,46 +23,46 @@
             android:padding="12dp">
 
             <TextView
-                android:id="@+id/tv_todo"
+                android:id="@+id/tv_namaSpama"
                 style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Judul Todo : "/>
+                android:text="Nama Spama: "/>
 
             <TextView
-                android:id="@+id/tv_pesan"
+                android:id="@+id/tv_poinSpama"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Pesan : "
+                android:text="Poin: "
                 android:textSize="15sp"
                 />
 
             <TextView
-                android:id="@+id/tv_tgldibuat"
+                android:id="@+id/tv_ketSpama"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Dibuat"
+                android:text="Keterangan: "
                 android:textSize="15sp"
                 />
             <TextView
-                android:id="@+id/tv_tgldeadline"
+                android:id="@+id/tv_tglDibuatSpama"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Deadline"
+                android:text="Tanggal Dibuat: "
                 android:textSize="15sp"
                 />
 <!--            <TextView-->

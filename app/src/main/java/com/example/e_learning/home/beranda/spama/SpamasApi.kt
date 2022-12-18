@@ -1,6 +1,6 @@
-package com.example.e_learning.home.keaktifan
+package com.example.e_learning.home.beranda.spama
 
-class SpamaApi {
+class SpamasApi {
     companion object{
         val BASE_URL = "https://tubespbp.akordmusic.com/"
 

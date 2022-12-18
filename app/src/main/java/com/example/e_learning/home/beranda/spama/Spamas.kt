@@ -1,7 +1,7 @@
-package com.example.e_learning.home.beranda.todoList
+package com.example.e_learning.home.beranda.spama
 
 
-class Spamas(var namaSpama:String, var poinSpama:Int, var ketSpama: String, var tglDibuat: String, var status: Int, var user_id: Int) {
+class Spamas(var namaSpama:String, var poinSpama:String, var ketSpama: String, var tglDibuat: String, var status: Int, var user_id: Int) {
     var id: Long? = null
 }
 

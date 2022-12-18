@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets
 class ToDoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-    private var adapter: SpamasAdapter? = null
+    private var adapter: TodoAdapter? = null
     private var queue: RequestQueue? = null
     private var layoutLoading: LinearLayout? = null
 
@@ -68,7 +68,7 @@ class ToDoFragment : Fragment() {
             val i = Intent(requireActivity(), AddEditActivity::class.java)
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
-        adapter = SpamasAdapter(ArrayList(), requireContext(), this@ToDoFragment)
+        adapter = TodoAdapter(ArrayList(), requireContext(), this@ToDoFragment)
         binding.rvTodo.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTodo.adapter = adapter
         allTodo()
@@ -83,7 +83,7 @@ class ToDoFragment : Fragment() {
             StringRequest(Request.Method.GET, TodoApi.GET_ALL_URL, Response.Listener { response ->
                 Log.d("responsee", response)
                 val gson = Gson()
-                var todo: Array<Spamas> = gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
+                var todo: Array<ToDoList> = gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
                     todo = todo.filter { td -> td.user_id ==  user_id}.toTypedArray()
                     Log.d("ini todo" , todo.toString())
 //                filter {

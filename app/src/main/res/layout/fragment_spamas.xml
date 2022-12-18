@@ -6,10 +6,10 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home.beranda.todoList.SpamasFragment">
+    tools:context=".home.beranda.spama.SpamasFragment">
 
     <SearchView
-        android:id="@+id/sv_todo"
+        android:id="@+id/sv_spama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -21,7 +21,7 @@
         />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/sr_todo"
+        android:id="@+id/sr_spama"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -29,17 +29,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sv_todo"
+        app:layout_constraintTop_toBottomOf="@id/sv_spama"
         app:layout_constraintVertical_bias="0.0"
         >
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_todo"
+            android:id="@+id/rv_spama"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingHorizontal="12dp"
             android:paddingBottom="88dp"
-            tools:listitem="@layout/item_todo"
+            tools:listitem="@layout/item_spamas"
             />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_baseline_menu_book_24"
+        android:src="@drawable/ic_baseline_school_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

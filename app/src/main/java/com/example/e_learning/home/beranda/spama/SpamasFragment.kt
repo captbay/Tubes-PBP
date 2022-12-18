@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda.todoList
+package com.example.e_learning.home.beranda.spama
 
 import android.content.Context
 import android.content.Intent
@@ -21,14 +21,14 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.e_learning.R
-import com.example.e_learning.databinding.FragmentTodoBinding
+import com.example.e_learning.databinding.FragmentSpamasBinding
 import com.google.gson.Gson
 import com.shashank.sony.fancytoastlib.FancyToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class SpamasFragment : Fragment() {
-    private var _binding: FragmentTodoBinding? = null
+    private var _binding: FragmentSpamasBinding? = null
     private val binding get() = _binding!!
     private var adapter: SpamasAdapter? = null
     private var queue: RequestQueue? = null
@@ -43,7 +43,7 @@ class SpamasFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTodoBinding.inflate(inflater, container, false)
+        _binding = FragmentSpamasBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
@@ -52,8 +52,8 @@ class SpamasFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         layoutLoading = requireView().findViewById(R.id.layout_loading)
         queue = Volley.newRequestQueue(requireActivity())
-        binding.srTodo.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { allTodo() })
-        binding.svTodo.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.srSpama.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { allSpama() })
+        binding.svSpama.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(s: String?): Boolean {
                 return false
             }
@@ -69,23 +69,23 @@ class SpamasFragment : Fragment() {
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
         adapter = SpamasAdapter(ArrayList(), requireContext(), this@SpamasFragment)
-        binding.rvTodo.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTodo.adapter = adapter
-        allTodo()
+        binding.rvSpama.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvSpama.adapter = adapter
+        allSpama()
     }
 
-    private fun allTodo() {
-        binding.srTodo!!.isRefreshing = true
+    private fun allSpama() {
+        binding.srSpama!!.isRefreshing = true
         //val url = "https://elearning-pbp.herokuapp.com/todolists"
         val sharedPreferences = requireContext().getSharedPreferences("user", 0)
         var user_id = sharedPreferences.getInt("id", 0)
         val stringRequest: StringRequest = object :
-            StringRequest(Request.Method.GET, TodoApi.GET_ALL_URL, Response.Listener { response ->
+            StringRequest(Request.Method.GET, SpamasApi.GET_ALL_URL, Response.Listener { response ->
                 Log.d("responsee", response)
                 val gson = Gson()
-                var todo: Array<Spamas> = gson.fromJson(response, ResponseData::class.java).data.toTypedArray()
-                    todo = todo.filter { td -> td.user_id ==  user_id}.toTypedArray()
-                    Log.d("ini todo" , todo.toString())
+                var spama: Array<Spamas> = gson.fromJson(response, ResponseDataSpama::class.java).data.toTypedArray()
+                    spama = spama.filter { td -> td.user_id ==  user_id}.toTypedArray()
+                    Log.d("ini todo" , spama.toString())
 //                filter {
 //                        doList -> doList.user_id == user_id
 //                }.toTypedArray()
@@ -94,12 +94,12 @@ class SpamasFragment : Fragment() {
 //                Log.d("ArrayHasil", todo.toString())
 //                Log.d("todo", todo[0].judul)
 //                Log.d("responsenya", response.toString())
-                adapter!!.setTodoList(todo)
-                adapter!!.filter.filter(binding.svTodo!!.query)
-                binding.srTodo!!.isRefreshing = false
+                adapter!!.setSpamas(spama)
+                adapter!!.filter.filter(binding.svSpama!!.query)
+                binding.srSpama!!.isRefreshing = false
 
                 checkIfFragmentAttached {
-                    if (!todo.isEmpty())
+                    if (!spama.isEmpty())
                         FancyToast.makeText(requireContext(),"Data Berhasil Diambil!",
                             FancyToast.LENGTH_SHORT,
                             FancyToast.SUCCESS,false).show()
@@ -110,7 +110,7 @@ class SpamasFragment : Fragment() {
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 Log.d("responseror", error.toString())
-                binding.srTodo!!.isRefreshing = false
+                binding.srSpama!!.isRefreshing = false
 
                 checkIfFragmentAttached {
                     try {
@@ -139,17 +139,17 @@ class SpamasFragment : Fragment() {
         queue!!.add(stringRequest)
     }
 
-    public fun deleteTodo(id: Long) {
+    public fun deleteSpamas(id: Long) {
         setLoading(true)
         val stringRequest: StringRequest = object :
-            StringRequest(Method.DELETE, TodoApi.DELETE_URL + id, Response.Listener { response ->
+            StringRequest(Method.DELETE, SpamasApi.DELETE_URL + id, Response.Listener { response ->
                 setLoading(false)
 
                 val gson = Gson()
-                var mahasiswa = gson.fromJson(response, TodoApi::class.java)
+                var mahasiswa = gson.fromJson(response, SpamasApi::class.java)
                 if (mahasiswa != null)
                     FancyToast.makeText(requireContext(),"Data Berhasil Dihapus!",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show()
-                allTodo()
+                allSpama()
                 setLoading(false)
             }, Response.ErrorListener { error ->
                 setLoading(false)
@@ -196,7 +196,7 @@ class SpamasFragment : Fragment() {
         if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == AppCompatActivity.RESULT_OK)
         {
             setLoading(true)
-            allTodo()
+            allSpama()
         }
     }
 }

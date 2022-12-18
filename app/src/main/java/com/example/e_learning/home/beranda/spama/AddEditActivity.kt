@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda.keaktifan
+package com.example.e_learning.home.beranda.spama
 
 
 //import com.example.e_learning.databinding.ActivityAuthBinding
@@ -17,8 +17,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.e_learning.R
 import com.example.e_learning.databinding.ActivityAddEditSpamasBinding
-import com.example.e_learning.home.beranda.keaktifan.AddEditActivity
-import com.example.e_learning.home.beranda.todoList.Spamas
 import com.example.e_learning.home.beranda.todoList.TodoApi
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
@@ -50,43 +48,43 @@ class AddEditActivity : AppCompatActivity() {
         val id = intent.getLongExtra("id", -1)
         if(id==-1L)
         {
-            binding.tvJudulAddedit.setText("Tambah Todo")
-            binding.btnSave.setOnClickListener{ createTodo(user_id)}
+            binding.tvJudulAddedit.setText("Tambah Spama")
+            binding.btnSave.setOnClickListener{ createSpama(user_id)}
         }else
         {
-            binding.tvJudulAddedit.setText("Edit Todo")
+            binding.tvJudulAddedit.setText("Edit Spama")
             Logger.d("ini_id",id.toString())
-            getTodoById(id)
-            binding.btnSave.setOnClickListener { updateTodo(id, user_id) }
+            getSpamaById(id)
+            binding.btnSave.setOnClickListener { updateSpama(id, user_id) }
         }
     }
 
-    private fun createTodo(user_id : Int)
+    private fun createSpama(user_id : Int)
     {
 //        setLoading(true)
         val current = LocalDate.now().toString()
-        if(binding.etTodo?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Judul tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
-        }else if(binding.etPesan?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Pesan tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
-        }else if(binding.etDibuat?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Tanggal Dibuat tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
-        }else if(binding.etDeadline?.getText().toString().isEmpty()){
-            FancyToast.makeText(this@AddEditActivity,"Tanggal Deadline tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+        if(binding.etNamaSPama?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Nama tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+        }else if(binding.etPoinSpama?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Poin tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+        }else if(binding.etKetSpama?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Keterangan Dibuat tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
+        }else if(binding.etTglDibuat?.getText().toString().isEmpty()){
+            FancyToast.makeText(this@AddEditActivity,"Tanggal tidak boleh kosong", FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show();
         }else{
-            var judul = binding.etTodo?.getText().toString()
-            var pesan = binding.etPesan?.getText().toString()
-            var dibuat = binding.etDibuat?.getText().toString()
-            var deadline = binding.etDeadline?.getText().toString()
+            var judul = binding.etNamaSPama?.getText().toString()
+            var pesan = binding.etPoinSpama?.getText().toString()
+            var dibuat = binding.etKetSpama?.getText().toString()
+            var deadline = binding.etTglDibuat?.getText().toString()
             var userID = user_id
 //            Logger.d("Ini user idnya : "+ user_id)
 //            Logger.d("inputan" , judul + pesan + dibuat +deadline)
-            val todoo = Spamas( judul, pesan.toInt(), dibuat, deadline,0, userID)
+            val todoo = Spamas( judul, pesan, dibuat, deadline,1, userID)
             Logger.d("Ini  objek todonya", Spamas::class.java)
 //            Log.d("initodo",todoo.pesan + todoo.tglDeadline + current + todoo.user_id)
             val stringRequest: StringRequest =
                 object : StringRequest(Request.Method.POST,
-                    TodoApi.ADD_URL, Response.Listener { response ->
+                    SpamasApi.ADD_URL, Response.Listener { response ->
                         Logger.d("iniresponse",response)
                         val gson = Gson()
                         var todoo = gson.fromJson(response, Spamas::class.java)
@@ -134,21 +132,21 @@ class AddEditActivity : AppCompatActivity() {
 
     }
 
-    private fun updateTodo(id : Long, user_id : Int) {
+    private fun updateSpama(id : Long, user_id : Int) {
         setLoading(true)
         val current = LocalDate.now()
         val Todo = Spamas(
-            binding.etTodo.getText().toString(),
-            binding.etPesan.getText().toString().toInt(),
-            binding.etDibuat.getText().toString(),
-            binding.etDeadline.getText().toString(),
+            binding.etNamaSPama.getText().toString(),
+            binding.etPoinSpama.getText().toString(),
+            binding.etKetSpama.getText().toString(),
+            binding.etTglDibuat.getText().toString(),
             0, user_id
         )
 
         val stringRequest: StringRequest = object :
-            StringRequest(Method.PUT, TodoApi.UPDATE_URL + id, Response.Listener { response ->
+            StringRequest(Method.PUT, SpamasApi.UPDATE_URL + id, Response.Listener { response ->
                 val gson = Gson()
-                var todo = gson.fromJson(response, Todo::class.java)
+                var todo = gson.fromJson(response, Spamas::class.java)
 
                 if (todo != null)
                     FancyToast.makeText(this,"Data Berhasil Diupdate",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();
@@ -188,19 +186,19 @@ class AddEditActivity : AppCompatActivity() {
         }
         queue!!.add(stringRequest)
     }
-    private fun getTodoById(id : Long)
+    private fun getSpamaById(id : Long)
     {
         setLoading(true)
         val stringRequest: StringRequest = object :
-            StringRequest(Method.GET, TodoApi.GET_BY_ID_URL + id, Response.Listener { response ->
+            StringRequest(Method.GET, SpamasApi.GET_BY_ID_URL + id, Response.Listener { response ->
                 Logger.d("iniresponeget", response)
                 val gson = Gson()
                 val todoo = gson.fromJson(response, Array<Spamas>::class.java)
 //
-                binding.etTodo!!.setText(todoo[0].ketSpama)
-                binding.etPesan!!.setText(todoo[0].namaSpama)
-                binding.etDibuat!!.setText(todoo[0].tglDibuat)
-                binding.etDeadline!!.setText(todoo[0].poinSpama.toString())
+                binding.etNamaSPama!!.setText(todoo[0].namaSpama)
+                binding.etPoinSpama!!.setText(todoo[0].poinSpama)
+                binding.etKetSpama!!.setText(todoo[0].ketSpama)
+                binding.etTglDibuat!!.setText(todoo[0].tglDibuat)
 
 
 

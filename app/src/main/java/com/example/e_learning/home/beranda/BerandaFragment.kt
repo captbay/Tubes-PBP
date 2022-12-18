@@ -23,7 +23,7 @@ import com.android.volley.toolbox.Volley
 import com.example.e_learning.R
 import com.example.e_learning.home.beranda.maps.MapsActivity
 import com.example.e_learning.databinding.FragmentBerandaBinding
-import com.example.e_learning.home.beranda.todoList.SpamasFragment
+import com.example.e_learning.home.beranda.spama.SpamasFragment
 import com.example.e_learning.home.beranda.todoList.ToDoFragment
 import com.example.e_learning.home.kelas.KelasFragment
 import com.example.e_learning.home.kelas.data.Kelas

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".home.beranda.todoList.AddEditActivity">
+    tools:context=".home.beranda.spama.AddEditActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -26,66 +26,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="Tambah Todo"
+                android:text="Tambah Spama"
                 />
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_judul"
+                android:id="@+id/layout_namaSpama"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:hint="Todo">
+                android:hint="Nama Spama">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_todo"
+                    android:id="@+id/et_namaSPama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_pesan"
+                android:id="@+id/layout_poinSpama"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:hint="Pesan">
+                android:hint="Poin Spama">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_pesan"
+                    android:id="@+id/et_poinSpama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_dibuat"
+                android:id="@+id/layout_ketSpama"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:hint="Dibuat">
+                android:hint="Keterangan">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_dibuat"
+                    android:id="@+id/et_ketSpama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_deadline"
+                android:id="@+id/layout_tglDibuat"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:hint="Deadline">
+                android:hint="Tanggal Dibuat">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_deadline"
+                    android:id="@+id/et_tglDibuat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />

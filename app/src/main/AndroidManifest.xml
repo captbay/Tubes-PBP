@@ -34,6 +34,9 @@
             android:name=".home.beranda.maps.MapsActivity"
             android:exported="false"></activity>
         <activity
+            android:name=".home.beranda.spama.AddEditActivity"
+            android:exported="true" />
+        <activity
             android:name=".home.beranda.todoList.AddEditActivity"
             android:exported="true" />
         <activity

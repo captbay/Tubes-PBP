@@ -79,14 +79,14 @@ class AddEditActivity : AppCompatActivity() {
 //            Logger.d("Ini user idnya : "+ user_id)
 //            Logger.d("inputan" , judul + pesan + dibuat +deadline)
             val todoo = ToDoList( judul, pesan, dibuat, deadline,0, userID)
-            Logger.d("Ini  objek todonya", Spamas::class.java)
+            Logger.d("Ini  objek todonya", ToDoList::class.java)
             Log.d("initodo",todoo.pesan + todoo.tglDeadline + current + todoo.user_id)
             val stringRequest: StringRequest =
                 object : StringRequest(Request.Method.POST,
                     TodoApi.ADD_URL, Response.Listener { response ->
                         Logger.d("iniresponse",response)
                         val gson = Gson()
-                        var todoo = gson.fromJson(response, Spamas::class.java)
+                        var todoo = gson.fromJson(response, ToDoList::class.java)
 
                         if(todoo != null)
                             FancyToast.makeText(this@AddEditActivity,"Data Berhasil Ditambah",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false).show();

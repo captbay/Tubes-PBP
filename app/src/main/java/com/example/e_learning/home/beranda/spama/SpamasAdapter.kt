@@ -1,4 +1,4 @@
-package com.example.e_learning.home.beranda.todoList
+package com.example.e_learning.home.beranda.spama
 
 
 
@@ -19,61 +19,59 @@ import com.example.e_learning.home.HomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
-class SpamasAdapter(private var todoList : List<Spamas>, context: Context, fragment: Fragment) :
+class SpamasAdapter(private var spamas : List<Spamas>, context: Context, fragment: Fragment) :
     RecyclerView.Adapter<SpamasAdapter.ViewHolder>(),Filterable{
-    private var filteredTodoList : MutableList<Spamas>
+    private var filteredSpamas : MutableList<Spamas>
     private val context : Context
     private val fragment : Fragment
 
     init {
-        filteredTodoList = ArrayList(todoList)
+        filteredSpamas = ArrayList(spamas)
         this.context = context
         this.fragment = fragment
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        var tvJudul : TextView
-        var tvPesan : TextView
-        var tglDibuat : TextView
-        var tglDeadline : TextView
+        var tvNamaSpama : TextView
+        var tvPoinSpama : TextView
+        var tvKetSpama : TextView
+        var tvTglDibuat: TextView
 //        var status : TextView
         var cvTodo : CardView
         var btnDelete : ImageButton
 
         init{
-            tvJudul = itemView.findViewById(R.id.tv_todo)
-            tvPesan = itemView.findViewById(R.id.tv_pesan)
-            tglDibuat = itemView.findViewById(R.id.tv_tgldibuat)
-            tglDeadline = itemView.findViewById(R.id.tv_tgldeadline)
-//            status = itemView.findViewById(R.id.tv_status)
-            cvTodo = itemView.findViewById(R.id.cv_todo)
+            tvNamaSpama = itemView.findViewById(R.id.tv_namaSpama)
+            tvPoinSpama = itemView.findViewById(R.id.tv_poinSpama)
+            tvKetSpama = itemView.findViewById(R.id.tv_ketSpama)
+            tvTglDibuat= itemView.findViewById(R.id.tv_tglDibuatSpama)
+            cvTodo = itemView.findViewById(R.id.cv_spama)
             btnDelete = itemView.findViewById(R.id.btn_delete)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_todo,parent,false)
+        val view = inflater.inflate(R.layout.item_spamas,parent,false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val todolist = filteredTodoList[position]
-        holder.tvJudul.text = todolist.namaSpama
-        holder.tvPesan.text = todolist.ketSpama
-        holder.tglDibuat.text = todolist.tglDibuat.toString()
-        holder.tglDeadline.text = todolist.tglDibuat.toString()
-//        holder.status.text = todolist.status.toString()
+        val spamalist = filteredSpamas[position]
+        holder.tvNamaSpama.text = spamalist.namaSpama
+        holder.tvPoinSpama.text = spamalist.poinSpama
+        holder.tvKetSpama.text = spamalist.ketSpama
+        holder.tvTglDibuat.text = spamalist.tglDibuat
 
         holder.btnDelete.setOnClickListener{
             val materialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
             materialAlertDialogBuilder.setTitle("Konfirmasi")
-                .setMessage("Apakah anda yakin ingin menghapus data todo ini?")
+                .setMessage("Apakah anda yakin ingin menghapus data spama ini?")
                 .setNegativeButton("Batal", null)
                 .setPositiveButton("Yakin"){_, _ ->
-                    if(fragment is SpamasFragment) todolist.id?.let {
-                            it1->fragment.deleteTodo(
+                    if(fragment is SpamasFragment) spamalist.id?.let {
+                            it1->fragment.deleteSpamas(
                         it1
                     )
                     }
@@ -82,20 +80,20 @@ class SpamasAdapter(private var todoList : List<Spamas>, context: Context, fragm
 
         holder.cvTodo.setOnClickListener{
             val i = Intent(context, AddEditActivity::class.java)
-            i.putExtra("id", todolist.id)
+            i.putExtra("id", spamalist.id)
             if(context is HomeActivity)
-                context.startActivityForResult(i, ToDoFragment.LAUNCH_ADD_ACTIVITY)
+                context.startActivityForResult(i, SpamasFragment.LAUNCH_ADD_ACTIVITY)
         }
     }
 
     override fun getItemCount(): Int {
-        return filteredTodoList.size
+        return filteredSpamas.size
     }
 
-    fun setTodoList(todoList: Array<Spamas>)
+    fun setSpamas(spamas: Array<Spamas>)
     {
-        this.todoList = todoList.toList()
-        filteredTodoList = todoList.toMutableList()
+        this.spamas = spamas.toList()
+        filteredSpamas = spamas.toMutableList()
     }
 
     override fun getFilter(): Filter {
@@ -106,14 +104,14 @@ class SpamasAdapter(private var todoList : List<Spamas>, context: Context, fragm
                 val filtered: MutableList<Spamas> = java.util.ArrayList()
                 if(charSequenceString.isEmpty())
                 {
-                    filtered.addAll(todoList)
+                    filtered.addAll(spamas)
                 }else
                 {
-                    for(todo in todoList)
+                    for(spama in spamas)
                     {
-                        if(todo.namaSpama.lowercase(Locale.getDefault())
+                        if(spama.namaSpama.lowercase(Locale.getDefault())
                                 .contains(charSequenceString.lowercase(Locale.getDefault()))
-                        )filtered.add(todo)
+                        )filtered.add(spama)
                     }
                 }
                 val filterResults = FilterResults()
@@ -122,8 +120,8 @@ class SpamasAdapter(private var todoList : List<Spamas>, context: Context, fragm
             }
 
             override fun publishResults(p0: CharSequence, p1: FilterResults) {
-                filteredTodoList.clear()
-                filteredTodoList.addAll(p1.values as List<Spamas>)
+                filteredSpamas.clear()
+                filteredSpamas.addAll(p1.values as List<Spamas>)
                 notifyDataSetChanged()
             }
         }
@@ -139,40 +137,40 @@ class SpamasAdapter(private var todoList : List<Spamas>, context: Context, fragm
 //import android.view.ViewGroup
 //import androidx.recyclerview.widget.RecyclerView
 //import com.example.e_learning.R
-//import com.example.e_learning.data.todoList.ToDoList
-//import kotlinx.android.synthetic.main.adapter_todo.view.*
+//import com.example.e_learning.data.spamas.ToDoList
+//import kotlinx.android.synthetic.main.adapter_spama.view.*
 //
-//class TodoAdapter (private val todolist: ArrayList<ToDoList>, private val listener: OnAdapterListener) :
+//class TodoAdapter (private val spamalist: ArrayList<ToDoList>, private val listener: OnAdapterListener) :
 //    RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 //    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
 //        return TodoViewHolder(
-//            LayoutInflater.from(parent.context).inflate(R.layout.adapter_todo,parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.adapter_spama,parent, false)
 //        )
 //
 //
 //    }
 //    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-//        val todo = todolist[position]
-//        holder.view.text_title.text = todo.judul
+//        val spama = spamalist[position]
+//        holder.view.text_title.text = spama.judul
 //        holder.view.text_title.setOnClickListener{
-//            listener.onClick(todo)
+//            listener.onClick(spama)
 //        }
 //        holder.view.icon_edit.setOnClickListener {
-//            listener.onUpdate(todo)
+//            listener.onUpdate(spama)
 //        }
 //        holder.view.icon_delete.setOnClickListener {
-//            listener.onDelete(todo)
+//            listener.onDelete(spama)
 //        }
 //    }
-//    override fun getItemCount() = todolist.size
+//    override fun getItemCount() = spamalist.size
 //    inner class TodoViewHolder( val view: View) : RecyclerView.ViewHolder(view)
 //    {
 //
 //    }
 //    @SuppressLint("NotifyDataSetChanged")
 //    fun setData(list: List<ToDoList>){
-//        todolist.clear()
-//        todolist.addAll(list)
+//        spamalist.clear()
+//        spamalist.addAll(list)
 //        notifyDataSetChanged()
 //    }
 //    interface OnAdapterListener {
