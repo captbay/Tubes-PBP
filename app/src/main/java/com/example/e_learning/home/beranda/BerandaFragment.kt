@@ -24,6 +24,7 @@ import com.example.e_learning.R
 import com.example.e_learning.home.beranda.maps.MapsActivity
 import com.example.e_learning.databinding.FragmentBerandaBinding
 import com.example.e_learning.home.beranda.todoList.SpamasFragment
+import com.example.e_learning.home.beranda.todoList.ToDoFragment
 import com.example.e_learning.home.kelas.KelasFragment
 import com.example.e_learning.home.kelas.data.Kelas
 import com.example.e_learning.home.kelas.data.KelasAdapter
@@ -68,9 +69,17 @@ class BerandaFragment : Fragment() {
         binding.buttonCreate.setOnClickListener {
                 getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.layout_fragment, SpamasFragment())
+                    .replace(R.id.layout_fragment, ToDoFragment())
                     .addToBackStack(null)
                     .commit()
+
+        }
+        binding.buttonAktif.setOnClickListener {
+            getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_fragment, SpamasFragment())
+                .addToBackStack(null)
+                .commit()
 
         }
 

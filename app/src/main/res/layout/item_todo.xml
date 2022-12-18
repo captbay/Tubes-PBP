@@ -23,6 +23,12 @@
             android:padding="12dp">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Judul Todo:"
+                android:textStyle="bold"/>
+
+            <TextView
                 android:id="@+id/tv_todo"
                 style="@style/TextAppearance.MaterialComponents.Body2"
                 android:layout_width="match_parent"
@@ -30,6 +36,12 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Judul Todo : "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Isi Pesan:"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_pesan"
@@ -44,6 +56,12 @@
                 />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dibuat:"
+                android:textStyle="bold"/>
+
+            <TextView
                 android:id="@+id/tv_tgldibuat"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:layout_width="match_parent"
@@ -54,6 +72,13 @@
                 android:text="Dibuat"
                 android:textSize="15sp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline:"
+                android:textStyle="bold"/>
+
             <TextView
                 android:id="@+id/tv_tgldeadline"
                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
